@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ff3defee9d90d4d83e6fd7a6df5a33, type: 3}
+  m_Name: WalkerHandling_POC
+  m_EditorClassIdentifier: GrannyRacer.Runtime::GrannyRacer.Walker.WalkerHandlingSettings
+  acceleration: 24
+  reverseAcceleration: 12
+  braking: 32
+  maximumSpeed: 15
+  maximumReverseSpeed: 5
+  boostAcceleration: 38
+  boostMaximumSpeed: 22
+  boostGripScale: 0.72
+  steeringDegreesPerSecond: 125
+  steeringFalloffSpeed: 15
+  topSpeedSteeringScale: 0.42
+  lateralGrip: 7
+  groundProbeRadius: 0.42
+  groundProbeDistance: 0.8
+  downforce: 18
+  uprightStrength: 18
+  uprightDamping: 5
+  visualLeanDegrees: 11
+  visualLeanSpeed: 8
+  wobbleDegrees: 8
+  wobbleDuration: 0.8
+  collisionHeatVelocity: 7

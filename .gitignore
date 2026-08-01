@@ -105,3 +105,17 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Local project-construction and agent scaffolding
+# Confirmed intentional 2026-07-31: the toolchain, rules, and Blender source stay
+# local-only and out of shared history. See Docs/DECISIONS.md.
+/.project/
+/.claude/
+/AGENTS.md
+/CLAUDE.md
+/Tools/
+/Blender/Source/
+/Blender/Scripts/
+/Blender/Exports/
+/Blender/Renders/
+/Blender/Reports/

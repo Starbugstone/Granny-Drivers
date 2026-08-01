@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e7bf53d6848dbb44a254fc2a4c9d8e1, type: 3}
+  m_Name: SlipperHeat_POC
+  m_EditorClassIdentifier: GrannyRacer.Runtime::GrannyRacer.Walker.SlipperHeatSettings
+  heatPerSecond: 0.31
+  collisionHeat: 0.08
+  coolingDelay: 0.55
+  coolingPerSecond: 0.2
+  warningThreshold: 0.6
+  criticalThreshold: 0.8
+  replacementDuration: 3.4
+  replacementTapReduction: 0.18
+  postReplacementHeat: 0.2
+  burnoutSpeedScale: 0.38
