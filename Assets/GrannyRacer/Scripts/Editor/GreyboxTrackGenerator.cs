@@ -147,14 +147,50 @@ namespace GrannyRacer.Editor
                 var width = (points[i].width + points[nextIndex].width) * 0.25f + 0.8f;
                 CreateSegment("Outer Barrier", start + right * width, end + right * width,
                     new Vector3(0.22f, 1.1f, length), material, parent);
-                var touchesShortcut = i == track.ShortcutStartWaypoint || nextIndex == track.ShortcutStartWaypoint
-                    || i == track.ShortcutEndWaypoint || nextIndex == track.ShortcutEndWaypoint;
-                if (!touchesShortcut)
+                var innerStart = start - right * width;
+                var innerEnd = end - right * width;
+                if (!BlocksShortcut(track, innerStart, innerEnd))
                 {
-                    CreateSegment("Inner Barrier", start - right * width, end - right * width,
+                    CreateSegment("Inner Barrier", innerStart, innerEnd,
                         new Vector3(0.22f, 1.1f, length), material, parent);
                 }
             }
+        }
+
+        /// <summary>
+        /// True where the inner barrier has to be left out because the shortcut runs through it.
+        /// </summary>
+        /// <remarks>
+        /// Measured against the driveway's own geometry rather than by waypoint index. Two
+        /// reasons: waypoints are generated at whatever spacing the corner's curvature
+        /// demands, so an index match can open a gap only two metres wide, and the driveway
+        /// peels away from the road gradually — it is still inside the barrier line for a good
+        /// ten metres past the mouth, which a fixed radius around the mouth does not cover.
+        /// </remarks>
+        private static bool BlocksShortcut(TrackDefinition track, Vector3 barrierStart,
+            Vector3 barrierEnd)
+        {
+            var points = track.Waypoints;
+            if (track.ShortcutStartWaypoint < 0 || track.ShortcutStartWaypoint >= points.Length
+                || track.ShortcutEndWaypoint < 0 || track.ShortcutEndWaypoint >= points.Length) return false;
+
+            var start = points[track.ShortcutStartWaypoint].position;
+            var end = points[track.ShortcutEndWaypoint].position;
+            // Half the driveway plus a metre of verge. Both ends of the barrier are tested,
+            // not its midpoint: a long barrier alongside the mouth can clear the driveway in
+            // the middle and still have one end standing in it.
+            var clearance = track.ShortcutWidth * 0.5f + 1f;
+            return DistanceToSegment(barrierStart, start, end) < clearance
+                || DistanceToSegment(barrierEnd, start, end) < clearance;
+        }
+
+        private static float DistanceToSegment(Vector3 point, Vector3 start, Vector3 end)
+        {
+            var span = end - start;
+            var lengthSquared = span.sqrMagnitude;
+            if (lengthSquared < 1e-6f) return Vector3.Distance(point, start);
+            var t = Mathf.Clamp01(Vector3.Dot(point - start, span) / lengthSquared);
+            return Vector3.Distance(point, start + span * t);
         }
 
         private static void CreateSpawnGrid(TrackDefinition track, Transform parent)

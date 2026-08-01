@@ -41,7 +41,7 @@ namespace GrannyRacer.Editor
             var track = LoadOrCreateTrack();
 
             CreateLight();
-            CreateGround();
+            CreateGround(track);
 
             var start = track.Waypoints[0].position + Vector3.up * 0.9f;
             var startForward = (track.Waypoints[1].position - track.Waypoints[0].position).normalized;
@@ -342,7 +342,8 @@ namespace GrannyRacer.Editor
             if (shader == null) shader = Shader.Find("Universal Render Pipeline/Unlit");
             if (shader == null) throw new InvalidDataException("A URP unlit shader is required for POC VFX.");
 
-            if (material == null)
+            var created = material == null;
+            if (created)
             {
                 material = new Material(shader) { name = name };
                 AssetDatabase.CreateAsset(material, path);
@@ -352,21 +353,31 @@ namespace GrannyRacer.Editor
                 material.shader = shader;
             }
 
-            if (material.HasProperty("_BaseColor")) material.SetColor("_BaseColor", color);
-            if (material.HasProperty("_Color")) material.SetColor("_Color", color);
             if (baseMap != null)
             {
                 if (material.HasProperty("_BaseMap")) material.SetTexture("_BaseMap", baseMap);
                 if (material.HasProperty("_MainTex")) material.SetTexture("_MainTex", baseMap);
             }
 
-            material.SetOverrideTag("RenderType", "Transparent");
-            material.SetFloat("_Surface", 1f);
-            material.SetFloat("_ZWrite", 0f);
-            material.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
-            material.SetFloat("_DstBlend", additive ? (float)BlendMode.One : (float)BlendMode.OneMinusSrcAlpha);
-            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            material.renderQueue = (int)RenderQueue.Transparent;
+            // Colour and blending are set once, when the material is first generated, and then
+            // left alone. They are exactly the properties a human tunes by eye in the
+            // inspector — commit 9726f3a moved the boost flame off additive after review — and
+            // rewriting them on every scene rebuild silently threw that judgement away. Delete
+            // the .mat to get the generated defaults back.
+            if (created)
+            {
+                if (material.HasProperty("_BaseColor")) material.SetColor("_BaseColor", color);
+                if (material.HasProperty("_Color")) material.SetColor("_Color", color);
+                material.SetOverrideTag("RenderType", "Transparent");
+                material.SetFloat("_Surface", 1f);
+                material.SetFloat("_ZWrite", 0f);
+                material.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                material.SetFloat("_DstBlend",
+                    additive ? (float)BlendMode.One : (float)BlendMode.OneMinusSrcAlpha);
+                material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                material.renderQueue = (int)RenderQueue.Transparent;
+            }
+
             EditorUtility.SetDirty(material);
             AssetDatabase.SaveAssetIfDirty(material);
             return material;
@@ -531,18 +542,36 @@ namespace GrannyRacer.Editor
             material.bounceCombine = PhysicsMaterialCombine.Minimum;
         }
 
+        /// <summary>
+        /// Rewrites the track asset from the authored layout in <see cref="QuietSundayLayout"/>.
+        /// </summary>
+        /// <remarks>
+        /// Deliberately a separate command from building the scene. D-04 makes dragging
+        /// waypoints in the inspector the fast iteration loop, and regenerating on every scene
+        /// build would silently throw those drags away. Run this when the layout in code has
+        /// changed, then rebuild the scene.
+        /// </remarks>
+        [MenuItem("Granny Racer/POC/Rebuild Quiet Sunday Track Layout")]
+        public static void RebuildTrackLayout()
+        {
+            EnsureFolder("Assets/GrannyRacer/Settings");
+            var track = LoadOrCreateTrackAsset();
+            var waypoints = QuietSundayLayout.Apply(track);
+            EditorUtility.SetDirty(track);
+            AssetDatabase.SaveAssets();
+            Debug.Log($"[POC] Rebuilt Quiet Sunday: {waypoints.Length} waypoints, "
+                + $"{TrackLayoutBuilder.MeasureLapLength(waypoints):0} m lap, "
+                + $"{CountCheckpoints(waypoints)} checkpoints, tightest corner radius "
+                + $"{TrackLayoutBuilder.MeasureTightestCornerRadius(waypoints):0.0} m. "
+                + "Rebuild the POC scene to regenerate the geometry.");
+        }
+
         private static TrackDefinition LoadOrCreateTrack()
         {
-            var track = AssetDatabase.LoadAssetAtPath<TrackDefinition>(TrackPath);
-            if (track == null)
-            {
-                track = ScriptableObject.CreateInstance<TrackDefinition>();
-                AssetDatabase.CreateAsset(track, TrackPath);
-            }
-
+            var track = LoadOrCreateTrackAsset();
             if (track.Waypoints == null || track.Waypoints.Length < 3)
             {
-                track.SetPrototypeData(CreatePrototypeWaypoints(), 3, 2, 4, 4.5f);
+                QuietSundayLayout.Apply(track);
                 EditorUtility.SetDirty(track);
                 AssetDatabase.SaveAssets();
             }
@@ -550,19 +579,24 @@ namespace GrannyRacer.Editor
             return track;
         }
 
-        private static TrackWaypoint[] CreatePrototypeWaypoints()
+        private static TrackDefinition LoadOrCreateTrackAsset()
         {
-            return new[]
+            var track = AssetDatabase.LoadAssetAtPath<TrackDefinition>(TrackPath);
+            if (track != null) return track;
+            track = ScriptableObject.CreateInstance<TrackDefinition>();
+            AssetDatabase.CreateAsset(track, TrackPath);
+            return track;
+        }
+
+        private static int CountCheckpoints(TrackWaypoint[] waypoints)
+        {
+            var count = 0;
+            for (var i = 0; i < waypoints.Length; i++)
             {
-                new TrackWaypoint(new Vector3(0f, 0.05f, -30f), 10f, true),
-                new TrackWaypoint(new Vector3(24f, 0.25f, -24f), 10f, false),
-                new TrackWaypoint(new Vector3(31f, 2.2f, 0f), 9f, true),
-                new TrackWaypoint(new Vector3(23f, 1.1f, 25f), 7f, false),
-                new TrackWaypoint(new Vector3(0f, 0.05f, 32f), 11f, true),
-                new TrackWaypoint(new Vector3(-23f, 0.05f, 24f), 8f, false),
-                new TrackWaypoint(new Vector3(-31f, 0.05f, 0f), 7f, true),
-                new TrackWaypoint(new Vector3(-20f, 0.05f, -25f), 9f, false)
-            };
+                if (waypoints[i].checkpoint) count++;
+            }
+
+            return count;
         }
 
         private static T LoadOrCreate<T>(string path) where T : ScriptableObject
@@ -589,12 +623,31 @@ namespace GrannyRacer.Editor
             new GameObject("Debug HUD").AddComponent<DrivingDebugHud>().Configure(walker, race);
         }
 
-        private static void CreateGround()
+        /// <summary>
+        /// The floor a walker lands on when it leaves the road. Sized from the track rather
+        /// than fixed, because a plane that stops short of the layout drops the walker into
+        /// the void instead of somewhere it can be reset from.
+        /// </summary>
+        private static void CreateGround(TrackDefinition track)
         {
+            var bounds = MeasureTrackBounds(track);
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "Safety Ground";
-            ground.transform.position = new Vector3(0f, -0.2f, 0f);
-            ground.transform.localScale = new Vector3(10f, 1f, 10f);
+            // A metre under the lowest waypoint: close enough to catch a fall, far enough
+            // that it does not z-fight with the flat sections of the road ribbon.
+            ground.transform.position = new Vector3(bounds.center.x, bounds.min.y - 1f,
+                bounds.center.z);
+            // Unity's plane primitive is 10 m across at scale 1. The margin is run-off room.
+            var extent = Mathf.Max(bounds.size.x, bounds.size.z) + 120f;
+            ground.transform.localScale = new Vector3(extent * 0.1f, 1f, extent * 0.1f);
+        }
+
+        private static Bounds MeasureTrackBounds(TrackDefinition track)
+        {
+            var points = track.Waypoints;
+            var bounds = new Bounds(points[0].position, Vector3.zero);
+            for (var i = 1; i < points.Length; i++) bounds.Encapsulate(points[i].position);
+            return bounds;
         }
 
         private static void CreateLight()

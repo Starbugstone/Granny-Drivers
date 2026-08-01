@@ -335,6 +335,34 @@ Whether the effects now read clearly at speed is a human playtest question.
 
 ---
 
+## D-15 — Generated assets are seeded by the builder, then owned by the human
+
+**Date:** 2026-08-01
+**Status:** Accepted
+**Amends:** the material generation in [D-12](#d-12--poc-admits-jump-skid-and-state-driven-propulsionfootwear-vfx) and [D-14](#d-14--walker-vfx-are-aimed-and-scaled-in-world-space-not-in-rig-space)
+
+`PocSceneBuilder` writes a generated asset's tuning values **only when it creates the asset**.
+On a rebuild it refreshes structure — shader, textures, wiring — and leaves the eyeballed
+values alone. This covers the VFX materials and the `TrackDefinition` waypoints. Deleting the
+asset is how you ask for the generated defaults back.
+
+**Why:** the two were in conflict. Commit `9726f3a` moved the boost flame off additive
+blending after human review; the next scene rebuild silently set it back, because
+`LoadOrCreateVfxMaterial` reapplied `_DstBlend` unconditionally. Anything a human tunes by eye
+cannot also be owned by a generator that runs on every rebuild.
+
+The same reasoning gives the track layout two commands rather than one:
+`Rebuild Quiet Sunday Track Layout` regenerates the waypoints from
+`QuietSundayLayout.ControlPoints()`, and `Create Complete Single-Racer POC` does not.
+[D-04](#d-04--track-is-generated-from-waypoints-in-editor) makes dragging waypoints the fast
+iteration loop for the revision pass, which only works if a rebuild preserves the drags.
+
+**Cost accepted:** a stale asset can drift from the code that generated it, and nothing
+detects that. The rebuild commands are the reset button, and they are documented in
+`Docs/POC_TRACK_LAYOUT.md`.
+
+---
+
 ## Outstanding decisions
 
 Not yet decided. Listed so they are not forgotten.

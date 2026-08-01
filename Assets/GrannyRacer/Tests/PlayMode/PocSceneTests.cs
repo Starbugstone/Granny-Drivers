@@ -261,7 +261,19 @@ namespace GrannyRacer.Tests.PlayMode
         {
             var race = FindInActiveScene<RaceController>();
             var checkpoints = FindAllInActiveScene<RaceCheckpoint>();
-            Assert.That(checkpoints, Has.Length.EqualTo(4));
+
+            // Count is not asserted exactly: the layout is retuned between playtests. What
+            // must hold is that the generator numbered them contiguously from the lap
+            // trigger, because RaceProgress advances strictly through those indices.
+            Assert.That(checkpoints, Has.Length.GreaterThanOrEqualTo(4));
+            var names = new System.Collections.Generic.List<string>();
+            for (var i = 0; i < checkpoints.Length; i++) names.Add(checkpoints[i].name);
+            Assert.That(names, Contains.Item("Lap Trigger (Checkpoint 0)"));
+            for (var i = 1; i < checkpoints.Length; i++)
+            {
+                Assert.That(names, Contains.Item($"Checkpoint {i}"),
+                    $"Checkpoint {i} is missing, so the ordered sequence has a hole in it.");
+            }
 
             while (race.State == RaceState.Countdown)
             {

@@ -67,6 +67,9 @@ Track layout follows playbook §17.3: one wide overtaking straight, one bottlene
 downhill boost section, one sharp corner where heat management matters, one risky shortcut.
 Greybox primitives only — no houses, no terrain, no art.
 
+The layout, the two commands that regenerate it, and the authoring rules are documented in
+[POC_TRACK_LAYOUT.md](POC_TRACK_LAYOUT.md).
+
 Race systems are written for N racers from the start ([D-05](DECISIONS.md#d-05--two-forward-compatibility-constraints-are-honoured-from-the-start)),
 even though only one exists.
 
