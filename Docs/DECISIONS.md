@@ -363,6 +363,26 @@ detects that. The rebuild commands are the reset button, and they are documented
 
 ---
 
+## D-16 — Granny identity is data layered over one racer controller
+
+**Date:** 2026-08-01
+**Status:** Accepted — user explicitly requested selectable grannies with different driving stats
+**Extends:** [D-05](#d-05--two-forward-compatibility-constraints-are-honoured-from-the-start)
+
+Every granny uses the same `ArcadeWalkerController` and base `WalkerHandlingSettings`.
+A selectable `GrannyRacerProfile` supplies multipliers for acceleration, adherence (lateral
+grip), and maximum speed. The multipliers also affect the equivalent reverse and boost
+values so a character keeps her identity throughout the driving loop. With no profile, all
+multipliers are 1.0 and the existing POC behaviour is unchanged.
+
+The full cast in playbook §29.1 remains full-game content. The POC admits only the reusable
+profile contract and placeholder profile assets needed for tuning. Roster UI, persistence,
+portraits, and additional finished models stay deferred until their milestones are approved.
+
+Profile differences require human playtesting for readability, balance, and feel.
+
+---
+
 ## Outstanding decisions
 
 Not yet decided. Listed so they are not forgotten.

@@ -143,10 +143,9 @@ namespace GrannyRacer.Walker
                 return;
             }
 
-            var handling = controller.Handling;
-            var speedLimit = handling == null
-                ? 1f
-                : (state == BoostState ? handling.boostMaximumSpeed : handling.maximumSpeed);
+            var speedLimit = state == BoostState
+                ? controller.Stats.BoostMaximumSpeed
+                : controller.Stats.MaximumSpeed;
             var speedRatio = Mathf.Clamp01(controller.Speed / Mathf.Max(0.01f, speedLimit));
             animator.speed = Mathf.Lerp(
                 minimumDrivePlaybackSpeed, maximumDrivePlaybackSpeed, speedRatio);

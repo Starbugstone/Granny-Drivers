@@ -10,6 +10,7 @@ namespace GrannyRacer.Walker
         [SerializeField] private WalkerHandlingSettings handling;
         [SerializeField] private SlipperHeatSettings heatSettings;
         [SerializeField] private Transform visualRoot;
+        [SerializeField] private GrannyRacerProfile profile;
 
         private Rigidbody body;
         private IRacerInputSource inputSource;
@@ -24,6 +25,7 @@ namespace GrannyRacer.Walker
         private float wobbleRemaining;
         private readonly SlipperHeatModel heat = new SlipperHeatModel();
         private readonly DriftModel drift = new DriftModel();
+        private GrannyRacerStats stats;
 
         public float Speed => body == null ? 0f : body.linearVelocity.magnitude;
         public bool IsGrounded => grounded;
@@ -31,6 +33,8 @@ namespace GrannyRacer.Walker
         public bool IsSkidding { get; private set; }
         public float VerticalSpeed => body == null ? 0f : Vector3.Dot(body.linearVelocity, transform.up);
         public WalkerHandlingSettings Handling => handling;
+        public GrannyRacerProfile Profile => profile;
+        public GrannyRacerStats Stats => stats;
         public float Heat => heat.Heat;
         public float ReplacementRemaining => heat.ReplacementRemaining;
         public bool IsBoosting { get; private set; }
@@ -59,6 +63,14 @@ namespace GrannyRacer.Walker
             handling = settings;
             heatSettings = slipperHeat;
             visualRoot = visuals;
+            ResolveStats();
+        }
+
+        /// <summary>Applies the result of character selection without replacing the racer.</summary>
+        public void ApplyProfile(GrannyRacerProfile selectedProfile)
+        {
+            profile = selectedProfile;
+            ResolveStats();
         }
 
         public void SetCanDrive(bool value)
@@ -73,6 +85,7 @@ namespace GrannyRacer.Walker
             spawnPosition = transform.position;
             spawnRotation = transform.rotation;
             visualBaseRotation = visualRoot == null ? Quaternion.identity : visualRoot.localRotation;
+            ResolveStats();
         }
 
         private void Update()
@@ -166,11 +179,11 @@ namespace GrannyRacer.Walker
             var driveInput = canDrive ? WalkerHandlingMath.DriveInput(input.Throttle, input.Brake, forwardSpeed) : 0f;
 
             var acceleration = driveInput >= 0f
-                ? (IsBoosting ? handling.boostAcceleration : handling.acceleration)
-                : handling.reverseAcceleration;
+                ? (IsBoosting ? stats.BoostAcceleration : stats.Acceleration)
+                : stats.ReverseAcceleration;
             var speedLimit = driveInput >= 0f
-                ? (IsBoosting ? handling.boostMaximumSpeed : handling.maximumSpeed)
-                : handling.maximumReverseSpeed;
+                ? (IsBoosting ? stats.BoostMaximumSpeed : stats.MaximumSpeed)
+                : stats.MaximumReverseSpeed;
             if (heat.IsBurnedOut && heatSettings != null)
             {
                 speedLimit *= heatSettings.burnoutSpeedScale;
@@ -179,7 +192,7 @@ namespace GrannyRacer.Walker
             {
                 // The exit boost is worth nothing if the normal cap claws the speed straight
                 // back, so it raises the ceiling for as long as it lasts.
-                speedLimit = Mathf.Max(speedLimit, handling.boostMaximumSpeed);
+                speedLimit = Mathf.Max(speedLimit, stats.BoostMaximumSpeed);
             }
             if (Mathf.Abs(forwardSpeed) < speedLimit || Mathf.Sign(driveInput) != Mathf.Sign(forwardSpeed))
             {
@@ -201,7 +214,7 @@ namespace GrannyRacer.Walker
                     ForceMode.Acceleration);
             }
 
-            var grip = IsBoosting ? handling.lateralGrip * handling.boostGripScale : handling.lateralGrip;
+            var grip = IsBoosting ? stats.LateralGrip * handling.boostGripScale : stats.LateralGrip;
             if (drift.IsDrifting) grip *= handling.driftGripScale;
             else if (brakeSlide) grip *= handling.skidGripScale;
             body.AddForce(-transform.right * (lateralSpeed * grip), ForceMode.Acceleration);
@@ -245,6 +258,24 @@ namespace GrannyRacer.Walker
             {
                 body.AddForce(transform.forward * impulse, ForceMode.VelocityChange);
             }
+        }
+
+        private void ResolveStats()
+        {
+            if (handling == null)
+            {
+                stats = default;
+                return;
+            }
+
+            var baseStats = new GrannyRacerStats(handling.acceleration,
+                handling.reverseAcceleration, handling.boostAcceleration,
+                handling.maximumSpeed, handling.maximumReverseSpeed,
+                handling.boostMaximumSpeed, handling.lateralGrip);
+            var multipliers = profile == null
+                ? GrannyStatMultipliers.Balanced
+                : profile.CreateMultipliers();
+            stats = GrannyRacerStats.Resolve(baseStats, multipliers);
         }
 
         public void ResetToSpawn()
