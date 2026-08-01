@@ -4,9 +4,10 @@ A humorous, cartoon-styled 3D arcade racing game in which grannies race modified
 frames fitted with boosters.
 
 The project is currently a **proof of concept**: one racer, one greybox track, and the
-handling model. It exists to answer a single question — *is this fun to drive?* — before any
-art, audio, AI racers, or combat get built. Nothing in this repository is claimed to look or
-feel finished.
+handling model. It exists to answer a single question — *is this fun to drive?* The merged
+Granny/walker model and reaction voices are now present as a bounded POC exception; AI,
+combat, environment art, and polish remain deferred. Nothing here is claimed to look, sound,
+or feel finished.
 
 > The repository folder is `Granny Drivers`; the game, namespace, and asset root are all
 > `GrannyRacer`. Same project.
@@ -58,12 +59,13 @@ Only the Unity project and the design docs are in version control:
 
 ```text
 Assets/GrannyRacer/
-├── Scripts/Runtime/{Input,Walker,Racing,Camera,UI}   ← gameplay code
+├── Scripts/Runtime/{Input,Walker,Racing,Camera,UI,Merged} ← gameplay and merged asset glue
 ├── Scripts/Editor/                                   ← scene generator, build entry points
 ├── Tests/{EditMode,PlayMode}
 ├── Scenes/Tracks/POC_QuietSunday.unity                ← the POC scene (generated)
 ├── Settings/                                          ← tuning ScriptableObjects
-└── Art/Materials/
+├── Art/{Materials,Imported}/                         ← greybox materials and Granny FBXs
+└── Resources/Audio/Granny/                           ← reaction voice banks
 Docs/                                                  ← plan, decisions, design, test plans
 ```
 
@@ -163,10 +165,12 @@ on an inside-out mesh is only solid from below, and the walker falls through the
 ## Status and scope
 
 In scope for the POC: arcade walker physics, boost, slipper heat and burnout, a greybox
-track, the three-lap race loop, checkpoints and reset, and a debug HUD.
+track, the three-lap race loop, checkpoints and reset, a debug HUD, and the D-11 exception
+for the merged Granny/walker model, locomotion animations, slipper variants, and reaction
+voices.
 
-Deferred: combat, AI racers, terrain and environment art, characters, audio, items and
-pickups, and multiplayer.
+Deferred: combat, AI racers, terrain and environment art, VFX, music/mixing, additional
+characters, item/pickup integration, and multiplayer.
 
 The next step after the POC builds is **not** the next milestone — it is a playtest pass
 using the test plan above, then handling revision. If the driving does not feel good, the

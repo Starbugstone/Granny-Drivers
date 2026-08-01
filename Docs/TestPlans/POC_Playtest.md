@@ -1,9 +1,11 @@
 # Single-racer POC playtest
 
-This is the approved primitive-only POC spanning milestones 1, 2, 3, and 5. It includes
+This is the approved single-racer POC spanning milestones 1, 2, 3, and 5. It includes
 walker handling and recovery, boost and slipper heat, burnout replacement, a waypoint-driven
 greybox loop, ordered checkpoints, three laps, countdown, wrong-way warning, finish, pause,
-and restart. Final art, authored audio, combat, and AI remain deferred by decision D-03.
+and restart. By decision D-11 it also uses the merged Granny/walker model, locomotion
+animations, slipper variants, and reaction voice clips. Combat, AI, environment art, VFX,
+music, and general polish remain deferred.
 
 ## Run it
 
@@ -42,10 +44,13 @@ Q/E and controller X/B are reserved for deferred combat and intentionally do not
 6. Confirm ordinary impacts wobble visibly and recovery remains generous.
 7. Decide whether short boost taps are useful and continuous boost creates understandable risk.
 8. Trigger burnout, verify the racer keeps moving, and judge whether replacement is funny or annoying.
-9. Try skipping checkpoints; lap progress must not advance.
-10. Complete three laps, verify the finish time, and restart without relaunching.
-11. Reverse around the course long enough to confirm the warning is sustained rather than noisy.
-12. Record promising values from `WalkerHandling_POC` and `SlipperHeat_POC` before further scope.
+9. Confirm the slippers disappear during burnout and a new variant appears after replacement.
+10. Confirm idle, drive, steering, boost, and collision reactions select the expected animation.
+11. Trigger repeated boosts and collisions; judge voice clarity, repetition, mix, and fatigue.
+12. Try skipping checkpoints; lap progress must not advance.
+13. Complete three laps, verify the finish time, and restart without relaunching.
+14. Reverse around the course long enough to confirm the warning is sustained rather than noisy.
+15. Record promising values from `WalkerHandling_POC` and `SlipperHeat_POC` before further scope.
 
 Answer the playbook questions explicitly: did the walker feel promising within one minute,
 was boost/heat understandable, was burnout funny or annoying, did reset feel fair, and did
@@ -72,8 +77,9 @@ collision matrix are project-wide serialized references.
 
 ## Known prototype gaps and deferrals
 
-- Authored audio, smoke/VFX, final UI, and final art are deferred to milestone 8. The HUD and
-  burnout foot shuffle are the current placeholder feedback.
+- Only the merged Granny model, its locomotion/hit animations, slipper variants, and
+  input/collision voice banks are integrated under D-11. Smoke/VFX, music, mixing, final UI,
+  final art direction, and the dormant combat/item clips remain deferred.
 - Position is correctly 1/1 for this single-racer POC. Fractional spline position sorting is
   deferred until AI racers are admitted after the revision gate.
 - Input actions are remappable in code, but the settings/rebinding UI is not yet authored.

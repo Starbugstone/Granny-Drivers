@@ -28,6 +28,8 @@ namespace GrannyRacer.Walker
         public float Heat => heat.Heat;
         public float ReplacementRemaining => heat.ReplacementRemaining;
         public bool IsBoosting { get; private set; }
+        public bool BoostPressedThisFrame { get; private set; }
+        public float SteeringInput { get; private set; }
         public SlipperHeatStage HeatStage => heatSettings == null
             ? SlipperHeatStage.Safe
             : heat.GetStage(heatSettings.warningThreshold, heatSettings.criticalThreshold);
@@ -56,6 +58,8 @@ namespace GrannyRacer.Walker
         private void Update()
         {
             input = inputSource.Sample();
+            BoostPressedThisFrame = canDrive && input.BoostPressed;
+            SteeringInput = input.Steer;
             if (input.Reset)
             {
                 ResetToSpawn();

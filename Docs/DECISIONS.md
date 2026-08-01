@@ -234,6 +234,26 @@ consumed by `Tools/unity-build.ps1`.
 
 ---
 
+## D-11 — Merged Granny model and reaction audio are admitted to the POC
+
+**Date:** 2026-08-01
+**Status:** Accepted — user explicitly requested integration after merging the asset PRs
+**Supersedes:** the blanket art/audio deferral in [D-03](#d-03--poc-scope-milestones-0-1-2-3-5), only for the assets listed here
+
+The single-racer POC uses the merged Granny/walker FBX, its idle, drive, turn, boost, and
+hit-reaction clips, the three merged slipper variants, and the merged input/collision voice
+banks. Slippers disappear during burnout and cycle to the next variant after replacement.
+
+Combat and items remain deferred, so their imported clips and voice banks stay dormant.
+Environment art, VFX, music, mixer work, AI, and general milestone-8 polish also remain
+deferred. This is an integration of already-approved assets, not permission to expand the
+POC into a polish milestone.
+
+**Gate:** visual clarity, animation quality, voice quality, repetition, mix, humour, and
+audio fatigue require human review in the POC playtest.
+
+---
+
 ## Outstanding decisions
 
 Not yet decided. Listed so they are not forgotten.

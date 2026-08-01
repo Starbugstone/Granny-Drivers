@@ -1,10 +1,13 @@
 using System.IO;
+using GrannyRacer.Audio;
 using GrannyRacer.Camera;
+using GrannyRacer.Characters;
 using GrannyRacer.Input;
 using GrannyRacer.Racing;
 using GrannyRacer.UI;
 using GrannyRacer.Walker;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -18,6 +21,12 @@ namespace GrannyRacer.Editor
         private const string TrackPath = "Assets/GrannyRacer/Settings/Track_QuietSunday_POC.asset";
         private const string WalkerPhysicsMaterialPath =
             "Assets/GrannyRacer/Settings/PM_Walker_Frictionless.physicsMaterial";
+        private const string GrannyModelRoot =
+            "Assets/GrannyRacer/Art/Imported/Models/Granny";
+        private const string GrannyModelPath = GrannyModelRoot + "/Granny_Walker.fbx";
+        private const string GrannyAnimatorPath =
+            "Assets/GrannyRacer/Settings/Generated/AC_GrannyWalker_POC.controller";
+        private static readonly Vector3 PocCameraOffset = new Vector3(0f, 2.4f, -4.2f);
 
         [MenuItem("Granny Racer/POC/Create Complete Single-Racer POC")]
         public static void CreateCompletePoc()
@@ -69,16 +78,191 @@ namespace GrannyRacer.Editor
 
             var visuals = new GameObject("Walker_Visuals").transform;
             visuals.SetParent(root.transform, false);
-            CreatePart("Frame_Left", PrimitiveType.Cube, visuals, new Vector3(-0.55f, 0f, 0f), new Vector3(0.12f, 1.25f, 1.35f), new Color(0.15f, 0.65f, 0.85f));
-            CreatePart("Frame_Right", PrimitiveType.Cube, visuals, new Vector3(0.55f, 0f, 0f), new Vector3(0.12f, 1.25f, 1.35f), new Color(0.15f, 0.65f, 0.85f));
-            CreatePart("Frame_Handle", PrimitiveType.Cube, visuals, new Vector3(0f, 0.55f, 0.45f), new Vector3(1.2f, 0.12f, 0.12f), new Color(0.15f, 0.65f, 0.85f));
-            CreatePart("Granny", PrimitiveType.Capsule, visuals, new Vector3(0f, 0.75f, 0f), new Vector3(0.7f, 0.85f, 0.7f), new Color(0.92f, 0.55f, 0.7f));
-            CreatePart("Left Slipper", PrimitiveType.Sphere, visuals, new Vector3(-0.3f, -0.55f, 0.35f), new Vector3(0.32f, 0.15f, 0.55f), new Color(0.95f, 0.35f, 0.25f));
-            CreatePart("Right Slipper", PrimitiveType.Sphere, visuals, new Vector3(0.3f, -0.55f, 0.35f), new Vector3(0.32f, 0.15f, 0.55f), new Color(0.95f, 0.35f, 0.25f));
 
             var controller = root.AddComponent<ArcadeWalkerController>();
             controller.Configure(handling, heat, visuals);
+            CreateGrannyPresentation(root, visuals, collider, controller);
             return controller;
+        }
+
+        private static void CreateGrannyPresentation(GameObject root, Transform visuals,
+            BoxCollider physicsCollider, ArcadeWalkerController controller)
+        {
+            ConfigureModelImporter(GrannyModelPath, false, null);
+            var baseAvatar = LoadRequiredAvatar();
+            ConfigureModelImporter(GrannyModelRoot + "/Granny_Walker@Idle.fbx", true, baseAvatar);
+            ConfigureModelImporter(GrannyModelRoot + "/Granny_Walker@Drive.fbx", true, baseAvatar);
+            ConfigureModelImporter(GrannyModelRoot + "/Granny_Walker@TurnLeft.fbx", true, baseAvatar);
+            ConfigureModelImporter(GrannyModelRoot + "/Granny_Walker@TurnRight.fbx", true, baseAvatar);
+            ConfigureModelImporter(GrannyModelRoot + "/Granny_Walker@Boost.fbx", true, baseAvatar);
+            ConfigureModelImporter(GrannyModelRoot + "/Granny_Walker@HitReact.fbx", false, baseAvatar);
+
+            var modelAsset = AssetDatabase.LoadAssetAtPath<GameObject>(GrannyModelPath);
+            if (modelAsset == null)
+            {
+                throw new FileNotFoundException("The merged Granny walker FBX could not be loaded.",
+                    GrannyModelPath);
+            }
+
+            var model = (GameObject)PrefabUtility.InstantiatePrefab(modelAsset, visuals);
+            model.name = "Granny_Walker_Model";
+            model.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            model.transform.localScale = Vector3.one;
+
+            var importedAnimator = model.GetComponent<Animator>();
+            var avatar = importedAnimator == null ? LoadRequiredAvatar() : importedAnimator.avatar;
+            if (importedAnimator != null) Object.DestroyImmediate(importedAnimator);
+
+            var rigRoot = FindDescendant(model.transform, "GrannyRig");
+            if (rigRoot == null)
+            {
+                throw new InvalidDataException("The imported Granny model has no GrannyRig root.");
+            }
+
+            var animator = rigRoot.gameObject.AddComponent<Animator>();
+            animator.avatar = avatar;
+            animator.runtimeAnimatorController = LoadOrCreateGrannyAnimator();
+            animator.applyRootMotion = false;
+
+            var slipperSwapper = model.AddComponent<SlipperSwapper>();
+            slipperSwapper.Configure(new[]
+            {
+                LoadRequiredModel(GrannyModelRoot + "/Slippers/Slipper_Classic.fbx"),
+                LoadRequiredModel(GrannyModelRoot + "/Slippers/Slipper_Bunny.fbx"),
+                LoadRequiredModel(GrannyModelRoot + "/Slippers/Slipper_Rocket.fbx")
+            }, 0);
+
+            AlignModelWithPhysics(model, visuals, root.transform, physicsCollider);
+
+            var voice = root.AddComponent<GrannyVoice>();
+            var presentation = root.AddComponent<WalkerPresentation>();
+            presentation.Configure(controller, animator, voice, slipperSwapper);
+        }
+
+        private static GameObject LoadRequiredModel(string path)
+        {
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (model == null) throw new FileNotFoundException("Required model is missing.", path);
+            return model;
+        }
+
+        private static Avatar LoadRequiredAvatar()
+        {
+            var avatar = AssetDatabase.LoadAssetAtPath<Avatar>(GrannyModelPath);
+            if (avatar == null)
+            {
+                throw new FileNotFoundException(
+                    "The base Granny walker FBX did not import a Generic Avatar.", GrannyModelPath);
+            }
+
+            return avatar;
+        }
+
+        private static RuntimeAnimatorController LoadOrCreateGrannyAnimator()
+        {
+            EnsureFolder("Assets/GrannyRacer/Settings/Generated");
+            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(GrannyAnimatorPath);
+            if (controller == null)
+            {
+                controller = AnimatorController.CreateAnimatorControllerAtPath(GrannyAnimatorPath);
+            }
+
+            var stateMachine = controller.layers[0].stateMachine;
+            var idle = SetStateMotion(stateMachine, "Idle", LoadAnimationClip("Idle"));
+            SetStateMotion(stateMachine, "Drive", LoadAnimationClip("Drive"));
+            SetStateMotion(stateMachine, "TurnLeft", LoadAnimationClip("TurnLeft"));
+            SetStateMotion(stateMachine, "TurnRight", LoadAnimationClip("TurnRight"));
+            SetStateMotion(stateMachine, "Boost", LoadAnimationClip("Boost"));
+            SetStateMotion(stateMachine, "HitReact", LoadAnimationClip("HitReact"));
+            stateMachine.defaultState = idle;
+            EditorUtility.SetDirty(controller);
+            AssetDatabase.SaveAssetIfDirty(controller);
+            return controller;
+        }
+
+        private static AnimatorState SetStateMotion(AnimatorStateMachine stateMachine,
+            string stateName, AnimationClip clip)
+        {
+            var states = stateMachine.states;
+            for (var i = 0; i < states.Length; i++)
+            {
+                if (states[i].state.name != stateName) continue;
+                states[i].state.motion = clip;
+                return states[i].state;
+            }
+
+            var state = stateMachine.AddState(stateName);
+            state.motion = clip;
+            return state;
+        }
+
+        private static AnimationClip LoadAnimationClip(string clipName)
+        {
+            var path = GrannyModelRoot + "/Granny_Walker@" + clipName + ".fbx";
+            var assets = AssetDatabase.LoadAllAssetsAtPath(path);
+            for (var i = 0; i < assets.Length; i++)
+            {
+                if (assets[i] is AnimationClip clip && !clip.name.StartsWith("__preview__"))
+                {
+                    return clip;
+                }
+            }
+
+            throw new FileNotFoundException($"No animation clip was imported from {path}.", path);
+        }
+
+        private static void ConfigureModelImporter(string path, bool loop, Avatar sourceAvatar)
+        {
+            var importer = AssetImporter.GetAtPath(path) as ModelImporter;
+            if (importer == null) throw new FileNotFoundException("Model importer is missing.", path);
+
+            importer.globalScale = 1f;
+            importer.useFileUnits = true;
+            importer.importCameras = false;
+            importer.importLights = false;
+            importer.bakeAxisConversion = false;
+            importer.animationType = ModelImporterAnimationType.Generic;
+            importer.avatarSetup = sourceAvatar == null
+                ? ModelImporterAvatarSetup.CreateFromThisModel
+                : ModelImporterAvatarSetup.CopyFromOther;
+            importer.sourceAvatar = sourceAvatar;
+            importer.removeConstantScaleCurves = sourceAvatar != null;
+            importer.motionNodeName = "Root";
+
+            if (importer.importAnimation)
+            {
+                var clips = importer.defaultClipAnimations;
+                for (var i = 0; i < clips.Length; i++) clips[i].loopTime = loop;
+                importer.clipAnimations = clips;
+            }
+
+            importer.SaveAndReimport();
+        }
+
+        private static Transform FindDescendant(Transform root, string childName)
+        {
+            if (root.name == childName) return root;
+            for (var i = 0; i < root.childCount; i++)
+            {
+                var found = FindDescendant(root.GetChild(i), childName);
+                if (found != null) return found;
+            }
+
+            return null;
+        }
+
+        private static void AlignModelWithPhysics(GameObject model, Transform visuals,
+            Transform physicsRoot, BoxCollider physicsCollider)
+        {
+            var renderers = model.GetComponentsInChildren<Renderer>(true);
+            if (renderers.Length == 0) return;
+
+            var bounds = renderers[0].bounds;
+            for (var i = 1; i < renderers.Length; i++) bounds.Encapsulate(renderers[i].bounds);
+
+            var colliderBottom = physicsCollider.center.y - physicsCollider.size.y * 0.5f;
+            var targetBottom = physicsRoot.TransformPoint(0f, colliderBottom, 0f).y;
+            visuals.position += Vector3.up * (targetBottom - bounds.min.y + 0.02f);
         }
 
         /// <summary>
@@ -161,10 +345,10 @@ namespace GrannyRacer.Editor
         {
             var cameraObject = new GameObject("Main Camera");
             cameraObject.tag = "MainCamera";
-            cameraObject.transform.position = target.TransformPoint(new Vector3(0f, 4.5f, -7.5f));
+            cameraObject.transform.position = target.TransformPoint(PocCameraOffset);
             cameraObject.AddComponent<UnityEngine.Camera>();
             cameraObject.AddComponent<AudioListener>();
-            cameraObject.AddComponent<WalkerFollowCamera>().Configure(target);
+            cameraObject.AddComponent<WalkerFollowCamera>().Configure(target, PocCameraOffset);
         }
 
         private static void CreateHud(ArcadeWalkerController walker, RaceController race)
@@ -178,20 +362,6 @@ namespace GrannyRacer.Editor
             ground.name = "Safety Ground";
             ground.transform.position = new Vector3(0f, -0.2f, 0f);
             ground.transform.localScale = new Vector3(10f, 1f, 10f);
-        }
-
-        private static GameObject CreatePart(string name, PrimitiveType type, Transform parent,
-            Vector3 position, Vector3 scale, Color colour)
-        {
-            var part = GameObject.CreatePrimitive(type);
-            part.name = name;
-            part.transform.SetParent(parent, false);
-            part.transform.localPosition = position;
-            part.transform.localScale = scale;
-            Object.DestroyImmediate(part.GetComponent<Collider>());
-            var shader = Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard");
-            part.GetComponent<Renderer>().sharedMaterial = new Material(shader) { color = colour };
-            return part;
         }
 
         private static void CreateLight()
