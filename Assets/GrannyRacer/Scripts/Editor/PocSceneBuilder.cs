@@ -10,6 +10,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace GrannyRacer.Editor
 {
@@ -26,6 +27,7 @@ namespace GrannyRacer.Editor
         private const string GrannyModelPath = GrannyModelRoot + "/Granny_Walker.fbx";
         private const string GrannyAnimatorPath =
             "Assets/GrannyRacer/Settings/Generated/AC_GrannyWalker_POC.controller";
+        private const string VfxMaterialRoot = "Assets/GrannyRacer/Settings/Generated";
         private static readonly Vector3 PocCameraOffset = new Vector3(0f, 2.4f, -4.2f);
 
         [MenuItem("Granny Racer/POC/Create Complete Single-Racer POC")]
@@ -137,6 +139,237 @@ namespace GrannyRacer.Editor
             var voice = root.AddComponent<GrannyVoice>();
             var presentation = root.AddComponent<WalkerPresentation>();
             presentation.Configure(controller, animator, voice, slipperSwapper);
+            CreateWalkerVfx(root, model.transform, controller);
+        }
+
+        private static void CreateWalkerVfx(GameObject root, Transform model,
+            ArcadeWalkerController controller)
+        {
+            var exhaustLeft = RequireDescendant(model, "FX_Exhaust_L");
+            var exhaustRight = RequireDescendant(model, "FX_Exhaust_R");
+            var slipperLeft = RequireDescendant(model, SlipperSwapper.LeftSocketName);
+            var slipperRight = RequireDescendant(model, SlipperSwapper.RightSocketName);
+
+            var softTexture = LoadOrCreateSoftParticleTexture();
+            var flameMaterial = LoadOrCreateVfxMaterial("MAT_VFX_BoostFlame", new Color(1f, 0.23f, 0.02f, 0.9f), true, softTexture);
+            var smokeMaterial = LoadOrCreateVfxMaterial("MAT_VFX_Smoke", new Color(0.25f, 0.27f, 0.3f, 0.48f), false, softTexture);
+            // White and alpha-blended: the drift plume is tinted per charge tier at runtime.
+            var driftMaterial = LoadOrCreateVfxMaterial("MAT_VFX_DriftSmoke", Color.white, false, softTexture);
+            var skidMaterial = LoadOrCreateVfxMaterial("MAT_VFX_SkidMark", new Color(0.035f, 0.03f, 0.025f, 0.82f), false, softTexture);
+
+            var flames = new[]
+            {
+                CreateParticles("Boost_Flame_L", exhaustLeft, flameMaterial, 0.22f, 6f, 0.28f, 60f, 0f),
+                CreateParticles("Boost_Flame_R", exhaustRight, flameMaterial, 0.22f, 6f, 0.28f, 60f, 0f)
+            };
+            var rocketSmoke = new[]
+            {
+                CreateParticles("Boost_Smoke_L", exhaustLeft, smokeMaterial, 0.9f, 2.4f, 0.4f, 30f, -0.1f),
+                CreateParticles("Boost_Smoke_R", exhaustRight, smokeMaterial, 0.9f, 2.4f, 0.4f, 30f, -0.1f)
+            };
+            var heatSmoke = new[]
+            {
+                CreateParticles("Slipper_Smoke_L", slipperLeft, smokeMaterial, 1.2f, 0.9f, 0.3f, 18f, -0.25f),
+                CreateParticles("Slipper_Smoke_R", slipperRight, smokeMaterial, 1.2f, 0.9f, 0.3f, 18f, -0.25f)
+            };
+            var driftSmoke = new[]
+            {
+                CreateParticles("Drift_Smoke_L", slipperLeft, driftMaterial, 0.7f, 1.6f, 0.34f, 55f, -0.35f),
+                CreateParticles("Drift_Smoke_R", slipperRight, driftMaterial, 0.7f, 1.6f, 0.34f, 55f, -0.35f)
+            };
+
+            // Parented to the racer root, not to a slipper: the marks are projected onto the
+            // road each frame, and a foot leaving the ground would otherwise draw in mid-air.
+            var marks = new[]
+            {
+                CreateSkidMark("Skid_Mark_L", root.transform, skidMaterial),
+                CreateSkidMark("Skid_Mark_R", root.transform, skidMaterial)
+            };
+
+            root.AddComponent<WalkerVfxPresentation>().Configure(controller, flames, rocketSmoke,
+                heatSmoke, driftSmoke, marks, new[] { slipperLeft, slipperRight });
+        }
+
+        private static Transform RequireDescendant(Transform root, string childName)
+        {
+            var child = FindDescendant(root, childName);
+            if (child == null)
+            {
+                throw new InvalidDataException($"The Granny rig is missing required VFX socket '{childName}'.");
+            }
+
+            return child;
+        }
+
+        private static ParticleSystem CreateParticles(string name, Transform parent,
+            Material material, float lifetime, float speed, float size, float rate, float gravity)
+        {
+            var effect = new GameObject(name);
+            effect.transform.SetParent(parent, false);
+            // Left at 1 deliberately. The rig's bones carry a 100x scale, but a particle system
+            // set to Local scaling reads only its own transform, so sizes and speeds below are
+            // literal metres. Compensating for the parent here is what made the first pass
+            // invisible: 0.13 m of flame came out at 1.3 mm.
+            effect.transform.localScale = Vector3.one;
+
+            var particles = effect.AddComponent<ParticleSystem>();
+            var main = particles.main;
+            main.loop = true;
+            main.playOnAwake = false;
+            main.startLifetime = lifetime;
+            main.startSpeed = speed;
+            main.startSize = size;
+            main.maxParticles = 220;
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+            main.scalingMode = ParticleSystemScalingMode.Local;
+            // Negative gravity floats the smoke up regardless of how the socket bone is
+            // oriented on any given animation frame.
+            main.gravityModifier = gravity;
+            main.stopAction = ParticleSystemStopAction.None;
+
+            var emission = particles.emission;
+            emission.rateOverTime = rate;
+            var shape = particles.shape;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = gravity < 0f ? 22f : 9f;
+            shape.radius = gravity < 0f ? 0.07f : 0.04f;
+
+            var colorOverLifetime = particles.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            colorOverLifetime.color = new ParticleSystem.MinMaxGradient(
+                new Gradient
+                {
+                    alphaKeys = new[]
+                    {
+                        new GradientAlphaKey(1f, 0f),
+                        new GradientAlphaKey(0f, 1f)
+                    },
+                    colorKeys = new[]
+                    {
+                        new GradientColorKey(Color.white, 0f),
+                        new GradientColorKey(Color.white, 1f)
+                    }
+                });
+
+            var renderer = effect.GetComponent<ParticleSystemRenderer>();
+            renderer.sharedMaterial = material;
+            renderer.renderMode = ParticleSystemRenderMode.Billboard;
+            renderer.shadowCastingMode = ShadowCastingMode.Off;
+            renderer.receiveShadows = false;
+            return particles;
+        }
+
+        private static TrailRenderer CreateSkidMark(string name, Transform parent, Material material)
+        {
+            var effect = new GameObject(name);
+            effect.transform.SetParent(parent, false);
+            effect.transform.localScale = Vector3.one;
+            var trail = effect.AddComponent<TrailRenderer>();
+            // The brief: marks linger for four seconds, then go.
+            trail.time = 4f;
+            trail.startWidth = 0.14f;
+            trail.endWidth = 0.1f;
+            trail.minVertexDistance = 0.05f;
+            trail.autodestruct = false;
+            trail.alignment = LineAlignment.TransformZ;
+            trail.textureMode = LineTextureMode.Stretch;
+            trail.colorGradient = new Gradient
+            {
+                colorKeys = new[]
+                {
+                    new GradientColorKey(Color.white, 0f),
+                    new GradientColorKey(Color.white, 1f)
+                },
+                alphaKeys = new[]
+                {
+                    new GradientAlphaKey(1f, 0f),
+                    new GradientAlphaKey(0.85f, 0.55f),
+                    new GradientAlphaKey(0f, 1f)
+                }
+            };
+            trail.sharedMaterial = material;
+            trail.shadowCastingMode = ShadowCastingMode.Off;
+            trail.receiveShadows = false;
+            trail.emitting = false;
+            return trail;
+        }
+
+        /// <summary>
+        /// A soft round sprite. Without it the URP particle shader draws untextured quads, so
+        /// smoke and flame read as hard white squares.
+        /// </summary>
+        private static Texture2D LoadOrCreateSoftParticleTexture()
+        {
+            EnsureFolder(VfxMaterialRoot);
+            const string path = VfxMaterialRoot + "/TEX_VFX_SoftParticle.asset";
+            var existing = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            if (existing != null) return existing;
+
+            const int size = 64;
+            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false)
+            {
+                name = "TEX_VFX_SoftParticle",
+                wrapMode = TextureWrapMode.Clamp
+            };
+            var pixels = new Color32[size * size];
+            var centre = (size - 1) * 0.5f;
+            for (var y = 0; y < size; y++)
+            {
+                for (var x = 0; x < size; x++)
+                {
+                    var dx = (x - centre) / centre;
+                    var dy = (y - centre) / centre;
+                    var falloff = Mathf.Clamp01(1f - Mathf.Sqrt(dx * dx + dy * dy));
+                    var alpha = falloff * falloff * (3f - 2f * falloff);
+                    pixels[y * size + x] = new Color32(255, 255, 255, (byte)(alpha * 255f));
+                }
+            }
+
+            texture.SetPixels32(pixels);
+            texture.Apply();
+            AssetDatabase.CreateAsset(texture, path);
+            AssetDatabase.SaveAssets();
+            return texture;
+        }
+
+        private static Material LoadOrCreateVfxMaterial(string name, Color color, bool additive,
+            Texture2D baseMap)
+        {
+            EnsureFolder(VfxMaterialRoot);
+            var path = VfxMaterialRoot + "/" + name + ".mat";
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            var shader = Shader.Find("Universal Render Pipeline/Particles/Unlit");
+            if (shader == null) shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null) throw new InvalidDataException("A URP unlit shader is required for POC VFX.");
+
+            if (material == null)
+            {
+                material = new Material(shader) { name = name };
+                AssetDatabase.CreateAsset(material, path);
+            }
+            else
+            {
+                material.shader = shader;
+            }
+
+            if (material.HasProperty("_BaseColor")) material.SetColor("_BaseColor", color);
+            if (material.HasProperty("_Color")) material.SetColor("_Color", color);
+            if (baseMap != null)
+            {
+                if (material.HasProperty("_BaseMap")) material.SetTexture("_BaseMap", baseMap);
+                if (material.HasProperty("_MainTex")) material.SetTexture("_MainTex", baseMap);
+            }
+
+            material.SetOverrideTag("RenderType", "Transparent");
+            material.SetFloat("_Surface", 1f);
+            material.SetFloat("_ZWrite", 0f);
+            material.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+            material.SetFloat("_DstBlend", additive ? (float)BlendMode.One : (float)BlendMode.OneMinusSrcAlpha);
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.renderQueue = (int)RenderQueue.Transparent;
+            EditorUtility.SetDirty(material);
+            AssetDatabase.SaveAssetIfDirty(material);
+            return material;
         }
 
         private static GameObject LoadRequiredModel(string path)

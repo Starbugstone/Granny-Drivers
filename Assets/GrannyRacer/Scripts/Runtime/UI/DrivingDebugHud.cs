@@ -28,15 +28,17 @@ namespace GrannyRacer.UI
         private void OnGUI()
         {
             if (walker == null) return;
-            GUI.Box(new Rect(16f, 16f, 430f, 190f), string.Empty);
+            GUI.Box(new Rect(16f, 16f, 430f, 220f), string.Empty);
             GUI.Label(new Rect(30f, 28f, 360f, 30f), $"Speed: {walker.Speed * 3.6f:0} km/h", style);
             GUI.Label(new Rect(30f, 56f, 360f, 30f), walker.IsGrounded ? "Grounded" : "AIRBORNE", style);
             GUI.Label(new Rect(30f, 84f, 380f, 30f), $"Slippers: {walker.HeatStage}  {walker.Heat * 100f:0}%", style);
             GUI.HorizontalScrollbar(new Rect(30f, 116f, 380f, 22f), 0f, walker.Heat, 0f, 1f);
 
+            DrawDriftState();
+
             if (race != null)
             {
-                GUI.Label(new Rect(30f, 144f, 390f, 30f),
+                GUI.Label(new Rect(30f, 174f, 390f, 30f),
                     $"Lap {race.CurrentLap}/{race.LapTarget}    Position {race.Position}/{race.RacerCount}", style);
                 if (race.IsWrongWay)
                 {
@@ -45,8 +47,42 @@ namespace GrannyRacer.UI
                 DrawRaceMessage();
             }
 
-            GUI.Label(new Rect(16f, Screen.height - 42f, 800f, 30f),
-                "WASD/arrows drive • Space boost/tap replacement • R reset • Esc pause", style);
+            GUI.Label(new Rect(16f, Screen.height - 42f, 950f, 30f),
+                "WASD/arrows drive • Space boost • Hold Left Shift + steer to hop-drift • R reset", style);
+        }
+
+        private void DrawDriftState()
+        {
+            var text = "Drift: —";
+            var tint = Color.white;
+            if (walker.IsDrifting)
+            {
+                var stage = walker.DriftStage;
+                tint = DriftColor(stage);
+                text = $"Drift {(walker.DriftDirection < 0 ? "left" : "right")}: "
+                    + $"{stage}  {walker.DriftCharge:0.0}s";
+            }
+            else if (walker.DriftBoostActive)
+            {
+                tint = DriftColor(walker.DriftBoostStage);
+                text = $"Drift boost: {walker.DriftBoostStage}";
+            }
+
+            var previous = style.normal.textColor;
+            style.normal.textColor = tint;
+            GUI.Label(new Rect(30f, 146f, 390f, 30f), text, style);
+            style.normal.textColor = previous;
+        }
+
+        private static Color DriftColor(DriftChargeStage stage)
+        {
+            switch (stage)
+            {
+                case DriftChargeStage.Red: return new Color(1f, 0.35f, 0.25f);
+                case DriftChargeStage.Yellow: return new Color(1f, 0.88f, 0.3f);
+                case DriftChargeStage.Blue: return new Color(0.45f, 0.7f, 1f);
+                default: return Color.white;
+            }
         }
 
         private void DrawRaceMessage()

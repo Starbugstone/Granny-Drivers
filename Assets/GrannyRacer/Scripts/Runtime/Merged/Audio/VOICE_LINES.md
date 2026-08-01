@@ -40,9 +40,9 @@
 - My hip replacement has a better warranty than you.
 - Right. You are off the Christmas card list.
 
-The bundled WAV files were rendered locally with the open-source Piper neural TTS
-engine and its `en_GB-alba-medium` voice. The TTS engine is not a runtime dependency.
+The bundled audio uses the replacement MP3 voice set supplied by the project
+owner on 2026-08-01. File IDs and Unity GUIDs are unchanged from the original
+implementation, so existing gameplay and serialized references remain valid.
 
-Voice model attribution: `en_GB-alba-medium` by the Piper Voices project, trained
-from the University of Edinburgh Alba English Speech Dataset (CC BY 4.0):
-https://datashare.ed.ac.uk/handle/10283/3270
+The production voice and generation-service licence must be confirmed before a
+public release.

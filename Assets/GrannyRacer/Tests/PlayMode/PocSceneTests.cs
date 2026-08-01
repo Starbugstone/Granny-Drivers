@@ -60,6 +60,51 @@ namespace GrannyRacer.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator BoostHeatAndSkidEffectsAreWiredToRigSockets()
+        {
+            var racer = FindInActiveScene<ArcadeWalkerController>();
+            var vfx = racer.GetComponent<WalkerVfxPresentation>();
+            var particles = racer.GetComponentsInChildren<ParticleSystem>(true);
+            var trails = racer.GetComponentsInChildren<TrailRenderer>(true);
+
+            Assert.That(vfx, Is.Not.Null, "The racer needs state-driven boost, heat, and skid VFX.");
+            Assert.That(particles, Has.Length.EqualTo(8),
+                "Two boost flames, two rocket smoke emitters, two slipper heat smoke emitters, "
+                + "and two drift plumes are required.");
+            Assert.That(trails, Has.Length.EqualTo(2), "Each slipper needs its own skid-mark trail.");
+            yield return null;
+
+            for (var i = 0; i < particles.Length; i++)
+            {
+                Assert.That(Vector3.Distance(particles[i].transform.position, racer.transform.position),
+                    Is.LessThan(3f), $"{particles[i].name} must stay attached to the racer rig.");
+
+                // Guards the fault that made the first VFX pass invisible: emitters parented to
+                // the rig's 100x bones were scaled down to compensate, but a Local-scaled
+                // particle system ignores its parents, so everything rendered millimetre-sized.
+                var main = particles[i].main;
+                Assert.That(main.scalingMode, Is.EqualTo(ParticleSystemScalingMode.Local),
+                    $"{particles[i].name} must use Local particle scaling.");
+                Assert.That(particles[i].transform.localScale.x, Is.EqualTo(1f).Within(0.001f),
+                    $"{particles[i].name} scale {particles[i].transform.localScale.x} shrinks its "
+                    + "particles below visibility.");
+                Assert.That(main.startSize.constant, Is.GreaterThan(0.05f),
+                    $"{particles[i].name} start size {main.startSize.constant} m is too small to see.");
+                Assert.That(particles[i].GetComponent<ParticleSystemRenderer>().sharedMaterial,
+                    Is.Not.Null, $"{particles[i].name} has no material and would not render.");
+            }
+            for (var i = 0; i < trails.Length; i++)
+            {
+                Assert.That(Vector3.Distance(trails[i].transform.position, racer.transform.position),
+                    Is.LessThan(3f), $"{trails[i].name} must track a slipper's ground contact.");
+                Assert.That(trails[i].time, Is.EqualTo(4f).Within(0.01f),
+                    $"{trails[i].name} must linger for four seconds.");
+                Assert.That(trails[i].sharedMaterial, Is.Not.Null,
+                    $"{trails[i].name} has no material and would not render.");
+            }
+        }
+
+        [UnityTest]
         public IEnumerator AnimatedModelRemainsAtMetreScale()
         {
             var racer = FindInActiveScene<ArcadeWalkerController>();
@@ -69,11 +114,17 @@ namespace GrannyRacer.Tests.PlayMode
             yield return null;
             yield return null;
 
-            var renderers = racer.GetComponentsInChildren<Renderer>(true);
+            var allRenderers = racer.GetComponentsInChildren<Renderer>(true);
+            var renderers = new System.Collections.Generic.List<Renderer>();
+            for (var i = 0; i < allRenderers.Length; i++)
+            {
+                if (allRenderers[i] is ParticleSystemRenderer || allRenderers[i] is TrailRenderer) continue;
+                renderers.Add(allRenderers[i]);
+            }
             Assert.That(renderers, Is.Not.Empty);
             var bounds = renderers[0].bounds;
             var details = new StringBuilder();
-            for (var i = 0; i < renderers.Length; i++)
+            for (var i = 0; i < renderers.Count; i++)
             {
                 if (i > 0) bounds.Encapsulate(renderers[i].bounds);
                 details.Append(renderers[i].name)

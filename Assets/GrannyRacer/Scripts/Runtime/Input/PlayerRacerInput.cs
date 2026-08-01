@@ -10,6 +10,7 @@ namespace GrannyRacer.Input
         private InputAction brake;
         private InputAction steer;
         private InputAction boost;
+        private InputAction jump;
         private InputAction reset;
         private InputAction pause;
         private InputAction leftAttack;
@@ -23,6 +24,8 @@ namespace GrannyRacer.Input
                 steer.ReadValue<float>(),
                 boost.IsPressed(),
                 boost.WasPressedThisFrame(),
+                jump.WasPressedThisFrame(),
+                jump.IsPressed(),
                 reset.WasPressedThisFrame(),
                 pause.WasPressedThisFrame(),
                 leftAttack.WasPressedThisFrame(),
@@ -52,6 +55,7 @@ namespace GrannyRacer.Input
             steer.AddBinding("<Gamepad>/leftStick/x");
 
             boost = CreateButton("Boost", "<Keyboard>/space", "<Gamepad>/buttonSouth");
+            jump = CreateButton("Jump", "<Keyboard>/leftShift", "<Gamepad>/rightShoulder");
             reset = CreateButton("Reset", "<Keyboard>/r", "<Gamepad>/buttonNorth");
             pause = CreateButton("Pause", "<Keyboard>/escape", "<Gamepad>/start");
             leftAttack = CreateButton("Left Attack (Reserved)", "<Keyboard>/q", "<Gamepad>/buttonWest");

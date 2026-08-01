@@ -1,0 +1,27 @@
+| Category | File ID | Phrase |
+| --- | --- | --- |
+| Input | `input_01` | “Yes, yes, I heard you. I am old, not buffering.” |
+| Input | `input_02` | “Stop mashing buttons. You will wake my arthritis.” |
+| Input | `input_03` | “One button at a time, dear. This is not a piano.” |
+| Input | `input_04` | “I am moving! These knees run on dial-up.” |
+| Input | `input_05` | “Keep your bloomers on. I heard you the first time.” |
+| Collision | `collision_01` | “Oi! That is coming out of your inheritance.” |
+| Collision | `collision_02` | “Mind the paintwork! And my hip.” |
+| Collision | `collision_03` | “I have had softer landings in church pews.” |
+| Collision | `collision_04` | “Who put that there? Probably a youngster.” |
+| Collision | `collision_05` | “That dent was vintage!” |
+| Item pickup | `pickup_01` | “Ooh, loot. Into the handbag it goes.” |
+| Item pickup | `pickup_02` | “Finders keepers. Granny’s rules.” |
+| Item pickup | `pickup_03` | “Useful! Unlike half my grandchildren.” |
+| Item pickup | `pickup_04` | “I will keep this. You would only lose it.” |
+| Item pickup | `pickup_05` | “Pop that in the handbag, beside the emergency biscuits.” |
+| Attack given | `attack_given_01` | “Have a taste of pensioner power!” |
+| Attack given | `attack_given_02` | “Respect your elders. Preferably from the floor.” |
+| Attack given | `attack_given_03` | “That is for calling me slow!” |
+| Attack given | `attack_given_04` | “Handbag delivery. Express service!” |
+| Attack given | `attack_given_05` | “My bingo arm still works!” |
+| Attack received | `attack_received_01` | “Ow! I have had vaccinations gentler than that.” |
+| Attack received | `attack_received_02` | “You hit a grandmother? No birthday money for you.” |
+| Attack received | `attack_received_03` | “Cheeky little menace! Come here!” |
+| Attack received | `attack_received_04` | “My hip replacement has a better warranty than you.” |
+| Attack received | `attack_received_05` | “Right. You are off the Christmas card list.” |

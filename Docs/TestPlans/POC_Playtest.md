@@ -27,10 +27,11 @@ heat, and waypoint tuning assets in `Assets/GrannyRacer/Settings/`.
 - S / Down: brake and reverse
 - A/D or Left/Right: steer
 - Space: boost; tap repeatedly during burnout to shorten slipper replacement
+- Left Shift: small jump; hop while steering at speed and hold to drift, release to boost
 - R: reset to the latest valid checkpoint
 - Escape: pause
 - Controller: right trigger accelerate, left trigger brake/reverse, left stick steer,
-  A boost, Y reset, Menu pause
+  A boost, right shoulder jump, Y reset, Menu pause
 
 Q/E and controller X/B are reserved for deferred combat and intentionally do nothing.
 
@@ -47,10 +48,22 @@ Q/E and controller X/B are reserved for deferred combat and intentionally do not
 9. Confirm the slippers disappear during burnout and a new variant appears after replacement.
 10. Confirm idle, drive, steering, boost, and collision reactions select the expected animation.
 11. Trigger repeated boosts and collisions; judge voice clarity, repetition, mix, and fatigue.
-12. Try skipping checkpoints; lap progress must not advance.
-13. Complete three laps, verify the finish time, and restart without relaunching.
-14. Reverse around the course long enough to confirm the warning is sustained rather than noisy.
-15. Record promising values from `WalkerHandling_POC` and `SlipperHeat_POC` before further scope.
+12. Boost and confirm both rockets emit flame and smoke; cross the warning heat threshold and
+    confirm smoke begins at both slippers.
+13. Jump from flat road and judge the height, landing stability, and Granny's tucked pose.
+14. Brake while steering above skid speed; confirm the braced pose and two road marks start and stop cleanly.
+15. Hop with Left Shift while steering at speed, hold it, and confirm the walker commits to a
+    drift on that side and that counter-steering opens the line without flipping it.
+16. Hold a drift through all three tiers; confirm the slipper smoke turns red, then yellow,
+    then blue, and that the debug HUD tier agrees with the smoke.
+17. Release at each tier in turn and judge whether the boost is felt and whether the three
+    strengths are distinguishable. Record whether the ~1 s hop hang time makes entry sluggish.
+18. Watch the skid marks: they must lie flat on the road, start and stop with the drift, and
+    fade out about 4 seconds later. Reset mid-drift and confirm no mark is dragged across the map.
+19. Try skipping checkpoints; lap progress must not advance.
+20. Complete three laps, verify the finish time, and restart without relaunching.
+21. Reverse around the course long enough to confirm the warning is sustained rather than noisy.
+22. Record promising values from `WalkerHandling_POC` and `SlipperHeat_POC` before further scope.
 
 Answer the playbook questions explicitly: did the walker feel promising within one minute,
 was boost/heat understandable, was burnout funny or annoying, did reset feel fair, and did

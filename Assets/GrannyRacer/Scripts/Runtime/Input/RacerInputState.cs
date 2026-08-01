@@ -8,6 +8,8 @@ namespace GrannyRacer.Input
             float steer,
             bool boost,
             bool boostPressed,
+            bool jumpPressed,
+            bool jumpHeld,
             bool reset,
             bool pause,
             bool leftAttack,
@@ -18,6 +20,8 @@ namespace GrannyRacer.Input
             Steer = steer;
             Boost = boost;
             BoostPressed = boostPressed;
+            JumpPressed = jumpPressed;
+            JumpHeld = jumpHeld;
             Reset = reset;
             Pause = pause;
             LeftAttack = leftAttack;
@@ -29,6 +33,10 @@ namespace GrannyRacer.Input
         public float Steer { get; }
         public bool Boost { get; }
         public bool BoostPressed { get; }
+        public bool JumpPressed { get; }
+
+        /// <summary>Jump held down. The hop starts a drift; holding keeps it charging.</summary>
+        public bool JumpHeld { get; }
         public bool Reset { get; }
         public bool Pause { get; }
         public bool LeftAttack { get; }

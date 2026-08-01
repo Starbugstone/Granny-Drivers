@@ -254,6 +254,87 @@ audio fatigue require human review in the POC playtest.
 
 ---
 
+## D-12 — POC admits jump, skid, and state-driven propulsion/footwear VFX
+
+**Date:** 2026-08-01
+**Status:** Accepted — user explicitly requested the feature set
+**Supersedes:** the remaining VFX/animation deferral in [D-03](#d-03--poc-scope-milestones-0-1-2-3-5), only for the items listed here
+
+The single-racer POC includes a small grounded jump, an automatic brake-and-steer skid,
+rocket flame/smoke during boost, slipper smoke from the warning heat stage onward, and
+temporary road marks from both slippers while skidding. Jump uses Left Shift / controller
+right shoulder so the existing Space / controller A boost mapping remains unchanged.
+
+Jump and skid use code-driven additive poses over the existing rig as placeholders. No new
+hero animation FBX is approved by this decision. VFX use generated URP materials and particle
+systems wired by `PocSceneBuilder`; no new package is required. Final timing, clarity,
+appearance, humour, and feel require the human POC playtest.
+
+---
+
+## D-13 — POC adds a charged hop-drift with a tiered exit boost
+
+**Date:** 2026-08-01
+**Status:** Accepted — user explicitly requested the feature set
+**Extends:** [D-12](#d-12--poc-admits-jump-skid-and-state-driven-propulsionfootwear-vfx)
+
+The hop is now also a drift entry, in the Mario Kart idiom. Hopping (Left Shift / right
+shoulder) while steering above `driftMinimumSpeed` commits the walker to a drift in the
+steered direction; holding the button keeps it alive, releasing it ends it. Charge is banked
+only while grounded, faster when steering into the drift than when counter-steering, and
+passes through three tiers — **red, then yellow, then blue** — each releasing a larger exit
+boost. Colours follow the user's brief, not Mario Kart's blue/orange/purple.
+
+The brake-and-steer skid from D-12 is kept as a separate, uncharged slide. Both raise
+`IsSkidding`, so one set of marks, smoke, and braced poses serves both.
+
+The drift rules live in `DriftModel`, a plain C# class with no `MonoBehaviour` dependency,
+tuned by a `DriftTuning` struct built from `WalkerHandlingSettings`. This keeps the tier
+timings and boost payouts EditMode-testable, per the same rule that governs slipper heat.
+
+Consequences accepted:
+
+- `RacerInputState` gains `JumpHeld`. The hop cannot be a drift without a held state.
+- The exit boost temporarily raises the speed cap to `boostMaximumSpeed` and suspends
+  rolling resistance; otherwise the normal cap claws the reward straight back.
+- Tier timings, boost strengths, and whether the ~1 s hop hang time makes drift entry feel
+  sluggish are tuning questions for the human playtest, not settled by this decision.
+
+---
+
+## D-14 — Walker VFX are aimed and scaled in world space, not in rig space
+
+**Date:** 2026-08-01
+**Status:** Accepted
+**Amends:** the VFX wiring in [D-12](#d-12--poc-admits-jump-skid-and-state-driven-propulsionfootwear-vfx)
+
+The first VFX pass was wired correctly but invisible in play. Emitters parented to the
+Granny rig were given `localScale = 0.01` to cancel the rig's 100x bone scale, but a Unity
+particle system defaults to **Local** scaling mode, which reads only its own transform and
+ignores its parents. The compensation therefore applied without anything to compensate for:
+a 0.13 m flame rendered at 1.3 mm, travelling at 4.8 cm/s.
+
+The rule adopted here: **never scale a particle emitter to compensate for a parent bone.**
+Emitters keep `localScale = 1` with an explicit `ParticleSystemScalingMode.Local`, so every
+size and speed in `PocSceneBuilder` is a literal metre value.
+
+Two related fixes follow from the same cause — presentation attached to an animated rig
+cannot trust the rig's axes:
+
+- Emitters are aimed in world space every frame (rockets backward, smoke up) instead of
+  firing down a bone axis, and smoke uses negative gravity to rise. A cone aimed down a
+  socket's local Z sprayed into the road on some animation frames.
+- Skid marks are parented to the racer root and projected onto the ground under each
+  slipper by a ray cast, rather than parented to a foot. A trail on a foot draws in mid-air
+  as the leg lifts, and its `TransformZ` alignment turned the ribbon edge-on to the camera.
+
+Marks last 4 seconds by the user's brief. A generated soft radial sprite is assigned to all
+VFX materials; untextured URP particles render as hard white squares.
+
+Whether the effects now read clearly at speed is a human playtest question.
+
+---
+
 ## Outstanding decisions
 
 Not yet decided. Listed so they are not forgotten.

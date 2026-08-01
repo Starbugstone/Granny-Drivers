@@ -58,7 +58,7 @@ public interface IRacerInputSource
 }
 ```
 
-`RacerInputState` carries throttle, brake, steer, boost, reset, pause, and reserved attack
+`RacerInputState` carries throttle, brake, steer, boost, jump, reset, pause, and reserved attack
 inputs. `PlayerRacerInput` owns remappable Input System actions constructed once in `Awake`;
 sampling is allocation-free and supports keyboard/controller switching at runtime.
 
@@ -85,6 +85,10 @@ Playbook §12. A custom arcade controller on a `Rigidbody`, not Unity's `WheelCo
 - Lateral grip with configurable slide, plus yaw assistance.
 - Downforce for grounding.
 - Airborne handling when contact points lose the ground.
+- A small buffered grounded jump on Left Shift / controller right shoulder.
+- A tunable skid state when the player brakes and steers above the configured speed; lateral
+  grip is reduced during the skid without changing the Rigidbody/collider architecture.
+- A charged hop-drift sharing that skid state (see [Drift](#drift) below).
 
 **Threading of the update loop:** input is sampled in `Update`; all force application happens
 in `FixedUpdate`. Presentation reads state in `Update`/`LateUpdate` and never writes to the
@@ -122,6 +126,61 @@ shorten it slightly.
 
 State is exposed for presentation but presentation does not drive it. Playbook §20.4:
 gameplay-critical timing is code-driven, not animation-event-driven.
+
+Boost flame/smoke, slipper heat smoke, and skid-mark trails are driven directly from the
+controller's boost, heat-stage, grounded, and skid state. Jump and skid use small additive
+bone poses in `LateUpdate` over the imported locomotion clips; they are placeholder animation
+that requires human review, not new hero FBX authoring.
+
+---
+
+## Drift
+
+`DriftModel` is a plain C# class, tuned by a `DriftTuning` struct that
+`WalkerHandlingSettings` builds per physics step. Same rule as slipper heat: the timings and
+payouts are deterministic and unit-tested without a scene.
+
+The hop is the entry. `ArcadeWalkerController` calls `TryStart` on the frame the jump
+impulse is applied; it fails quietly below `driftMinimumSpeed` or `driftMinimumSteer`, so a
+straight hop stays a plain jump. The drift direction is fixed at that moment and cannot be
+flipped by later steering.
+
+While drifting:
+
+- Charge accrues **only while grounded** — air time keeps the drift alive but banks nothing.
+- Steering into the drift charges at `driftInsideChargeRate`, counter-steering at
+  `driftOutsideChargeRate`, giving the player a reason to work the line.
+- Steering is `WalkerHandlingMath.DriftSteer`, which blends a fixed bias toward the drift
+  direction with the player's input and clamps so the result never crosses zero.
+- Lateral grip is scaled by `driftGripScale`.
+
+Charge passes through **red, yellow, then blue** tiers. Releasing the button — or dropping
+below the minimum speed — ends the drift and pays the tier reached as a one-shot forward
+velocity change, plus a window during which the speed cap is raised to `boostMaximumSpeed`
+and rolling resistance is suspended. `ConsumeBoostImpulse` hands the impulse out exactly
+once so it cannot be re-applied every physics step.
+
+`IsSkidding` is true for a drift or a brake-slide, so marks, smoke, and the braced pose have
+one trigger. The braced pose uses the committed drift direction rather than live steering,
+so counter-steering does not flip Granny's hips.
+
+---
+
+## Walker VFX
+
+Effects hang off an imported rig whose bones carry a 100x scale and animated orientations.
+Two rules follow, and both exist because breaking them made the first pass invisible:
+
+1. **Emitters are never scaled to compensate for a parent bone.** They keep
+   `localScale = 1` with an explicit `ParticleSystemScalingMode.Local`, which ignores parent
+   scale, so sizes and speeds in `PocSceneBuilder` are literal metres.
+2. **Emitters are aimed in world space each frame**, not down a bone axis — rockets
+   backward, smoke upward with negative gravity.
+
+Skid marks are `TrailRenderer`s parented to the racer root and projected each frame onto the
+ground beneath each slipper by a ray cast that skips the walker's own colliders. They are
+aligned so the ribbon lies flat on the road, and linger 4 seconds. Drift smoke is tinted per
+charge tier at runtime via `main.startColor`.
 
 ---
 

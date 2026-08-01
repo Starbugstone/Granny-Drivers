@@ -85,5 +85,16 @@ namespace GrannyRacer.Tests.PlayMode
             Assert.That(state.Steer, Is.EqualTo(1f).Within(0.01f), $"Steer read {state.Steer}.");
             Assert.That(state.Throttle, Is.EqualTo(1f).Within(0.01f), $"Throttle read {state.Throttle}.");
         }
+
+        [UnityTest]
+        public IEnumerator LeftShiftProducesOneJumpPress()
+        {
+            yield return null;
+            Press(keyboard.leftShiftKey);
+            yield return null;
+
+            Assert.That(input.Sample().JumpPressed, Is.True,
+                "Left Shift must issue the jump action.");
+        }
     }
 }
