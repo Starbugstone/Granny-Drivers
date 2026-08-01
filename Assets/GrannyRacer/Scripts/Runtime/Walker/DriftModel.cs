@@ -22,6 +22,9 @@ namespace GrannyRacer.Walker
         public DriftTuning(
             float minimumSpeed,
             float minimumSteer,
+            float minimumAirTime,
+            float engageWindow,
+            float engageRamp,
             float insideChargeRate,
             float outsideChargeRate,
             float redSeconds,
@@ -34,6 +37,9 @@ namespace GrannyRacer.Walker
         {
             MinimumSpeed = minimumSpeed;
             MinimumSteer = minimumSteer;
+            MinimumAirTime = minimumAirTime;
+            EngageWindow = engageWindow;
+            EngageRamp = engageRamp;
             InsideChargeRate = insideChargeRate;
             OutsideChargeRate = outsideChargeRate;
             RedSeconds = redSeconds;
@@ -47,6 +53,20 @@ namespace GrannyRacer.Walker
 
         public float MinimumSpeed { get; }
         public float MinimumSteer { get; }
+
+        /// <summary>
+        /// How long the walker must be off the ground before the hop counts as a real hop.
+        /// The ground probe reaches further than the first few centimetres of the jump, so
+        /// without this a hop would read as "landed" one physics step after take-off.
+        /// </summary>
+        public float MinimumAirTime { get; }
+
+        /// <summary>Grace period after landing in which steering still engages the drift.</summary>
+        public float EngageWindow { get; }
+
+        /// <summary>Seconds the drift takes to blend from raw steering onto its own line.</summary>
+        public float EngageRamp { get; }
+
         public float InsideChargeRate { get; }
         public float OutsideChargeRate { get; }
         public float RedSeconds { get; }
@@ -59,20 +79,37 @@ namespace GrannyRacer.Walker
     }
 
     /// <summary>
-    /// Mario-Kart style charged drift. The hop commits the walker to a drift direction, holding
-    /// the jump button keeps it charging, and letting go cashes the charge in as a speed boost.
+    /// Mario-Kart style charged drift, in three phases.
+    ///
+    /// The hop only <em>arms</em> the drift. Nothing slides, smokes or marks the road while
+    /// Granny is in the air — the drift engages on the landing, in whichever direction she is
+    /// steering when the slippers touch down, and a short grace window after touchdown lets a
+    /// player who steers slightly late still get it. Holding the button keeps it charging;
+    /// letting go cashes the charge in as a speed boost.
     /// </summary>
     public sealed class DriftModel
     {
         private float pendingBoostSpeed;
+        private float airborneSeconds;
+        private float engageRemaining;
+        private bool landedFromHop;
+
+        /// <summary>The hop is in the air or waiting out its landing window. Not yet a drift.</summary>
+        public bool IsArmed { get; private set; }
 
         public bool IsDrifting { get; private set; }
 
-        /// <summary>-1 when drifting left, +1 when drifting right. Fixed at the hop.</summary>
+        /// <summary>-1 when drifting left, +1 when drifting right. Fixed at the landing.</summary>
         public int Direction { get; private set; }
 
         /// <summary>Charge in seconds. Steering into the drift banks it faster than steering out.</summary>
         public float Charge { get; private set; }
+
+        /// <summary>
+        /// 0 on the frame the drift engages, 1 once it holds its own line. The controller
+        /// blends steering with it so a landing does not snap the walker sideways.
+        /// </summary>
+        public float EngageWeight { get; private set; }
 
         public float BoostRemaining { get; private set; }
         public DriftChargeStage BoostStage { get; private set; }
@@ -93,26 +130,28 @@ namespace GrannyRacer.Walker
         }
 
         /// <summary>
-        /// Called on the hop. Fails quietly when the walker is too slow or is not steering,
-        /// so a plain jump stays a plain jump.
+        /// Called on the hop. Arms the drift without committing to a direction; the direction is
+        /// read at the landing. Fails quietly below the minimum speed, so a slow hop stays a
+        /// plain hop.
         /// </summary>
-        public bool TryStart(in DriftTuning tuning, float speed, float steer)
+        public bool TryArm(in DriftTuning tuning, float speed)
         {
-            if (IsDrifting || speed < tuning.MinimumSpeed || Abs(steer) < tuning.MinimumSteer)
+            if (IsDrifting || IsArmed || speed < tuning.MinimumSpeed)
             {
                 return false;
             }
 
-            IsDrifting = true;
-            Direction = steer < 0f ? -1 : 1;
-            Charge = 0f;
+            IsArmed = true;
+            airborneSeconds = 0f;
+            engageRemaining = 0f;
+            landedFromHop = false;
             return true;
         }
 
         /// <summary>
-        /// Advances the drift and the exit boost. Returns whether the walker is still drifting.
-        /// Airborne time keeps the drift alive but does not bank charge — only slipper on
-        /// tarmac counts.
+        /// Advances the armed hop, the drift and the exit boost. Returns whether the walker is
+        /// drifting. Airborne time keeps an engaged drift alive but does not bank charge — only
+        /// slipper on tarmac counts.
         /// </summary>
         public bool Tick(in DriftTuning tuning, float deltaTime, bool held, bool grounded,
             float speed, float steer)
@@ -129,6 +168,11 @@ namespace GrannyRacer.Walker
                 }
             }
 
+            if (IsArmed)
+            {
+                TickArmed(tuning, deltaTime, held, grounded, speed, steer);
+            }
+
             if (!IsDrifting) return false;
 
             if (!held || speed < tuning.MinimumSpeed)
@@ -136,6 +180,10 @@ namespace GrannyRacer.Walker
                 End(tuning);
                 return false;
             }
+
+            EngageWeight = tuning.EngageRamp > 0f
+                ? Min(1f, EngageWeight + deltaTime / tuning.EngageRamp)
+                : 1f;
 
             if (!grounded) return true;
 
@@ -147,6 +195,59 @@ namespace GrannyRacer.Walker
             return true;
         }
 
+        /// <summary>
+        /// Runs the armed hop. Nothing here starts a slide: it waits for real air time, then for
+        /// the touchdown, and only then reads the stick to pick a drift direction.
+        /// </summary>
+        private void TickArmed(in DriftTuning tuning, float deltaTime, bool held, bool grounded,
+            float speed, float steer)
+        {
+            if (!held || speed < tuning.MinimumSpeed)
+            {
+                IsArmed = false;
+                return;
+            }
+
+            if (!grounded)
+            {
+                airborneSeconds += deltaTime;
+                if (airborneSeconds >= tuning.MinimumAirTime)
+                {
+                    landedFromHop = false;
+                    engageRemaining = tuning.EngageWindow;
+                }
+
+                return;
+            }
+
+            // Contact before the minimum air time is the tail of the take-off, not a landing:
+            // the ground probe still reports the road for the first few centimetres of the hop.
+            if (airborneSeconds < tuning.MinimumAirTime)
+            {
+                airborneSeconds = 0f;
+                return;
+            }
+
+            landedFromHop = true;
+            if (Abs(steer) >= tuning.MinimumSteer)
+            {
+                Engage(steer);
+                return;
+            }
+
+            engageRemaining -= deltaTime;
+            if (engageRemaining <= 0f) IsArmed = false;
+        }
+
+        private void Engage(float steer)
+        {
+            IsArmed = false;
+            IsDrifting = true;
+            Direction = steer < 0f ? -1 : 1;
+            Charge = 0f;
+            EngageWeight = 0f;
+        }
+
         /// <summary>Ends the drift and arms the exit boost for the tier that was reached.</summary>
         public void End(in DriftTuning tuning)
         {
@@ -155,6 +256,7 @@ namespace GrannyRacer.Walker
             var stage = StageFor(Charge, tuning.RedSeconds, tuning.YellowSeconds, tuning.BlueSeconds);
             IsDrifting = false;
             Charge = 0f;
+            EngageWeight = 0f;
 
             if (stage == DriftChargeStage.None) return;
 
@@ -181,17 +283,30 @@ namespace GrannyRacer.Walker
 
         public void Reset()
         {
+            IsArmed = false;
             IsDrifting = false;
             Direction = 0;
             Charge = 0f;
+            EngageWeight = 0f;
             BoostRemaining = 0f;
             BoostStage = DriftChargeStage.None;
             pendingBoostSpeed = 0f;
+            airborneSeconds = 0f;
+            engageRemaining = 0f;
+            landedFromHop = false;
         }
+
+        /// <summary>True once an armed hop has touched down and is waiting on the stick.</summary>
+        public bool IsWaitingToEngage => IsArmed && landedFromHop;
 
         private static float Abs(float value)
         {
             return value < 0f ? -value : value;
+        }
+
+        private static float Min(float a, float b)
+        {
+            return a < b ? a : b;
         }
     }
 }

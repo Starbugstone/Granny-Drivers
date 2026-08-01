@@ -41,6 +41,9 @@ namespace GrannyRacer.Walker
             : heat.GetStage(heatSettings.warningThreshold, heatSettings.criticalThreshold);
 
         public bool IsDrifting => drift.IsDrifting;
+
+        /// <summary>The hop is in the air, or has just landed and is waiting on the stick.</summary>
+        public bool IsDriftArmed => drift.IsArmed;
         public int DriftDirection => drift.Direction;
         public float DriftCharge => drift.Charge;
         public DriftChargeStage DriftStage => handling == null
@@ -141,9 +144,10 @@ namespace GrannyRacer.Walker
                 jumpRequestRemaining = 0f;
                 jumpPresentationRemaining = 0.12f;
                 grounded = false;
-                // The hop is the drift entry. Hopping while steering at speed commits the
-                // walker to a drift; hopping straight stays an ordinary jump.
-                drift.TryStart(handling.CreateDriftTuning(), Mathf.Abs(forwardSpeed), input.Steer);
+                // The hop only arms the drift. Which way she drifts — or whether she drifts at
+                // all — is decided when the slippers touch back down, so the whole hop reads as
+                // a hop and the slide starts on the landing.
+                drift.TryArm(handling.CreateDriftTuning(), Mathf.Abs(forwardSpeed));
             }
 
             TickDrift(Mathf.Abs(forwardSpeed));
@@ -206,10 +210,20 @@ namespace GrannyRacer.Walker
             var steeringScale = WalkerHandlingMath.SteeringScale(Mathf.Abs(forwardSpeed),
                 handling.steeringFalloffSpeed, handling.topSpeedSteeringScale);
             var direction = forwardSpeed < -0.2f ? -1f : 1f;
-            var steer = drift.IsDrifting
-                ? WalkerHandlingMath.DriftSteer(drift.Direction, input.Steer,
-                    handling.driftSteerBias, handling.driftSteerControl)
-                : input.Steer;
+            var steer = input.Steer;
+            if (drift.IsDrifting)
+            {
+                // Blended in over the engage ramp rather than swapped in on the landing frame:
+                // a player who turned in gently would otherwise be snapped to the drift's full
+                // bias in a single physics step.
+                var driftSteer = WalkerHandlingMath.DriftSteer(drift.Direction, input.Steer,
+                    handling.driftSteerBias, handling.driftInwardSteerControl,
+                    handling.driftCounterSteerControl, handling.driftMinimumHold);
+                steer = Mathf.Lerp(input.Steer, driftSteer, drift.EngageWeight);
+                // A drifted corner has to out-turn a gripped one or there is no reason to drift.
+                steeringScale *= Mathf.Lerp(1f, handling.driftSteeringScale, drift.EngageWeight);
+            }
+
             var yaw = canDrive
                 ? steer * direction * handling.steeringDegreesPerSecond * steeringScale * Time.fixedDeltaTime
                 : 0f;

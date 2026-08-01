@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GrannyRacer.Walker
 {
@@ -43,13 +44,43 @@ namespace GrannyRacer.Walker
         [Range(0.05f, 1f)] public float skidGripScale = 0.38f;
 
         [Header("Drift")]
-        [Tooltip("Hop with Jump above this speed while steering to commit to a charged drift.")]
+        [Tooltip("Hop with Jump above this speed to arm a drift. The drift itself engages on "
+            + "the landing, in whichever direction the player is steering then.")]
         [Min(0f)] public float driftMinimumSpeed = 5f;
         [Range(0f, 1f)] public float driftMinimumSteer = 0.3f;
+
+        [Tooltip("Air time the hop must clear before a ground contact counts as the landing. "
+            + "The ground probe outreaches the first centimetres of the hop, so without this "
+            + "the drift would engage a physics step after take-off.")]
+        [Min(0f)] public float driftMinimumAirTime = 0.08f;
+
+        [Tooltip("Grace period after landing in which steering still engages the drift, so a "
+            + "player who turns in slightly late is not punished.")]
+        [Min(0f)] public float driftEngageWindow = 0.6f;
+
+        [Tooltip("Seconds the drift takes to blend from raw steering onto its own line. Stops "
+            + "the landing from snapping the walker sideways.")]
+        [Min(0f)] public float driftEngageRamp = 0.15f;
+
         [Tooltip("Steering the drift applies on its own, before the player's input is added.")]
         [Range(0f, 1f)] public float driftSteerBias = 0.7f;
-        [Tooltip("How much the player can tighten or open the drift line.")]
-        [Range(0f, 1f)] public float driftSteerControl = 0.45f;
+
+        [Tooltip("Extra lock available by steering into the drift, on top of the bias.")]
+        [FormerlySerializedAs("driftSteerControl")]
+        [Range(0f, 1f)] public float driftInwardSteerControl = 0.38f;
+
+        [Tooltip("How much counter-steering opens the drift back out. Set high enough that a "
+            + "full counter runs nearly straight while still holding the drift.")]
+        [Range(0f, 1f)] public float driftCounterSteerControl = 0.62f;
+
+        [Tooltip("Lock a fully countered drift still holds. Never zero — a drift that resolves "
+            + "to neutral stops reading as a drift.")]
+        [Range(0f, 0.5f)] public float driftMinimumHold = 0.08f;
+
+        [Tooltip("Yaw rate multiplier while drifting. Above 1 so a drifted corner genuinely "
+            + "turns tighter than a gripped one.")]
+        [Range(0.5f, 2f)] public float driftSteeringScale = 1.25f;
+
         [Range(0.05f, 1f)] public float driftGripScale = 0.3f;
         [Tooltip("Charge multiplier while steering into the drift.")]
         [Min(0f)] public float driftInsideChargeRate = 1.35f;
@@ -73,7 +104,8 @@ namespace GrannyRacer.Walker
 
         public DriftTuning CreateDriftTuning()
         {
-            return new DriftTuning(driftMinimumSpeed, driftMinimumSteer, driftInsideChargeRate,
+            return new DriftTuning(driftMinimumSpeed, driftMinimumSteer, driftMinimumAirTime,
+                driftEngageWindow, driftEngageRamp, driftInsideChargeRate,
                 driftOutsideChargeRate, driftRedSeconds, driftYellowSeconds, driftBlueSeconds,
                 driftRedBoostSpeed, driftYellowBoostSpeed, driftBlueBoostSpeed, driftBoostDuration);
         }

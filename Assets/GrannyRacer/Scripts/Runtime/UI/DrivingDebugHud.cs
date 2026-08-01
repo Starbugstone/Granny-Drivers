@@ -48,14 +48,24 @@ namespace GrannyRacer.UI
             }
 
             GUI.Label(new Rect(16f, Screen.height - 42f, 950f, 30f),
-                "WASD/arrows drive • Space boost • Hold Left Shift + steer to hop-drift • R reset", style);
+                "WASD/arrows drive • Space boost • Hold Left Shift to hop, steer as you land to "
+                + "drift • R reset", style);
         }
 
         private void DrawDriftState()
         {
             var text = "Drift: —";
             var tint = Color.white;
-            if (walker.IsDrifting)
+            if (walker.IsDriftArmed)
+            {
+                // Worth showing separately: "armed" is the window between the hop and the drift,
+                // and when a hop-drift fails to catch, this is where it went wrong.
+                tint = new Color(0.75f, 0.75f, 0.78f);
+                text = walker.IsGrounded
+                    ? "Drift armed: steer to engage"
+                    : "Drift armed: landing…";
+            }
+            else if (walker.IsDrifting)
             {
                 var stage = walker.DriftStage;
                 tint = DriftColor(stage);

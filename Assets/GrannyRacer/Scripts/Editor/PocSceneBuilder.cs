@@ -30,6 +30,15 @@ namespace GrannyRacer.Editor
         private const string VfxMaterialRoot = "Assets/GrannyRacer/Settings/Generated";
         private static readonly Vector3 PocCameraOffset = new Vector3(0f, 2.4f, -4.2f);
 
+        /// <summary>Seconds a skid mark stays on the road before it has fully faded.</summary>
+        private const float SkidMarkFadeSeconds = 3f;
+
+        /// <summary>
+        /// Ribbons each slipper can draw with. Five is enough that a chain of quick drifts never
+        /// recycles a mark that is still visible, at the cost of ten mostly-idle TrailRenderers.
+        /// </summary>
+        private const int SkidRibbonsPerSlipper = 5;
+
         [MenuItem("Granny Racer/POC/Create Complete Single-Racer POC")]
         public static void CreateCompletePoc()
         {
@@ -178,16 +187,28 @@ namespace GrannyRacer.Editor
                 CreateParticles("Drift_Smoke_R", slipperRight, driftMaterial, 0.7f, 1.6f, 0.34f, 55f, -0.35f)
             };
 
-            // Parented to the racer root, not to a slipper: the marks are projected onto the
-            // road each frame, and a foot leaving the ground would otherwise draw in mid-air.
-            var marks = new[]
+            // Kept out of the racer's hierarchy entirely. A skid mark belongs to the road, and a
+            // TrailRenderer records points from its own movement whether or not it is emitting,
+            // so a ribbon parented to Granny draws her whole route around the track.
+            // WalkerVfxPresentation drives each one to its slipper's ground contact instead.
+            // Several ribbons per slipper, because one trail switched off and on again bridges
+            // the two skids with a straight streak — see SkidMarkPool.
+            var markRoot = new GameObject("Skid Marks").transform;
+            markRoot.position = root.transform.position;
+            var sockets = new[] { slipperLeft, slipperRight };
+            var sides = new[] { "L", "R" };
+            var marks = new TrailRenderer[sockets.Length * SkidRibbonsPerSlipper];
+            for (var socket = 0; socket < sockets.Length; socket++)
             {
-                CreateSkidMark("Skid_Mark_L", root.transform, skidMaterial),
-                CreateSkidMark("Skid_Mark_R", root.transform, skidMaterial)
-            };
+                for (var ribbon = 0; ribbon < SkidRibbonsPerSlipper; ribbon++)
+                {
+                    marks[socket * SkidRibbonsPerSlipper + ribbon] = CreateSkidMark(
+                        $"Skid_Mark_{sides[socket]}_{ribbon}", markRoot, skidMaterial);
+                }
+            }
 
             root.AddComponent<WalkerVfxPresentation>().Configure(controller, flames, rocketSmoke,
-                heatSmoke, driftSmoke, marks, new[] { slipperLeft, slipperRight });
+                heatSmoke, driftSmoke, marks, sockets, SkidRibbonsPerSlipper);
         }
 
         private static Transform RequireDescendant(Transform root, string childName)
@@ -265,8 +286,9 @@ namespace GrannyRacer.Editor
             effect.transform.SetParent(parent, false);
             effect.transform.localScale = Vector3.one;
             var trail = effect.AddComponent<TrailRenderer>();
-            // The brief: marks linger for four seconds, then go.
-            trail.time = 4f;
+            // The brief: marks fade out within three seconds so the track does not end the race
+            // covered in rubber.
+            trail.time = SkidMarkFadeSeconds;
             trail.startWidth = 0.14f;
             trail.endWidth = 0.1f;
             trail.minVertexDistance = 0.05f;
@@ -291,6 +313,9 @@ namespace GrannyRacer.Editor
             trail.shadowCastingMode = ShadowCastingMode.Off;
             trail.receiveShadows = false;
             trail.emitting = false;
+            // Asleep until a skid claims it. A disabled TrailRenderer is the only one guaranteed
+            // not to record points.
+            effect.SetActive(false);
             return trail;
         }
 

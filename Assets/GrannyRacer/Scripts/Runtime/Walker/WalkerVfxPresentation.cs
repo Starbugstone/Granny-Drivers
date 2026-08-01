@@ -19,12 +19,19 @@ namespace GrannyRacer.Walker
         [SerializeField] private ParticleSystem[] boostSmoke = Array.Empty<ParticleSystem>();
         [SerializeField] private ParticleSystem[] slipperSmoke = Array.Empty<ParticleSystem>();
         [SerializeField] private ParticleSystem[] driftSmoke = Array.Empty<ParticleSystem>();
+        [Tooltip("Skid ribbons, socket-major: the first skidRibbonsPerSocket entries belong to "
+            + "the first socket, and so on.")]
         [SerializeField] private TrailRenderer[] skidMarks = Array.Empty<TrailRenderer>();
 
-        [Tooltip("Slipper sockets the skid marks are projected beneath, index-matched to skidMarks.")]
+        [Tooltip("Slipper sockets the skid marks are projected beneath.")]
         [SerializeField] private Transform[] skidSockets = Array.Empty<Transform>();
 
         [Header("Skid marks")]
+        [Tooltip("Ribbons available to each slipper. Each unbroken skid takes one and holds it "
+            + "until the skid ends, so this is how many skids can be fading at once before the "
+            + "oldest is cut short.")]
+        [Min(1)] [SerializeField] private int skidRibbonsPerSocket = 5;
+
         [Min(0f)] [SerializeField] private float skidProbeHeight = 0.6f;
         [Min(0f)] [SerializeField] private float skidProbeDistance = 1.4f;
         [Min(0f)] [SerializeField] private float skidGroundOffset = 0.02f;
@@ -40,6 +47,9 @@ namespace GrannyRacer.Walker
 
         private readonly RaycastHit[] groundHits = new RaycastHit[8];
         private Rigidbody body;
+        private SkidMarkPool[] skidPools = Array.Empty<SkidMarkPool>();
+        private int ribbonsPerSocket = 1;
+        private float skidRecycleSeconds = 3.25f;
         private bool boostEffectsActive;
         private bool slipperSmokeActive;
         private bool driftSmokeActive;
@@ -53,7 +63,7 @@ namespace GrannyRacer.Walker
 
         public void Configure(ArcadeWalkerController walker, ParticleSystem[] flames,
             ParticleSystem[] rocketSmoke, ParticleSystem[] heatSmoke, ParticleSystem[] driftPlume,
-            TrailRenderer[] marks, Transform[] markSockets)
+            TrailRenderer[] marks, Transform[] markSockets, int marksPerSocket)
         {
             controller = walker;
             boostFlames = flames ?? Array.Empty<ParticleSystem>();
@@ -62,6 +72,7 @@ namespace GrannyRacer.Walker
             driftSmoke = driftPlume ?? Array.Empty<ParticleSystem>();
             skidMarks = marks ?? Array.Empty<TrailRenderer>();
             skidSockets = markSockets ?? Array.Empty<Transform>();
+            skidRibbonsPerSocket = Mathf.Max(1, marksPerSocket);
         }
 
         private void Awake()
@@ -72,7 +83,30 @@ namespace GrannyRacer.Walker
             SetParticles(boostSmoke, false);
             SetParticles(slipperSmoke, false);
             SetParticles(driftSmoke, false);
-            SetTrails(false, true);
+            SleepAllTrails();
+            BuildSkidPools();
+        }
+
+        private void BuildSkidPools()
+        {
+            ribbonsPerSocket = Mathf.Max(1, skidRibbonsPerSocket);
+            var socketCount = Mathf.Min(skidSockets.Length, skidMarks.Length / ribbonsPerSocket);
+            skidPools = socketCount < 1 ? Array.Empty<SkidMarkPool>() : new SkidMarkPool[socketCount];
+            for (var i = 0; i < skidPools.Length; i++)
+            {
+                skidPools[i] = new SkidMarkPool(ribbonsPerSocket);
+            }
+
+            for (var i = 0; i < skidMarks.Length; i++)
+            {
+                if (skidMarks[i] == null) continue;
+                // Taken from the ribbons themselves so there is only one place to tune the fade.
+                // The margin keeps the explicit clear behind the renderer's own fade, so it only
+                // ever catches a mark the renderer failed to age out.
+                skidRecycleSeconds = skidMarks[i].time + 0.25f;
+                break;
+            }
+
         }
 
         private void LateUpdate()
@@ -95,7 +129,11 @@ namespace GrannyRacer.Walker
                 SetParticles(slipperSmoke, heatSmoke);
             }
 
-            var drifting = controller.IsDrifting;
+            // Gated on contact as well as on the drift: the slippers only smoke when they are
+            // scrubbing tarmac, so a drift that hops a kerb stops smoking until it lands. This
+            // is also what keeps the hop that arms a drift completely clean — the drift itself
+            // does not exist until the landing.
+            var drifting = controller.IsDrifting && controller.IsGrounded;
             if (drifting != driftSmokeActive)
             {
                 driftSmokeActive = drifting;
@@ -140,38 +178,104 @@ namespace GrannyRacer.Walker
             if (driftSmokeActive) AimParticles(driftSmoke, Vector3.up);
         }
 
+        /// <summary>
+        /// Paints the current skid. Only the ribbon a slipper is actively drawing into is moved;
+        /// released ribbons are left exactly where they were, so their marks sit on the road and
+        /// fade out on the TrailRenderer's own clock rather than following Granny around.
+        /// </summary>
         private void UpdateSkidMarks()
         {
             var marking = controller.IsSkidding && controller.IsGrounded;
-            var count = Mathf.Min(skidMarks.Length, skidSockets.Length);
-            for (var i = 0; i < count; i++)
-            {
-                var trail = skidMarks[i];
-                var socket = skidSockets[i];
-                if (trail == null || socket == null) continue;
+            var now = Time.time;
+            var painting = false;
 
-                var origin = socket.position + Vector3.up * skidProbeHeight;
-                if (!TryFindGround(origin, skidProbeHeight + skidProbeDistance, out var hit))
+            for (var socketIndex = 0; socketIndex < skidPools.Length; socketIndex++)
+            {
+                var socket = skidSockets[socketIndex];
+                var pool = skidPools[socketIndex];
+
+                var expired = pool.TryRecycle(now, skidRecycleSeconds);
+                if (expired != SkidMarkPool.NoRibbon)
                 {
-                    trail.emitting = false;
+                    var stale = Ribbon(socketIndex, expired);
+                    if (stale != null) Retire(stale);
+                }
+
+                // No socket, no skid, or a slipper with nothing under it (mid-hop, off the edge
+                // of the road) all end the current ribbon rather than pausing it.
+                if (socket == null || !marking
+                    || !TryFindGround(socket.position + Vector3.up * skidProbeHeight,
+                        skidProbeHeight + skidProbeDistance, out var hit))
+                {
+                    StopRibbon(pool, socketIndex, now);
                     continue;
                 }
 
-                var point = hit.point + hit.normal * skidGroundOffset;
-                if ((point - trail.transform.position).sqrMagnitude
-                    > skidTeleportDistance * skidTeleportDistance)
-                {
-                    trail.Clear();
-                }
+                var ribbon = Ribbon(socketIndex, pool.Acquire(now, out var started));
+                if (ribbon == null) continue;
 
+                var point = hit.point + hit.normal * skidGroundOffset;
                 // TransformZ alignment lays the ribbon flat once the transform's forward is the
                 // ground normal, which keeps the mark on the road instead of edge-on.
-                trail.transform.SetPositionAndRotation(point,
-                    Quaternion.LookRotation(hit.normal, controller.transform.forward));
-                trail.emitting = marking;
+                var rotation = Quaternion.LookRotation(hit.normal, controller.transform.forward);
+
+                if (started)
+                {
+                    // Woken, emptied and teleported before it is allowed to record anything. A
+                    // recycled ribbon may still hold the tail of an older mark, and joining that
+                    // to the new skid would draw a straight line across the track.
+                    ribbon.gameObject.SetActive(true);
+                    ribbon.Clear();
+                    ribbon.transform.SetPositionAndRotation(point, rotation);
+                    ribbon.emitting = true;
+                }
+                else
+                {
+                    if ((point - ribbon.transform.position).sqrMagnitude
+                        > skidTeleportDistance * skidTeleportDistance)
+                    {
+                        // A respawn, not a skid.
+                        ribbon.Clear();
+                    }
+
+                    ribbon.transform.SetPositionAndRotation(point, rotation);
+                }
+
+                painting = true;
             }
 
-            skidMarksActive = marking;
+            skidMarksActive = painting;
+        }
+
+        private void StopRibbon(SkidMarkPool pool, int socketIndex, float now)
+        {
+            var released = pool.Release(now);
+            if (released == SkidMarkPool.NoRibbon) return;
+            var ribbon = Ribbon(socketIndex, released);
+            // Left active and where it is, so the mark it drew stays on the road and fades. It
+            // is not moving any more, so it records nothing further.
+            if (ribbon != null) ribbon.emitting = false;
+        }
+
+        /// <summary>
+        /// Puts a faded-out ribbon back to sleep.
+        ///
+        /// Deactivating it is not just tidiness. A TrailRenderer records points from its own
+        /// movement whether or not <c>emitting</c> is set, so an idle ribbon left awake and
+        /// carried around by the racer quietly draws her whole route. Only a disabled one is
+        /// guaranteed to record nothing.
+        /// </summary>
+        private static void Retire(TrailRenderer ribbon)
+        {
+            ribbon.emitting = false;
+            ribbon.Clear();
+            ribbon.gameObject.SetActive(false);
+        }
+
+        private TrailRenderer Ribbon(int socketIndex, int slot)
+        {
+            var index = socketIndex * ribbonsPerSocket + slot;
+            return index >= 0 && index < skidMarks.Length ? skidMarks[index] : null;
         }
 
         private bool TryFindGround(Vector3 origin, float distance, out RaycastHit hit)
@@ -256,6 +360,14 @@ namespace GrannyRacer.Walker
                 if (trail == null) continue;
                 trail.emitting = emitting;
                 if (clear) trail.Clear();
+            }
+        }
+
+        private void SleepAllTrails()
+        {
+            for (var i = 0; i < skidMarks.Length; i++)
+            {
+                if (skidMarks[i] != null) Retire(skidMarks[i]);
             }
         }
     }

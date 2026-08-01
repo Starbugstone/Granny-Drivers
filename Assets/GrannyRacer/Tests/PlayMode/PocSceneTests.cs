@@ -65,13 +65,19 @@ namespace GrannyRacer.Tests.PlayMode
             var racer = FindInActiveScene<ArcadeWalkerController>();
             var vfx = racer.GetComponent<WalkerVfxPresentation>();
             var particles = racer.GetComponentsInChildren<ParticleSystem>(true);
-            var trails = racer.GetComponentsInChildren<TrailRenderer>(true);
+            // Scene-wide: the skid ribbons deliberately sit outside the racer's hierarchy, or
+            // they would be dragged around the track recording Granny's route.
+            var trails = Object.FindObjectsByType<TrailRenderer>(FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
 
             Assert.That(vfx, Is.Not.Null, "The racer needs state-driven boost, heat, and skid VFX.");
             Assert.That(particles, Has.Length.EqualTo(8),
                 "Two boost flames, two rocket smoke emitters, two slipper heat smoke emitters, "
                 + "and two drift plumes are required.");
-            Assert.That(trails, Has.Length.EqualTo(2), "Each slipper needs its own skid-mark trail.");
+            Assert.That(trails, Has.Length.EqualTo(10),
+                "Each slipper needs a pool of skid ribbons — five each. One trail per slipper "
+                + "cannot work: switching the same trail off and on again joins two separate "
+                + "skids with a straight streak across the road.");
             yield return null;
 
             for (var i = 0; i < particles.Length; i++)
@@ -97,8 +103,19 @@ namespace GrannyRacer.Tests.PlayMode
             {
                 Assert.That(Vector3.Distance(trails[i].transform.position, racer.transform.position),
                     Is.LessThan(3f), $"{trails[i].name} must track a slipper's ground contact.");
-                Assert.That(trails[i].time, Is.EqualTo(4f).Within(0.01f),
-                    $"{trails[i].name} must linger for four seconds.");
+                Assert.That(trails[i].time, Is.EqualTo(3f).Within(0.01f),
+                    $"{trails[i].name} must fade away within three seconds so the track does "
+                    + "not end the race covered in rubber.");
+                Assert.That(trails[i].emitting, Is.False,
+                    $"{trails[i].name} must start idle; a ribbon left emitting draws a mark "
+                    + "from the starting grid.");
+                Assert.That(trails[i].gameObject.activeSelf, Is.False,
+                    $"{trails[i].name} must start disabled. A TrailRenderer records points from "
+                    + "its own movement even with emitting off, so only a disabled ribbon is "
+                    + "guaranteed to leave the road clean until a skid claims it.");
+                Assert.That(trails[i].GetComponentInParent<ArcadeWalkerController>(), Is.Null,
+                    $"{trails[i].name} must not live under the racer, or it is carried around "
+                    + "the track drawing Granny's whole route.");
                 Assert.That(trails[i].sharedMaterial, Is.Not.Null,
                     $"{trails[i].name} has no material and would not render.");
             }

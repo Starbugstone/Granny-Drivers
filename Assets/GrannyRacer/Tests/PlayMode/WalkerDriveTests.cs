@@ -187,8 +187,12 @@ namespace GrannyRacer.Tests.PlayMode
             }
         }
 
+        /// <summary>
+        /// The hop is only the wind-up. Nothing about the drift — the slide, the smoke, the
+        /// marks — may exist until Granny is back on the road.
+        /// </summary>
         [UnityTest]
-        public IEnumerator HoppingWhileSteeringStartsAChargingDrift()
+        public IEnumerator TheHopArmsTheDriftAndTheLandingStartsIt()
         {
             yield return LoadPocScene();
 
@@ -199,18 +203,92 @@ namespace GrannyRacer.Tests.PlayMode
             yield return null;
             yield return new WaitForFixedUpdate();
 
-            Assert.That(racer.IsDrifting, Is.True,
-                "Hopping while steering at speed must commit the walker to a drift.");
-            Assert.That(racer.DriftDirection, Is.EqualTo(1), "Steering right must drift right.");
+            Assert.That(racer.IsDriftArmed, Is.True,
+                "Hopping at speed must arm a drift for the landing to collect.");
+            Assert.That(racer.IsDrifting, Is.False,
+                "The drift must not start under Granny while she is in the air.");
+            Assert.That(racer.IsSkidding, Is.False,
+                "Nothing may smoke or mark the road during the hop itself.");
 
-            // Long enough to land the hop and then bank the first tier on the ground.
-            yield return HoldOnRails(100, 8f);
+            // Long enough to land the hop and then bank a tier on the ground.
+            yield return HoldOnRails(120, 8f);
 
             Assert.That(racer.IsDrifting, Is.True,
-                "Holding Left Shift must keep the drift alive after landing.");
+                "Landing while steering and holding Left Shift must start the drift.");
+            Assert.That(racer.DriftDirection, Is.EqualTo(1),
+                "The direction is read at the landing; steering right must drift right.");
             Assert.That(racer.DriftStage, Is.Not.EqualTo(DriftChargeStage.None),
                 $"The drift charged for {racer.DriftCharge:0.00}s without reaching a tier.");
             Assert.That(racer.IsSkidding, Is.True, "A drift must read as a skid for presentation.");
+        }
+
+        /// <summary>
+        /// Skid marks are the mechanic's only trace on the road, so this checks the whole life
+        /// cycle: painted while drifting, stopped on release, and gone within the fade time
+        /// rather than left on the track for the rest of the race.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator DriftingPaintsSkidRibbonsThatFadeAwayAfterTheDrift()
+        {
+            yield return LoadPocScene();
+
+            // Scene-wide, not under the racer: skid marks deliberately live in the world so they
+            // stay on the road when Granny drives away.
+            var trails = Object.FindObjectsByType<TrailRenderer>(FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+            Assert.That(trails, Has.Length.EqualTo(10));
+            Assert.That(CountEmitting(trails), Is.EqualTo(0), "Nothing marks the road at rest.");
+
+            body.linearVelocity = racer.transform.forward * 8f;
+            Press(keyboard.wKey);
+            Press(keyboard.dKey);
+            yield return null;
+            Press(keyboard.leftShiftKey);
+            yield return null;
+
+            yield return HoldOnRails(120, 8f);
+            yield return null;
+
+            Assert.That(racer.IsDrifting, Is.True, "The drift must be running to paint marks.");
+            Assert.That(CountEmitting(trails), Is.EqualTo(2),
+                "Exactly one ribbon per slipper may be drawing at a time.");
+
+            var painted = 0;
+            for (var i = 0; i < trails.Length; i++) painted += trails[i].positionCount;
+            Assert.That(painted, Is.GreaterThan(0), "The drift left no marks on the road at all.");
+
+            // Everything up, so nothing can re-enter a skid while the fade is measured.
+            InputSystem.QueueStateEvent(keyboard, new KeyboardState());
+            InputSystem.Update();
+            yield return null;
+            yield return new WaitForFixedUpdate();
+            yield return null;
+
+            Assert.That(racer.IsDrifting, Is.False);
+            Assert.That(CountEmitting(trails), Is.EqualTo(0),
+                "Ending the drift must stop every ribbon.");
+
+            yield return new WaitForSeconds(4f);
+
+            var remaining = 0;
+            for (var i = 0; i < trails.Length; i++) remaining += trails[i].positionCount;
+
+            Assert.That(remaining, Is.EqualTo(0),
+                $"{remaining} skid points survived the three-second fade, so the track would "
+                + "silt up with rubber over a race. A TrailRenderer stops ageing its points "
+                + "while it is off-screen, which is why WalkerVfxPresentation retires spent "
+                + "ribbons itself instead of trusting the renderer.");
+        }
+
+        private static int CountEmitting(TrailRenderer[] trails)
+        {
+            var emitting = 0;
+            for (var i = 0; i < trails.Length; i++)
+            {
+                if (trails[i].emitting) emitting++;
+            }
+
+            return emitting;
         }
 
         [UnityTest]
@@ -225,7 +303,7 @@ namespace GrannyRacer.Tests.PlayMode
             Press(keyboard.leftShiftKey);
             yield return null;
 
-            yield return HoldOnRails(100, 8f);
+            yield return HoldOnRails(120, 8f);
 
             Assert.That(racer.DriftStage, Is.Not.EqualTo(DriftChargeStage.None),
                 "The drift must reach a tier before the release can be measured.");
