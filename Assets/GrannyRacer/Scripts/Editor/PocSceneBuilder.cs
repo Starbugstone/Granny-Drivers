@@ -65,6 +65,7 @@ namespace GrannyRacer.Editor
                 checkpointCount, track.Laps);
             CreateCamera(racer.transform);
             CreateHud(racer, race);
+            PocArtRefreshBuilder.Decorate(track);
 
             EditorSceneManager.SaveScene(scene, ScenePath);
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
@@ -682,6 +683,8 @@ namespace GrannyRacer.Editor
             var light = lightObject.AddComponent<Light>();
             light.type = LightType.Directional;
             light.intensity = 1.2f;
+            light.shadows = LightShadows.Soft;
+            light.shadowStrength = .75f;
         }
 
         private static void EnsureFolder(string path)

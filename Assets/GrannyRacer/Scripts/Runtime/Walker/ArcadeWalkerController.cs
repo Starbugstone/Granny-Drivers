@@ -31,6 +31,8 @@ namespace GrannyRacer.Walker
         private float raceStartSkidRemaining;
         private float raceStartSkidElapsed;
         private float pendingRaceStartImpulse;
+        private WalkerHandlingSettings originalHandling;
+        private float overturnedSeconds;
 
         public float Speed => body == null ? 0f : body.linearVelocity.magnitude;
         public bool IsGrounded => grounded;
@@ -87,6 +89,31 @@ namespace GrannyRacer.Walker
             canDrive = value;
         }
 
+        public void BeginSessionTuning()
+        {
+            if (originalHandling != null || handling == null) return;
+            originalHandling = handling;
+            handling = Instantiate(handling);
+            handling.name = "Session handling (not saved)";
+        }
+
+        public void RefreshHandling() => ResolveStats();
+
+        public void RestoreSessionTuning()
+        {
+            if (originalHandling == null) return;
+            var previous = handling;
+            handling = originalHandling;
+            originalHandling = null;
+            Destroy(previous);
+            ResolveStats();
+        }
+
+        private void OnDestroy()
+        {
+            if (originalHandling != null) Destroy(handling);
+        }
+
         public void ApplyRaceStart(RaceStartOutcome outcome)
         {
             raceStartBoostRemaining = 0f;
@@ -135,7 +162,7 @@ namespace GrannyRacer.Walker
             {
                 jumpPresentationRemaining -= Time.deltaTime;
             }
-            if (input.Reset)
+            if (canDrive && input.Reset)
             {
                 ResetToSpawn();
             }
@@ -169,6 +196,18 @@ namespace GrannyRacer.Walker
             if (handling == null)
             {
                 return;
+            }
+
+            if (canDrive)
+            {
+                overturnedSeconds = Vector3.Dot(transform.up, Vector3.up) < 0.15f
+                    ? overturnedSeconds + Time.fixedDeltaTime : 0f;
+                if (body.position.y < spawnPosition.y - handling.recoveryDropDistance
+                    || overturnedSeconds >= handling.overturnedRecoverySeconds)
+                {
+                    ResetToSpawn();
+                    return;
+                }
             }
 
             if (jumpRequestRemaining > 0f)
@@ -253,7 +292,7 @@ namespace GrannyRacer.Walker
                 body.AddForce(transform.forward * (driveInput * acceleration), ForceMode.Acceleration);
             }
 
-            if (input.Brake > 0f && forwardSpeed > 0.5f)
+            if (canDrive && input.Brake > 0f && forwardSpeed > 0.5f)
             {
                 body.AddForce(-transform.forward * (input.Brake * handling.braking), ForceMode.Acceleration);
             }
@@ -277,7 +316,7 @@ namespace GrannyRacer.Walker
             var steeringScale = WalkerHandlingMath.SteeringScale(Mathf.Abs(forwardSpeed),
                 handling.steeringFalloffSpeed, handling.topSpeedSteeringScale);
             var direction = forwardSpeed < -0.2f ? -1f : 1f;
-            var steer = input.Steer;
+            var steer = canDrive ? input.Steer : 0f;
             if (startSkidding)
             {
                 steer = Mathf.Clamp(input.Steer * 0.25f
@@ -339,6 +378,7 @@ namespace GrannyRacer.Walker
 
         public void ResetToSpawn()
         {
+            overturnedSeconds = 0f;
             body.position = spawnPosition;
             body.rotation = spawnRotation;
             body.linearVelocity = Vector3.zero;

@@ -46,6 +46,10 @@ namespace GrannyRacer.Walker
         [Min(0f)] public float uprightStrength = 18f;
         [Min(0f)] public float uprightDamping = 5f;
 
+        [Header("Recovery")]
+        [Min(2f)] public float recoveryDropDistance = 8f;
+        [Min(0.5f)] public float overturnedRecoverySeconds = 2f;
+
         [Header("Jump")]
         [Min(0f)] public float jumpVelocityChange = 5.2f;
         [Min(0f)] public float jumpInputBuffer = 0.12f;

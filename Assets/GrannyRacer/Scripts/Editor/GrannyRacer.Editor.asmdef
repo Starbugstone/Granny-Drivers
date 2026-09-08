@@ -2,7 +2,8 @@
     "name": "GrannyRacer.Editor",
     "rootNamespace": "GrannyRacer.Editor",
     "references": [
-        "GrannyRacer.Runtime"
+        "GrannyRacer.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [
         "Editor"

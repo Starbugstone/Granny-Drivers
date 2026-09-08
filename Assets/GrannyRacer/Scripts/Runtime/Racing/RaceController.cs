@@ -53,6 +53,7 @@ namespace GrannyRacer.Racing
         public float CountdownRemaining => countdownRemaining;
         public bool IsWrongWay { get; private set; }
         public float FinishTime { get; private set; }
+        public float ElapsedTime => raceElapsed;
         public bool IsInitialized { get; private set; }
         public RaceStartOutcome StartOutcome { get; private set; }
         public float StartFeedbackRemaining => startFeedbackRemaining;

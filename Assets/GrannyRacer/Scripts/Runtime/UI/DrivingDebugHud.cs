@@ -1,16 +1,25 @@
 using GrannyRacer.Walker;
 using GrannyRacer.Racing;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GrannyRacer.UI
 {
+    // A lightweight POC HUD. All text formatting and immediate GUI work stays in OnGUI.
     public sealed class DrivingDebugHud : MonoBehaviour
     {
         [SerializeField] private ArcadeWalkerController walker;
         [SerializeField] private RaceController race;
-        private GUIStyle style;
-        private GUIStyle lightLabelStyle;
-        private Texture2D lampTexture;
+        private GUIStyle heading;
+        private GUIStyle body;
+        private GUIStyle small;
+        private GUIStyle huge;
+        private GUIStyle button;
+        private bool showTuning;
+        private bool showControls;
+        private readonly Color ink = new Color(0.055f, 0.105f, 0.13f);
+        private readonly Color paper = new Color(0.97f, 0.92f, 0.79f);
+        private readonly Color teal = new Color(0.10f, 0.65f, 0.55f);
 
         public void Configure(ArcadeWalkerController controller, RaceController raceController)
         {
@@ -18,183 +27,151 @@ namespace GrannyRacer.UI
             race = raceController;
         }
 
-        private void Awake()
+        private void Update()
         {
-            style = new GUIStyle
-            {
-                fontSize = 22,
-                normal = { textColor = Color.white }
-            };
-            lightLabelStyle = new GUIStyle(style)
-            {
-                fontSize = 14,
-                alignment = TextAnchor.MiddleCenter
-            };
-            lampTexture = CreateLampTexture(48);
+            if (Keyboard.current != null && Keyboard.current.f1Key.wasPressedThisFrame)
+                showTuning = !showTuning;
         }
 
-        private void OnDestroy()
+        private void EnsureStyles()
         {
-            if (lampTexture != null) Destroy(lampTexture);
+            if (heading != null) return;
+            heading = new GUIStyle(GUI.skin.label) { fontSize = 25, fontStyle = FontStyle.Bold };
+            body = new GUIStyle(GUI.skin.label) { fontSize = 18, wordWrap = true };
+            small = new GUIStyle(body) { fontSize = 14 };
+            huge = new GUIStyle(heading) { fontSize = 54, alignment = TextAnchor.MiddleCenter };
+            button = new GUIStyle(GUI.skin.button) { fontSize = 18, fontStyle = FontStyle.Bold };
+            heading.normal.textColor = paper;
+            body.normal.textColor = paper;
+            small.normal.textColor = paper;
+            huge.normal.textColor = paper;
         }
 
         private void OnGUI()
         {
-            if (walker == null) return;
-            GUI.Box(new Rect(16f, 16f, 430f, 220f), string.Empty);
-            GUI.Label(new Rect(30f, 28f, 360f, 30f), $"Speed: {walker.Speed * 3.6f:0} km/h", style);
-            GUI.Label(new Rect(30f, 56f, 360f, 30f), walker.IsGrounded ? "Grounded" : "AIRBORNE", style);
-            GUI.Label(new Rect(30f, 84f, 380f, 30f), $"Slippers: {walker.HeatStage}  {walker.Heat * 100f:0}%", style);
-            GUI.HorizontalScrollbar(new Rect(30f, 116f, 380f, 22f), 0f, walker.Heat, 0f, 1f);
-
-            DrawDriftState();
-
-            if (race != null)
+            if (walker == null || race == null) return;
+            EnsureStyles();
+            var oldMatrix = GUI.matrix;
+            var scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
+            GUI.matrix = Matrix4x4.TRS(new Vector3((Screen.width - 1280f * scale) * 0.5f,
+                (Screen.height - 720f * scale) * 0.5f, 0f), Quaternion.identity, Vector3.one * scale);
+            Panel(new Rect(24, 24, 310, 84));
+            GUI.Label(new Rect(42, 32, 285, 32), "GRANNY RACER", heading);
+            GUI.Label(new Rect(42, 67, 285, 28), "QUIET SUNDAY / ROCKET CLUB", small);
+            Panel(new Rect(962, 24, 294, 84));
+            GUI.Label(new Rect(980, 32, 255, 32), $"LAP {race.CurrentLap} / {race.LapTarget}", heading);
+            GUI.Label(new Rect(980, 68, 180, 28), $"{race.ElapsedTime:0.0}s   •   SOLO RUN", small);
+            if (GUI.Button(new Rect(1167, 67, 74, 27), "Pause")) race.TogglePause();
+            DrawTelemetry();
+            if (race.IsWrongWay) Banner("WRONG WAY — TURN AROUND", new Color(.78f,.20f,.13f), 139);
+            if (race.State == RaceState.Countdown) DrawCountdown();
+            else if (race.State == RaceState.Racing && race.StartFeedbackRemaining > 0f)
             {
-                GUI.Label(new Rect(30f, 174f, 390f, 30f),
-                    $"Lap {race.CurrentLap}/{race.LapTarget}    Position {race.Position}/{race.RacerCount}", style);
-                if (race.IsWrongWay)
-                {
-                    GUI.Label(new Rect(Screen.width * 0.5f - 90f, 60f, 250f, 40f), "WRONG WAY", style);
-                }
-                DrawRaceMessage();
-                DrawTrafficLight();
+                var text = race.StartOutcome == RaceStartOutcome.Turbo ? "PERFECT TURBO!"
+                    : race.StartOutcome == RaceStartOutcome.Boost ? "BOOST START!"
+                    : race.StartOutcome == RaceStartOutcome.Skid ? "TOO EARLY! WHEELSPIN" : "GO!";
+                Banner(text, teal, 174);
             }
-
-            GUI.Label(new Rect(16f, Screen.height - 42f, 950f, 30f),
-                "WASD/arrows drive • Space boost • Hold Left Shift to hop, steer as you land to "
-                + "drift • R reset", style);
+            else if (race.State == RaceState.Paused || race.State == RaceState.Finished) DrawMenu();
+            if (showTuning && race.State != RaceState.Finished) DrawTuning();
+            GUI.matrix = oldMatrix;
         }
 
-        private void DrawDriftState()
+        private void DrawTelemetry()
         {
-            var text = "Drift: —";
-            var tint = Color.white;
-            if (walker.IsDriftArmed)
-            {
-                // Worth showing separately: "armed" is the window between the hop and the drift,
-                // and when a hop-drift fails to catch, this is where it went wrong.
-                tint = new Color(0.75f, 0.75f, 0.78f);
-                text = walker.IsGrounded
-                    ? "Drift armed: steer to engage"
-                    : "Drift armed: landing…";
-            }
-            else if (walker.IsDrifting)
-            {
-                var stage = walker.DriftStage;
-                tint = DriftColor(stage);
-                text = $"Drift {(walker.DriftDirection < 0 ? "left" : "right")}: "
-                    + $"{stage}  {walker.DriftCharge:0.0}s";
-            }
-            else if (walker.DriftBoostActive)
-            {
-                tint = DriftColor(walker.DriftBoostStage);
-                text = $"Drift boost: {walker.DriftBoostStage}";
-            }
-
-            var previous = style.normal.textColor;
-            style.normal.textColor = tint;
-            GUI.Label(new Rect(30f, 146f, 390f, 30f), text, style);
-            style.normal.textColor = previous;
+            Panel(new Rect(24, 549, 366, 147));
+            GUI.Label(new Rect(42, 556, 155, 36), $"{walker.Speed * 3.6f:0} km/h", heading);
+            GUI.Label(new Rect(213, 566, 165, 24), walker.IsGrounded ? "SLIPPERS DOWN" : "FEET UP!", small);
+            var burned = walker.HeatStage == SlipperHeatStage.BurnedOut;
+            GUI.Label(new Rect(42, 597, 326, 28), burned
+                ? $"NEW SLIPPERS IN {walker.ReplacementRemaining:0.0}s — tap boost"
+                : $"SLIPPER HEAT   {walker.Heat * 100f:0}%", small);
+            Fill(new Rect(42, 630, 326, 14), new Color(.22f,.26f,.26f));
+            Fill(new Rect(42, 630, 326 * walker.Heat, 14), burned ? Color.red : Color.Lerp(teal,new Color(1,.35f,.12f),walker.Heat));
+            var driftText = walker.IsDrifting ? $"DRIFT {walker.DriftStage} / HOLD TO CHARGE"
+                : walker.DriftBoostActive ? $"{walker.DriftBoostStage} DRIFT BOOST!"
+                : walker.IsDriftArmed ? "HOP — STEER INTO THE LANDING" : "HOP + HOLD TO DRIFT";
+            GUI.Label(new Rect(42, 656, 326, 28), driftText, small);
+            Panel(new Rect(411, 647, 845, 49));
+            GUI.Label(new Rect(430, 660, 810, 30), "WASD drive  •  Space boost  •  Shift hop/drift  •  R recover  •  Esc pause  •  F1 tune", small);
         }
 
-        private static Color DriftColor(DriftChargeStage stage)
+        private void DrawCountdown()
         {
-            switch (stage)
-            {
-                case DriftChargeStage.Red: return new Color(1f, 0.35f, 0.25f);
-                case DriftChargeStage.Yellow: return new Color(1f, 0.88f, 0.3f);
-                case DriftChargeStage.Blue: return new Color(0.45f, 0.7f, 1f);
-                default: return Color.white;
-            }
+            Panel(new Rect(463, 129, 354, 204));
+            GUI.Label(new Rect(480, 142, 320, 36), "THE TEA CAN WAIT", heading);
+            GUI.Label(new Rect(480, 175, 320, 90), Mathf.CeilToInt(race.CountdownRemaining).ToString(), huge);
+            var active = race.CountdownRemaining > 2f ? 0 : 1;
+            for (var i = 0; i < 3; i++)
+                Fill(new Rect(537 + i * 76, 276, 54, 18), i == active
+                    ? (i == 0 ? new Color(.96f,.28f,.15f) : new Color(1,.73f,.17f)) : new Color(.24f,.27f,.27f));
+            GUI.Label(new Rect(491, 303, 302, 24), "Time your first rev. Hold through GO.", small);
         }
 
-        private void DrawRaceMessage()
+        private void DrawMenu()
         {
-            var message = string.Empty;
-            switch (race.State)
+            var finished = race.State == RaceState.Finished;
+            Panel(new Rect(389, 126, 502, 494));
+            GUI.Label(new Rect(419, 148, 444, 40), finished ? "BACK BEFORE BINGO!" : "TEA BREAK", heading);
+            GUI.Label(new Rect(419, 191, 444, 36), finished
+                ? $"Three laps in {race.FinishTime:0.0} seconds." : "Paused. Your slippers can catch their breath.", body);
+            if (!finished && GUI.Button(new Rect(419, 239, 442, 42), "Resume  /  Esc or controller Menu", button)) race.TogglePause();
+            if (GUI.Button(new Rect(419, 291, 442, 42), "Race again", button)) race.RestartScene();
+            if (GUI.Button(new Rect(419, 343, 216, 36), "Controls", button)) showControls = !showControls;
+            if (GUI.Button(new Rect(645, 343, 216, 36), "Handling lab", button)) showTuning = !showTuning;
+            if (showControls)
+                GUI.Label(new Rect(419, 390, 442, 153), "Keyboard: WASD / arrows drive, Space boost, Shift hop and hold to drift, R recover.\nController: triggers drive/brake, stick steer, A boost, RB hop/drift, Y recover, Menu pause.\nCool slippers between boosts. Tap boost during burnout to replace them faster.", small);
+            else
             {
-                case RaceState.Countdown:
-                    message = Mathf.CeilToInt(race.CountdownRemaining).ToString();
-                    break;
-                case RaceState.Racing:
-                    if (race.StartFeedbackRemaining > 0f)
-                    {
-                        switch (race.StartOutcome)
-                        {
-                            case RaceStartOutcome.Skid: message = "WHEELSPIN!"; break;
-                            case RaceStartOutcome.Boost: message = "BOOST START!"; break;
-                            case RaceStartOutcome.Turbo: message = "PERFECT TURBO!"; break;
-                            default: message = "GO!"; break;
-                        }
-                    }
-                    break;
-                case RaceState.Finished:
-                    message = $"FINISHED in {race.FinishTime:0.0}s — Press Space or R to race again";
-                    break;
-                case RaceState.Paused:
-                    message = "PAUSED";
-                    break;
+                GUI.Label(new Rect(419, 402, 190, 28), "Master volume", body);
+                AudioListener.volume = GUI.HorizontalSlider(new Rect(614, 413, 237, 20), AudioListener.volume, 0f, 1f);
+                GUI.Label(new Rect(419, 454, 442, 70), "One granny. Three laps. Questionable engineering.\nCool your slippers between boosts and keep an eye on the heat.", small);
             }
-
-            if (message.Length > 0)
-            {
-                GUI.Label(new Rect(Screen.width * 0.5f - 220f, Screen.height * 0.25f, 520f, 50f), message, style);
-            }
+            if (GUI.Button(new Rect(419, 556, 442, 36), "Quit to desktop", button)) Application.Quit();
         }
 
-        private void DrawTrafficLight()
+        private void DrawTuning()
         {
-            var showingGo = race.State == RaceState.Racing && race.StartFeedbackRemaining > 0f;
-            if (race.State != RaceState.Countdown && !showingGo) return;
-
-            var x = Screen.width * 0.5f - 46f;
-            var y = 28f;
-            GUI.Box(new Rect(x, y, 92f, 196f), string.Empty);
-
-            var red = race.State == RaceState.Countdown && race.CountdownRemaining > 2f;
-            var amber = race.State == RaceState.Countdown && race.CountdownRemaining <= 2f;
-            DrawLamp(new Rect(x + 22f, y + 10f, 48f, 48f), Color.red, red, "WAIT");
-            DrawLamp(new Rect(x + 22f, y + 68f, 48f, 48f), new Color(1f, 0.72f, 0.05f), amber, "READY");
-            DrawLamp(new Rect(x + 22f, y + 126f, 48f, 48f), Color.green, showingGo, "GO");
+            walker.BeginSessionTuning();
+            var settings = walker.Handling;
+            Panel(new Rect(899, 127, 357, 490));
+            GUI.Label(new Rect(917, 141, 300, 35), "HANDLING LAB", heading);
+            GUI.Label(new Rect(917, 179, 320, 45), "Changes last for this run. Original tuning stays safe.", small);
+            GUI.changed = false;
+            settings.acceleration = Slider("Acceleration", settings.acceleration, 10, 40, 233);
+            settings.maximumSpeed = Slider("Top speed (m/s)", settings.maximumSpeed, 8, 22, 291);
+            settings.lateralGrip = Slider("Grip", settings.lateralGrip, 2, 12, 349);
+            settings.steeringDegreesPerSecond = Slider("Steering", settings.steeringDegreesPerSecond, 60, 180, 407);
+            if (GUI.changed) walker.RefreshHandling();
+            GUI.Label(new Rect(917, 471, 320, 55), $"Accel {settings.acceleration:0.0} / speed {settings.maximumSpeed:0.0}\nGrip {settings.lateralGrip:0.0} / steer {settings.steeringDegreesPerSecond:0}", small);
+            if (GUI.Button(new Rect(917, 539, 153, 37), "Restore defaults", button)) walker.RestoreSessionTuning();
+            if (GUI.Button(new Rect(1080, 539, 153, 37), "Close", button)) showTuning = false;
         }
 
-        private void DrawLamp(Rect rect, Color color, bool active, string label)
+        private float Slider(string label, float value, float min, float max, float y)
+        {
+            GUI.Label(new Rect(917, y, 305, 26), $"{label}   {value:0.0}", body);
+            return GUI.HorizontalSlider(new Rect(919, y + 31, 310, 20), value, min, max);
+        }
+
+        private void Banner(string text, Color color, float y)
+        {
+            Fill(new Rect(390, y, 500, 50), color);
+            GUI.Label(new Rect(410, y + 9, 465, 35), text, heading);
+        }
+
+        private void Panel(Rect rect)
+        {
+            Fill(rect, ink);
+            Fill(new Rect(rect.x, rect.y, 5, rect.height), teal);
+        }
+
+        private static void Fill(Rect rect, Color color)
         {
             var previous = GUI.color;
-            GUI.color = active ? color : color * 0.18f;
-            GUI.DrawTexture(rect, lampTexture);
-            GUI.color = Color.white;
-            GUI.Label(rect, label, lightLabelStyle);
+            GUI.color = color;
+            GUI.DrawTexture(rect, Texture2D.whiteTexture);
             GUI.color = previous;
-        }
-
-        private static Texture2D CreateLampTexture(int size)
-        {
-            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false)
-            {
-                name = "Runtime Traffic Light Lamp",
-                filterMode = FilterMode.Bilinear,
-                wrapMode = TextureWrapMode.Clamp
-            };
-            var pixels = new Color32[size * size];
-            var radius = size * 0.48f;
-            var centre = (size - 1) * 0.5f;
-            for (var y = 0; y < size; y++)
-            {
-                for (var x = 0; x < size; x++)
-                {
-                    var dx = x - centre;
-                    var dy = y - centre;
-                    pixels[y * size + x] = dx * dx + dy * dy <= radius * radius
-                        ? new Color32(255, 255, 255, 255)
-                        : new Color32(0, 0, 0, 0);
-                }
-            }
-
-            texture.SetPixels32(pixels);
-            texture.Apply(false, true);
-            return texture;
         }
     }
 }
