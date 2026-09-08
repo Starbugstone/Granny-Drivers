@@ -3,9 +3,9 @@
 This is the approved single-racer POC spanning milestones 1, 2, 3, and 5. It includes
 walker handling and recovery, boost and slipper heat, burnout replacement, a waypoint-driven
 greybox loop, ordered checkpoints, three laps, countdown, wrong-way warning, finish, pause,
-and restart. By decision D-11 it also uses the merged Granny/walker model, locomotion
-animations, slipper variants, and reaction voice clips. Combat, AI, environment art, VFX,
-music, and general polish remain deferred.
+and restart. D-11 and D-18 add the rebuilt Granny/walker, locomotion animations, slipper
+variants, reaction voice clips, boost/smoke/skid effects, neighbourhood art and the racing
+HUD/pause menu. Combat, AI, multiplayer, music and full-game progression remain deferred.
 
 ## Run it
 
@@ -30,6 +30,7 @@ heat, and waypoint tuning assets in `Assets/GrannyRacer/Settings/`.
 - Left Shift: small jump; hop while steering at speed and hold to drift, release to boost
 - R: reset to the latest valid checkpoint
 - Escape: pause
+- F1: handling lab; adjust live acceleration, top speed, grip and steering for this session
 - Controller: right trigger accelerate, left trigger brake/reverse, left stick steer,
   A boost, right shoulder jump, Y reset, Menu pause
 
@@ -64,37 +65,33 @@ Q/E and controller X/B are reserved for deferred combat and intentionally do not
 20. Complete three laps, verify the finish time, and restart without relaunching.
 21. Reverse around the course long enough to confirm the warning is sustained rather than noisy.
 22. Record promising values from `WalkerHandling_POC` and `SlipperHeat_POC` before further scope.
+23. Pause during the countdown and while driving; resume and confirm the timer and car position
+    remain stable. Try R while paused; it must not recover the racer until normal play resumes.
+24. Use the handling lab, restore defaults, and restart. Confirm the underlying tuning asset
+    remains unchanged; record preferred values separately.
+25. Review the new Granny from the front/back and while boosting: eyes, shoulder continuity,
+    hand contact, slipper clearance and rocket exhaust placement. Review all three slippers.
+26. Drive past the houses, trees, fences and gate. Check sight lines and whether the scenery
+    makes the course easier to read. Record actual frame rate on the intended hardware.
 
 Answer the playbook questions explicitly: did the walker feel promising within one minute,
 was boost/heat understandable, was burnout funny or annoying, did reset feel fair, and did
 the camera cause discomfort?
 
-## Required editor layer setup
+## Collision layers
 
-The generated POC intentionally stays on Unity's Default layer so it is immediately runnable.
-Before authoring reusable colliders or prefabs, configure the playbook §17.6 layers manually:
-
-1. Open **Edit > Project Settings > Tags and Layers**.
-2. Add these user layers in order: `Racer`, `Track`, `SoftObstacle`, `HardObstacle`,
-   `DynamicHazard`, `AttackHitbox`, `AttackHurtbox`, `Trigger`, `Pickup`, `ResetVolume`,
-   `Decoration`.
-3. Open **Edit > Project Settings > Physics**.
-4. In the Layer Collision Matrix, disable `Decoration` against `Racer`; disable `Trigger`,
-   `Pickup`, and `ResetVolume` against everything except `Racer`; keep `AttackHitbox` and
-   `AttackHurtbox` disabled until combat resumes.
-5. Save the project and record the final matrix in `Docs/DECISIONS.md` before assigning
-   layers to generated objects.
-
-This setup is deliberately not guessed through YAML editing because layer indices and the
-collision matrix are project-wide serialized references.
+The refresh importer configures the eleven playbook layers through Unity editor APIs.
+Racer/Track/Trigger/Decoration are assigned in the generated scene. Decoration and reserved
+attack layers collide with nothing; triggers, pickups and reset volumes interact only with
+Racer. The checked-in project settings retain this setup on fresh clones. See D-18.
 
 ## Known prototype gaps and deferrals
 
-- Only the merged Granny model, its locomotion/hit animations, slipper variants, and
-  input/collision voice banks are integrated under D-11. Smoke/VFX, music, mixing, final UI,
-  final art direction, and the dormant combat/item clips remain deferred.
+- The art direction is approved; the delivered meshes, animation and handling still need
+  human acceptance. Music, a complete sound mix and dormant combat/item clips remain deferred.
 - Position is correctly 1/1 for this single-racer POC. Fractional spline position sorting is
   deferred until AI racers are admitted after the revision gate.
 - Input actions are remappable in code, but the settings/rebinding UI is not yet authored.
 - Camera comfort, fixed-timestep feel, humour, visual clarity, and fun require this human pass.
-- Collision layers require the manual setup above.
+- Existing voice asset provenance and a project licence remain unresolved; no new licence
+  is implied by this art refresh.

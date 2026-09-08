@@ -3,11 +3,12 @@
 A humorous, cartoon-styled 3D arcade racing game in which grannies race modified walking
 frames fitted with boosters.
 
-The project is currently a **proof of concept**: one racer, one greybox track, and the
-handling model. It exists to answer a single question — *is this fun to drive?* The merged
-Granny/walker model and reaction voices are now present as a bounded POC exception; AI,
-combat, environment art, and polish remain deferred. Nothing here is claimed to look, sound,
-or feel finished.
+The project is a **single-racer proof of concept**: three laps of Quiet Sunday with arcade
+handling, timed starts, boost/heat, burnout replacement, hop/drift boosts and checkpoint
+recovery. The owner-approved chunky cartoon refresh adds a rebuilt Granny, rocket walker,
+three slipper variants and a neighbourhood prop kit, plus a racing HUD and pause menu.
+AI, combat and multiplayer remain deferred. Human art, audio and handling acceptance is
+still pending; see [POC completion](Docs/POC_COMPLETION.md).
 
 > The repository folder is `Granny Drivers`; the game, namespace, and asset root are all
 > `GrannyRacer`. Same project.
@@ -30,7 +31,7 @@ of scope until the offline race is accepted.
 
 ## Getting started
 
-1. Clone the repository.
+1. Clone the repository with Git LFS installed, then run `git lfs pull`.
 2. Open the root folder as a Unity project in `6000.4.4f1`. The first import takes a few
    minutes.
 3. Open `Assets/GrannyRacer/Scenes/Tracks/POC_QuietSunday.unity`.
@@ -44,14 +45,18 @@ of scope until the offline race is accepted.
 | Brake / reverse | `S` / `↓` | Left trigger |
 | Steer | `A` `D` / `←` `→` | Left stick |
 | Boost | `Space` | A |
+| Hop / hold to drift | `Left Shift` | Right shoulder |
 | Reset to last checkpoint | `R` | Y |
 | Pause | `Esc` | Start |
+| Handling lab | `F1` | Pause menu button (mouse) |
 
 Boost heats the slippers. Let them reach 100% and they burn out, capping your speed until
 they are replaced — **tap boost repeatedly during a burnout** to swap them faster. `Q` and `E`
 are bound to left/right attack but are reserved; combat is not implemented.
 
-A debug HUD shows speed, grounded state, slipper heat, lap, and position.
+The HUD shows speed, ground contact, slipper heat, drift charge, lap and elapsed time.
+The pause menu includes restart, controls and master volume. F1 exposes session-only
+acceleration, speed, grip and steering sliders with a restore-defaults button.
 
 ## Repository layout
 
@@ -64,7 +69,7 @@ Assets/GrannyRacer/
 ├── Tests/{EditMode,PlayMode}
 ├── Scenes/Tracks/POC_QuietSunday.unity                ← the POC scene (generated)
 ├── Settings/                                          ← tuning ScriptableObjects
-├── Art/{Materials,Imported}/                         ← greybox materials and Granny FBXs
+├── Art/{Materials,Imported,Environment,Textures}/    ← Blender meshes and shared palette
 └── Resources/Audio/Granny/                           ← reaction voice banks
 Docs/                                                  ← plan, decisions, design, test plans
 ```
@@ -92,6 +97,9 @@ are baked from the track asset. After editing `Track_QuietSunday_POC.asset`, reb
 > **Granny Racer → POC → Create Complete Single-Racer POC**
 
 This overwrites the scene, the road mesh, and the walker's physics material.
+When the Rocket Club kit is present, the generator also restores its scenery and Blender
+kerb/barrier visuals. The local Blender pipeline and validation reports are documented in
+[the asset report](Docs/Art/POC_ASSET_REPORT.md).
 
 ## Building
 

@@ -1,0 +1,110 @@
+{
+    "meshes": [
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/ENV_House.fbx",
+            "mesh": "ENV_House",
+            "vertices": 1069,
+            "triangles": 1756,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/ENV_Tree.fbx",
+            "mesh": "ENV_Tree",
+            "vertices": 868,
+            "triangles": 1712,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Imported/Models/Granny/Granny_Walker.fbx",
+            "mesh": "CHR_Granny",
+            "vertices": 14703,
+            "triangles": 25452,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Imported/Models/Granny/Granny_Walker.fbx",
+            "mesh": "VEH_Walker",
+            "vertices": 6176,
+            "triangles": 7728,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_Barrier.fbx",
+            "mesh": "PRP_Barrier",
+            "vertices": 494,
+            "triangles": 816,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_Bench.fbx",
+            "mesh": "PRP_Bench",
+            "vertices": 1448,
+            "triangles": 2296,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_Bin.fbx",
+            "mesh": "PRP_Bin",
+            "vertices": 1005,
+            "triangles": 1880,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_Cone.fbx",
+            "mesh": "PRP_Cone",
+            "vertices": 404,
+            "triangles": 580,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_Fence.fbx",
+            "mesh": "PRP_Fence",
+            "vertices": 1399,
+            "triangles": 2456,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_Kerb.fbx",
+            "mesh": "PRP_Kerb",
+            "vertices": 120,
+            "triangles": 216,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_RoadDash.fbx",
+            "mesh": "PRP_RoadDash",
+            "vertices": 56,
+            "triangles": 84,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/RocketClub/PRP_StartGate.fbx",
+            "mesh": "PRP_StartGate",
+            "vertices": 2925,
+            "triangles": 4236,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Imported/Models/Granny/Slippers/Slipper_Bunny.fbx",
+            "mesh": "PRP_Slipper_Bunny",
+            "vertices": 1562,
+            "triangles": 3088,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Imported/Models/Granny/Slippers/Slipper_Classic.fbx",
+            "mesh": "PRP_Slipper_Classic",
+            "vertices": 568,
+            "triangles": 1128,
+            "submeshes": 1
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Imported/Models/Granny/Slippers/Slipper_Rocket.fbx",
+            "mesh": "PRP_Slipper_Rocket",
+            "vertices": 624,
+            "triangles": 1228,
+            "submeshes": 1
+        }
+    ],
+    "humanReviewed": false
+}

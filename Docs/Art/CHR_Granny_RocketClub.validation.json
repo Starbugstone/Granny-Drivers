@@ -1,0 +1,224 @@
+{
+  "source": "CHR_Granny_RocketClub.blend",
+  "unitScale": 1.0,
+  "objects": [
+    {
+      "name": "CHR_Granny",
+      "triangles": 25452,
+      "dimensions": [
+        0.6352,
+        0.4467,
+        1.4808
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "VEH_Walker",
+      "triangles": 7728,
+      "dimensions": [
+        0.872,
+        0.8269,
+        0.972
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Slipper_Classic",
+      "triangles": 1128,
+      "dimensions": [
+        0.122,
+        0.255,
+        0.109
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Slipper_Bunny",
+      "triangles": 3088,
+      "dimensions": [
+        0.122,
+        0.256,
+        0.1962
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Slipper_Rocket",
+      "triangles": 1228,
+      "dimensions": [
+        0.132,
+        0.255,
+        0.109
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "ENV_House",
+      "triangles": 1756,
+      "dimensions": [
+        5.5871,
+        4.5,
+        5.21
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Fence",
+      "triangles": 2456,
+      "dimensions": [
+        2.4,
+        0.2061,
+        1.18
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Bench",
+      "triangles": 2304,
+      "dimensions": [
+        1.7,
+        0.52,
+        1.12
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Bin",
+      "triangles": 1912,
+      "dimensions": [
+        0.62,
+        0.54,
+        0.7925
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Cone",
+      "triangles": 580,
+      "dimensions": [
+        0.45,
+        0.45,
+        0.6
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "ENV_Tree",
+      "triangles": 1712,
+      "dimensions": [
+        2.8,
+        1.89,
+        4.2619
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Kerb",
+      "triangles": 216,
+      "dimensions": [
+        0.485,
+        1.0,
+        0.23
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Barrier",
+      "triangles": 864,
+      "dimensions": [
+        2.0,
+        0.65,
+        0.92
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_RoadDash",
+      "triangles": 108,
+      "dimensions": [
+        0.12,
+        2.0,
+        0.016
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_StartGate",
+      "triangles": 5292,
+      "dimensions": [
+        9.05,
+        0.7,
+        4.2
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    }
+  ],
+  "triangles": 55824,
+  "errors": [],
+  "warnings": [
+    "PRP_Fence: 2456 triangles exceeds 2000 review budget",
+    "PRP_Bench: 2304 triangles exceeds 2000 review budget"
+  ],
+  "technicalPass": true,
+  "humanReviewed": false
+}

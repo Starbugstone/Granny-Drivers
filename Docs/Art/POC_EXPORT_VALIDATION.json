@@ -1,0 +1,714 @@
+[
+  {
+    "file": "ENV_House.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "ENV_House",
+        "triangles": 1756,
+        "dimensions": [
+          5.5871,
+          4.5,
+          5.21
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "ENV_Tree.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "ENV_Tree",
+        "triangles": 1712,
+        "dimensions": [
+          2.8,
+          1.89,
+          4.2619
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "VEH_Walker",
+        "triangles": 7728,
+        "dimensions": [
+          0.872,
+          0.8269,
+          0.972
+        ],
+        "materials": 1
+      },
+      {
+        "name": "CHR_Granny",
+        "triangles": 25452,
+        "dimensions": [
+          0.6352,
+          0.4467,
+          1.4808
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [
+      27
+    ],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@AttackLeft.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@AttackRight.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@Boost.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 46.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 46.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 46.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 46.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 46.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 46.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 46.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@Drive.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 41.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 41.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 41.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 41.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 41.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 41.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 41.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@HitReact.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 27.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 27.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 27.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 27.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 27.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 27.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 27.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@Idle.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 61.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 61.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 61.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 61.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 61.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 61.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 61.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@TurnLeft.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Granny_Walker@TurnRight.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [],
+    "bones": [
+      27
+    ],
+    "actions": [
+      {
+        "name": "FX_Exhaust_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "FX_Exhaust_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "GrannyRig|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Hand_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_L|Scene",
+        "start": 1.0,
+        "end": 31.0
+      },
+      {
+        "name": "Slipper_Socket_R|Scene",
+        "start": 1.0,
+        "end": 31.0
+      }
+    ],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_Barrier.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Barrier",
+        "triangles": 864,
+        "dimensions": [
+          2.0,
+          0.65,
+          0.92
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_Bench.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Bench",
+        "triangles": 2304,
+        "dimensions": [
+          1.7,
+          0.52,
+          1.12
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_Bin.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Bin",
+        "triangles": 1912,
+        "dimensions": [
+          0.62,
+          0.54,
+          0.7925
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_Cone.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Cone",
+        "triangles": 580,
+        "dimensions": [
+          0.45,
+          0.45,
+          0.6
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_Fence.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Fence",
+        "triangles": 2456,
+        "dimensions": [
+          2.4,
+          0.2061,
+          1.18
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_Kerb.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Kerb",
+        "triangles": 216,
+        "dimensions": [
+          0.485,
+          1.0,
+          0.23
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_RoadDash.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_RoadDash",
+        "triangles": 108,
+        "dimensions": [
+          0.12,
+          2.0,
+          0.016
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "PRP_StartGate.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_StartGate",
+        "triangles": 5292,
+        "dimensions": [
+          9.05,
+          0.7,
+          4.2
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Slipper_Bunny.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Slipper_Bunny",
+        "triangles": 3088,
+        "dimensions": [
+          0.122,
+          0.256,
+          0.1962
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Slipper_Classic.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Slipper_Classic",
+        "triangles": 1128,
+        "dimensions": [
+          0.122,
+          0.255,
+          0.109
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  },
+  {
+    "file": "Slipper_Rocket.fbx",
+    "source": "Blender/Source/Characters/CHR_Granny_RocketClub.blend",
+    "unit": "metre",
+    "meshes": [
+      {
+        "name": "PRP_Slipper_Rocket",
+        "triangles": 1228,
+        "dimensions": [
+          0.132,
+          0.255,
+          0.109
+        ],
+        "materials": 1
+      }
+    ],
+    "bones": [],
+    "actions": [],
+    "errors": [],
+    "technicalPass": true,
+    "humanReviewed": false
+  }
+]

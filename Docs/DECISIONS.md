@@ -383,6 +383,38 @@ Profile differences require human playtesting for readability, balance, and feel
 
 ---
 
+## D-18 — POC completion and chunky cartoon art refresh
+
+**Date:** 2026-09-08
+**Status:** Direction and implementation scope requested by the owner; human acceptance pending
+**Extends:** D-03, D-11
+
+The owner requested completion of the single-racer POC and replacement of its 3D assets,
+using Blender and Unity, and selected chunky cartoon comedy: expressive granny, colourful
+clothing, oversized slippers and a homemade rocket walker. This explicitly brings the
+POC's character, locomotion animations, slipper variants and small neighbourhood kit into
+scope. Combat, AI, multiplayer, extra tracks and full-game progression remain deferred.
+
+The refresh preserves the existing rig, sockets and Unity model GUIDs. Blender sources use
+new filenames; the original source remains untouched. A single shared palette texture and
+URP material serve the meshes. The editable road stays generated from the existing waypoints;
+Blender kerb/barrier visuals keep the established collision dimensions.
+
+The import command configures the eleven named collision layers through Unity editor APIs,
+assigns Racer/Track/Trigger/Decoration, and disables decoration and reserved attack collisions.
+Triggers, pickups and reset volumes interact only with racers. This replaces the previous
+manual layer setup instructions. No Unity package is added.
+
+HUD, pause/restart/controls, a session-only handling panel and automatic fall/overturn recovery
+complete the POC review workflow. Automated tests, export audits and screenshots are technical
+evidence; the milestone still needs the owner's playtest and art/audio acceptance.
+
+The existing exclusion of `Blender/` and local wrappers from Git remains in effect. Tracked
+Unity exports and reports survive cloning; editable refresh sources remain in this working
+copy. See `POC_COMPLETION.md` and `Art/POC_ASSET_REPORT.md` for reproduction and evidence.
+
+---
+
 ## D-17 — Countdown throttle timing selects the launch
 
 **Date:** 2026-08-01
