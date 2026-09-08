@@ -114,7 +114,8 @@ namespace GrannyRacer.Walker
             if (controller == null) return;
 
             // The exit boost fires the rockets too, so the reward reads at a glance.
-            var boosting = controller.IsBoosting || controller.DriftBoostActive;
+            var boosting = controller.IsBoosting || controller.DriftBoostActive
+                || controller.IsStartBoostActive;
             if (boosting != boostEffectsActive)
             {
                 boostEffectsActive = boosting;
@@ -133,7 +134,8 @@ namespace GrannyRacer.Walker
             // scrubbing tarmac, so a drift that hops a kerb stops smoking until it lands. This
             // is also what keeps the hop that arms a drift completely clean — the drift itself
             // does not exist until the landing.
-            var drifting = controller.IsDrifting && controller.IsGrounded;
+            var drifting = (controller.IsDrifting || controller.IsStartSkidding)
+                && controller.IsGrounded;
             if (drifting != driftSmokeActive)
             {
                 driftSmokeActive = drifting;

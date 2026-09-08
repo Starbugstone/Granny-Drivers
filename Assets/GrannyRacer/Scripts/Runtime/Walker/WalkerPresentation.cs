@@ -83,7 +83,9 @@ namespace GrannyRacer.Walker
             // is doing with the stick — counter-steering must not flip Granny's hips.
             var side = controller.IsDrifting
                 ? controller.DriftDirection
-                : Mathf.Sign(controller.SteeringInput);
+                : controller.IsStartSkidding
+                    ? controller.StartSkidDirection
+                    : Mathf.Sign(controller.SteeringInput);
             var chatter = Mathf.Sin(Time.time * 28f) * 2f;
             AddLocalRotation(hips, new Vector3(0f, -side * skidBraceDegrees, chatter));
             AddLocalRotation(thighLeft, new Vector3(0f, side * skidBraceDegrees * 0.4f,
@@ -124,7 +126,7 @@ namespace GrannyRacer.Walker
 
         private int SelectLocomotionState()
         {
-            if (controller.IsBoosting) return BoostState;
+            if (controller.IsBoosting || controller.IsStartBoostActive) return BoostState;
             if (controller.Speed < movingSpeed)
             {
                 if (controller.SteeringInput < -turningThreshold) return TurnLeftState;

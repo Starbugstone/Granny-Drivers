@@ -26,12 +26,21 @@ namespace GrannyRacer.Racing
         [SerializeField, Min(1)] private int lapTarget = 3;
         [SerializeField, Min(0f)] private float countdownDuration = 3f;
 
+        [Header("Race start")]
+        [Tooltip("The perfect window ends as this number appears on the countdown.")]
+        [SerializeField, Min(0f)] private float perfectStartEndsAt = 2f;
+        [SerializeField, Min(0f)] private float perfectStartWindow = 0.75f;
+        [SerializeField, Range(0.01f, 1f)] private float startThrottleThreshold = 0.5f;
+        [SerializeField, Min(0f)] private float startFeedbackDuration = 1.25f;
+
         private RaceProgress[] progressByRacer = Array.Empty<RaceProgress>();
         private float countdownRemaining;
         private RaceState stateBeforePause;
         private Vector3 expectedTrackDirection;
         private float wrongWayTime;
         private float raceElapsed;
+        private float startFeedbackRemaining;
+        private readonly RaceStartModel raceStart = new RaceStartModel();
 
         private ArcadeWalkerController PlayerRacer => racers[playerRacerIndex];
         private RaceProgress PlayerProgress => progressByRacer[playerRacerIndex];
@@ -45,6 +54,8 @@ namespace GrannyRacer.Racing
         public bool IsWrongWay { get; private set; }
         public float FinishTime { get; private set; }
         public bool IsInitialized { get; private set; }
+        public RaceStartOutcome StartOutcome { get; private set; }
+        public float StartFeedbackRemaining => startFeedbackRemaining;
 
         public void Configure(ArcadeWalkerController[] raceRacers, Vector3[] gridPositions,
             Vector3[] gridForwards, int playerIndex, PlayerRacerInput input, int checkpoints, int laps)
@@ -65,9 +76,11 @@ namespace GrannyRacer.Racing
 
         private void Update()
         {
+            var throttle = 0f;
             if (playerInput != null)
             {
                 var input = playerInput.Sample();
+                throttle = input.Throttle;
                 if (input.Pause) TogglePause();
                 if (State == RaceState.Finished && (input.BoostPressed || input.Reset))
                 {
@@ -78,16 +91,22 @@ namespace GrannyRacer.Racing
 
             if (State == RaceState.Countdown)
             {
+                raceStart.Tick(countdownRemaining, throttle, perfectStartEndsAt,
+                    perfectStartWindow, startThrottleThreshold);
                 countdownRemaining -= Time.deltaTime;
                 if (countdownRemaining <= 0f)
                 {
                     countdownRemaining = 0f;
                     State = RaceState.Racing;
                     SetAllCanDrive(true);
+                    StartOutcome = raceStart.Resolve(throttle, startThrottleThreshold);
+                    PlayerRacer.ApplyRaceStart(StartOutcome);
+                    startFeedbackRemaining = startFeedbackDuration;
                 }
             }
             else if (State == RaceState.Racing)
             {
+                if (startFeedbackRemaining > 0f) startFeedbackRemaining -= Time.deltaTime;
                 raceElapsed += Time.deltaTime;
                 var headingDot = Vector3.Dot(PlayerRacer.transform.forward, expectedTrackDirection);
                 wrongWayTime = headingDot < -0.35f && PlayerRacer.Speed > 2f
@@ -114,6 +133,9 @@ namespace GrannyRacer.Racing
             FinishTime = 0f;
             wrongWayTime = 0f;
             IsWrongWay = false;
+            StartOutcome = RaceStartOutcome.None;
+            startFeedbackRemaining = 0f;
+            raceStart.Reset();
             State = RaceState.Countdown;
             expectedTrackDirection = startForwards[playerRacerIndex].normalized;
             SetAllCanDrive(false);

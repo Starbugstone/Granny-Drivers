@@ -16,6 +16,19 @@ namespace GrannyRacer.Walker
         [Min(0f)] public float boostMaximumSpeed = 22f;
         [Range(0.1f, 1f)] public float boostGripScale = 0.72f;
 
+        [Header("Race Start")]
+        [Tooltip("Velocity-change reward for pressing accelerate from 2 to GO.")]
+        [Min(0f)] public float startBoostSpeed = 2.5f;
+        [Tooltip("Velocity-change reward for the 0.75 second perfect-start window.")]
+        [Min(0f)] public float startTurboSpeed = 5.5f;
+        [Min(0f)] public float startBoostDuration = 0.65f;
+        [Min(0f)] public float startTurboDuration = 1.1f;
+        [Min(0f)] public float startSkidDuration = 1.25f;
+        [Range(0.05f, 1f)] public float startSkidAccelerationScale = 0.42f;
+        [Range(0.05f, 1f)] public float startSkidSpeedScale = 0.65f;
+        [Range(0f, 1f)] public float startSkidSteerStrength = 0.72f;
+        [Min(0f)] public float startSkidSwerveFrequency = 1.35f;
+
         [Header("Steering")]
         [Min(0f)] public float steeringDegreesPerSecond = 125f;
         [Min(0.01f)] public float steeringFalloffSpeed = 15f;

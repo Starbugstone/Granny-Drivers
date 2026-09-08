@@ -383,6 +383,30 @@ Profile differences require human playtesting for readability, balance, and feel
 
 ---
 
+## D-17 — Countdown throttle timing selects the launch
+
+**Date:** 2026-08-01
+**Status:** Accepted — user explicitly requested a Mario Kart-style starting technique
+**Extends:** [D-03](#d-03--poc-scope-milestones-0-1-2-3-5)
+
+The POC countdown now records the player's first accelerate press and requires accelerate
+to remain held through GO. The perfect window is exactly 0.75 seconds, from 2.75 seconds
+remaining until the display reaches 2. Pressing earlier produces a slower wheelspin launch
+with an automatic alternating swerve; pressing from 2 down to GO produces a smaller boost;
+releasing before GO produces no launch effect. An early press remains an early press if the
+player releases and tries again during the same countdown.
+
+The timing rules live in the scene-free `RaceStartModel`. Launch impulse, reward duration,
+wheelspin duration, acceleration penalty, speed penalty, and swerve are exposed on
+`WalkerHandlingSettings` for the required human tuning pass. Existing rocket VFX represent
+the two rewarded starts, while the existing drift smoke, skid ribbons, and braced pose
+represent wheelspin. The current traffic light is a runtime-drawn HUD placeholder, labelled
+as well as coloured for readability.
+
+Final timing legibility, vehicle feel, visual clarity, and humour require human playtesting.
+
+---
+
 ## Outstanding decisions
 
 Not yet decided. Listed so they are not forgotten.

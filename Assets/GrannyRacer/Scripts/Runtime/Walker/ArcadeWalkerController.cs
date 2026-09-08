@@ -1,4 +1,5 @@
 using GrannyRacer.Input;
+using GrannyRacer.Racing;
 using UnityEngine;
 
 namespace GrannyRacer.Walker
@@ -26,6 +27,10 @@ namespace GrannyRacer.Walker
         private readonly SlipperHeatModel heat = new SlipperHeatModel();
         private readonly DriftModel drift = new DriftModel();
         private GrannyRacerStats stats;
+        private float raceStartBoostRemaining;
+        private float raceStartSkidRemaining;
+        private float raceStartSkidElapsed;
+        private float pendingRaceStartImpulse;
 
         public float Speed => body == null ? 0f : body.linearVelocity.magnitude;
         public bool IsGrounded => grounded;
@@ -57,6 +62,10 @@ namespace GrannyRacer.Walker
         /// <summary>The tier the current exit boost was released at, for VFX and HUD.</summary>
         public DriftChargeStage DriftBoostStage => drift.BoostStage;
         public bool DriftBoostActive => drift.BoostRemaining > 0f;
+        public bool IsStartBoostActive => raceStartBoostRemaining > 0f;
+        public bool IsStartSkidding => raceStartSkidRemaining > 0f;
+        public int StartSkidDirection => handling == null || Mathf.Sin(raceStartSkidElapsed
+            * handling.startSkidSwerveFrequency * Mathf.PI * 2f) >= 0f ? 1 : -1;
 
         public void Configure(WalkerHandlingSettings settings, SlipperHeatSettings slipperHeat, Transform visuals)
         {
@@ -76,6 +85,30 @@ namespace GrannyRacer.Walker
         public void SetCanDrive(bool value)
         {
             canDrive = value;
+        }
+
+        public void ApplyRaceStart(RaceStartOutcome outcome)
+        {
+            raceStartBoostRemaining = 0f;
+            raceStartSkidRemaining = 0f;
+            raceStartSkidElapsed = 0f;
+            pendingRaceStartImpulse = 0f;
+            if (handling == null) return;
+
+            switch (outcome)
+            {
+                case RaceStartOutcome.Skid:
+                    raceStartSkidRemaining = handling.startSkidDuration;
+                    break;
+                case RaceStartOutcome.Boost:
+                    raceStartBoostRemaining = handling.startBoostDuration;
+                    pendingRaceStartImpulse = handling.startBoostSpeed;
+                    break;
+                case RaceStartOutcome.Turbo:
+                    raceStartBoostRemaining = handling.startTurboDuration;
+                    pendingRaceStartImpulse = handling.startTurboSpeed;
+                    break;
+            }
         }
 
         private void Awake()
@@ -150,6 +183,22 @@ namespace GrannyRacer.Walker
             var velocity = body.linearVelocity;
             var forwardSpeed = Vector3.Dot(velocity, transform.forward);
             var lateralSpeed = Vector3.Dot(velocity, transform.right);
+            var startSkidding = raceStartSkidRemaining > 0f;
+
+            if (pendingRaceStartImpulse > 0f)
+            {
+                body.AddForce(transform.forward * pendingRaceStartImpulse, ForceMode.VelocityChange);
+                pendingRaceStartImpulse = 0f;
+            }
+            if (raceStartBoostRemaining > 0f)
+            {
+                raceStartBoostRemaining = Mathf.Max(0f, raceStartBoostRemaining - Time.fixedDeltaTime);
+            }
+            if (startSkidding)
+            {
+                raceStartSkidRemaining = Mathf.Max(0f, raceStartSkidRemaining - Time.fixedDeltaTime);
+                raceStartSkidElapsed += Time.fixedDeltaTime;
+            }
 
             if (grounded && canDrive && jumpRequestRemaining > 0f)
             {
@@ -175,7 +224,7 @@ namespace GrannyRacer.Walker
             var brakeSlide = canDrive && WalkerHandlingMath.ShouldSkid(forwardSpeed, input.Brake,
                 input.Steer, handling.skidMinimumSpeed, handling.skidMinimumBrake,
                 handling.skidMinimumSteer);
-            IsSkidding = brakeSlide || drift.IsDrifting;
+            IsSkidding = brakeSlide || drift.IsDrifting || startSkidding;
             var driveInput = canDrive ? WalkerHandlingMath.DriveInput(input.Throttle, input.Brake, forwardSpeed) : 0f;
 
             var acceleration = driveInput >= 0f
@@ -184,11 +233,16 @@ namespace GrannyRacer.Walker
             var speedLimit = driveInput >= 0f
                 ? (IsBoosting ? stats.BoostMaximumSpeed : stats.MaximumSpeed)
                 : stats.MaximumReverseSpeed;
+            if (startSkidding && driveInput >= 0f)
+            {
+                acceleration *= handling.startSkidAccelerationScale;
+                speedLimit *= handling.startSkidSpeedScale;
+            }
             if (heat.IsBurnedOut && heatSettings != null)
             {
                 speedLimit *= heatSettings.burnoutSpeedScale;
             }
-            if (drift.BoostRemaining > 0f && driveInput >= 0f)
+            if ((drift.BoostRemaining > 0f || raceStartBoostRemaining > 0f) && driveInput >= 0f)
             {
                 // The exit boost is worth nothing if the normal cap claws the speed straight
                 // back, so it raises the ceiling for as long as it lasts.
@@ -216,7 +270,7 @@ namespace GrannyRacer.Walker
 
             var grip = IsBoosting ? stats.LateralGrip * handling.boostGripScale : stats.LateralGrip;
             if (drift.IsDrifting) grip *= handling.driftGripScale;
-            else if (brakeSlide) grip *= handling.skidGripScale;
+            else if (brakeSlide || startSkidding) grip *= handling.skidGripScale;
             body.AddForce(-transform.right * (lateralSpeed * grip), ForceMode.Acceleration);
             body.AddForce(-transform.up * handling.downforce, ForceMode.Acceleration);
 
@@ -224,7 +278,12 @@ namespace GrannyRacer.Walker
                 handling.steeringFalloffSpeed, handling.topSpeedSteeringScale);
             var direction = forwardSpeed < -0.2f ? -1f : 1f;
             var steer = input.Steer;
-            if (drift.IsDrifting)
+            if (startSkidding)
+            {
+                steer = Mathf.Clamp(input.Steer * 0.25f
+                    + StartSkidDirection * handling.startSkidSteerStrength, -1f, 1f);
+            }
+            else if (drift.IsDrifting)
             {
                 // Blended in over the engage ramp rather than swapped in on the landing frame:
                 // a player who turned in gently would otherwise be snapped to the drift's full
@@ -286,6 +345,10 @@ namespace GrannyRacer.Walker
             body.angularVelocity = Vector3.zero;
             drift.Reset();
             IsSkidding = false;
+            raceStartBoostRemaining = 0f;
+            raceStartSkidRemaining = 0f;
+            raceStartSkidElapsed = 0f;
+            pendingRaceStartImpulse = 0f;
         }
 
         public void SetResetPose(Vector3 position, Quaternion rotation)
