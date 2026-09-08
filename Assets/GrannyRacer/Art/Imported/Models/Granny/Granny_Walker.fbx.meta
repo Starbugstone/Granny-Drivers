@@ -3,9 +3,14 @@ guid: 01e249f6c83e9c645b1126b24736fb09
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_POC_Palette
+    second: {fileID: 2100000, guid: 2ca908e5a20ad7b449e9faa4911affd3, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
