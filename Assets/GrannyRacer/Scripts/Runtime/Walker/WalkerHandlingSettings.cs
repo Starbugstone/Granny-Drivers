@@ -7,14 +7,17 @@ namespace GrannyRacer.Walker
     public sealed class WalkerHandlingSettings : ScriptableObject
     {
         [Header("Drive")]
-        [Min(0f)] public float acceleration = 24f;
+        [Min(0f)] public float acceleration = 36f;
         [Min(0f)] public float reverseAcceleration = 12f;
-        [Min(0f)] public float braking = 32f;
-        [Min(0f)] public float maximumSpeed = 15f;
+        [Min(0f)] public float braking = 42f;
+        [Min(0f)] public float maximumSpeed = 24f;
         [Min(0f)] public float maximumReverseSpeed = 5f;
-        [Min(0f)] public float boostAcceleration = 38f;
-        [Min(0f)] public float boostMaximumSpeed = 22f;
-        [Range(0.1f, 1f)] public float boostGripScale = 0.72f;
+        [Min(0f)] public float boostAcceleration = 52f;
+        [Min(0f)] public float boostMaximumSpeed = 35f;
+        [Range(0.1f, 1f)] public float boostGripScale = 0.8f;
+
+        [Tooltip("Excess boost speed eases back to cruising speed after releasing boost.")]
+        [Min(0f)] public float boostReleaseDeceleration = 8f;
 
         [Header("Race Start")]
         [Tooltip("Velocity-change reward for pressing accelerate from 2 to GO.")]
@@ -30,10 +33,10 @@ namespace GrannyRacer.Walker
         [Min(0f)] public float startSkidSwerveFrequency = 1.35f;
 
         [Header("Steering")]
-        [Min(0f)] public float steeringDegreesPerSecond = 125f;
-        [Min(0.01f)] public float steeringFalloffSpeed = 15f;
-        [Range(0.1f, 1f)] public float topSpeedSteeringScale = 0.42f;
-        [Min(0f)] public float lateralGrip = 7f;
+        [Min(0f)] public float steeringDegreesPerSecond = 155f;
+        [Min(0.01f)] public float steeringFalloffSpeed = 35f;
+        [Range(0.1f, 1f)] public float topSpeedSteeringScale = 0.7f;
+        [Min(0f)] public float lateralGrip = 12f;
 
         [Tooltip("Coast-down deceleration. The walker collider is frictionless so that PhysX "
             + "friction cannot fight the drive force, so rolling resistance is modelled here.")]

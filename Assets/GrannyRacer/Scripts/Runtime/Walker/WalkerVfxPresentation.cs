@@ -115,7 +115,7 @@ namespace GrannyRacer.Walker
 
             // The exit boost fires the rockets too, so the reward reads at a glance.
             var boosting = controller.IsBoosting || controller.DriftBoostActive
-                || controller.IsStartBoostActive;
+                || controller.IsStartBoostActive || controller.IsTrackBoostActive;
             if (boosting != boostEffectsActive)
             {
                 boostEffectsActive = boosting;

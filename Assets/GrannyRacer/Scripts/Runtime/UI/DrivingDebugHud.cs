@@ -17,6 +17,15 @@ namespace GrannyRacer.UI
         private GUIStyle button;
         private bool showTuning;
         private bool showControls;
+        private bool showTracks;
+        private int selectedTrack;
+        private CircuitTour tour;
+        private ArcadeAudioPresentation arcadeAudio;
+        private void Awake()
+        {
+            tour = GetComponent<CircuitTour>();
+            if(walker != null) arcadeAudio = walker.GetComponent<ArcadeAudioPresentation>();
+        }
         private readonly Color ink = new Color(0.055f, 0.105f, 0.13f);
         private readonly Color paper = new Color(0.97f, 0.92f, 0.79f);
         private readonly Color teal = new Color(0.10f, 0.65f, 0.55f);
@@ -31,6 +40,21 @@ namespace GrannyRacer.UI
         {
             if (Keyboard.current != null && Keyboard.current.f1Key.wasPressedThisFrame)
                 showTuning = !showTuning;
+            if(tour==null || (race.State!=RaceState.Paused && race.State!=RaceState.Finished))return;
+            var keyboard=Keyboard.current;var gamepad=Gamepad.current;
+            if((keyboard!=null && keyboard.tKey.wasPressedThisFrame) || (gamepad!=null && gamepad.buttonWest.wasPressedThisFrame))
+                ToggleTrackSelection();
+            if(!showTracks)return;
+            if((keyboard!=null && keyboard.downArrowKey.wasPressedThisFrame) || (gamepad!=null && gamepad.dpad.down.wasPressedThisFrame))
+                selectedTrack=(selectedTrack+1)%tour.Destinations.Length;
+            if((keyboard!=null && keyboard.upArrowKey.wasPressedThisFrame) || (gamepad!=null && gamepad.dpad.up.wasPressedThisFrame))
+                selectedTrack=(selectedTrack+tour.Destinations.Length-1)%tour.Destinations.Length;
+            if((keyboard!=null && keyboard.enterKey.wasPressedThisFrame) || (gamepad!=null && gamepad.buttonSouth.wasPressedThisFrame))tour.Travel(selectedTrack);
+        }
+
+        public void ToggleTrackSelection()
+        {
+            showTracks=!showTracks;showControls=false;race.ExternalMenuOpen=showTracks;
         }
 
         private void EnsureStyles()
@@ -57,12 +81,19 @@ namespace GrannyRacer.UI
                 (Screen.height - 720f * scale) * 0.5f, 0f), Quaternion.identity, Vector3.one * scale);
             Panel(new Rect(24, 24, 310, 84));
             GUI.Label(new Rect(42, 32, 285, 32), "GRANNY RACER", heading);
-            GUI.Label(new Rect(42, 67, 285, 28), "QUIET SUNDAY / ROCKET CLUB", small);
+            GUI.Label(new Rect(42, 67, 285, 28), race.CircuitName, small);
             Panel(new Rect(962, 24, 294, 84));
             GUI.Label(new Rect(980, 32, 255, 32), $"LAP {race.CurrentLap} / {race.LapTarget}", heading);
             GUI.Label(new Rect(980, 68, 180, 28), $"{race.ElapsedTime:0.0}s   •   SOLO RUN", small);
             if (GUI.Button(new Rect(1167, 67, 74, 27), "Pause")) race.TogglePause();
             DrawTelemetry();
+            if (walker.IsTrackBoostActive) Banner("ROCKET STRIP BOOST!", teal, 225);
+            else if (walker.IsOffRoad && race.State == RaceState.Racing) Banner("LAWN SLOWS YOU DOWN — BOOST TO CUT", ink, 225);
+            Panel(new Rect(962, 116, 294, 54));
+            GUI.Label(new Rect(980, 125, 260, 40), race.CheckpointFeedbackRemaining > 0
+                ? $"SECTOR CLEAR • {race.LastSectorTime:0.0}s"
+                : race.NextCheckpoint == 0 ? "NEXT: FINISH LINE"
+                : $"NEXT: GATE {race.NextCheckpoint} / {race.CheckpointCount - 1}", small);
             if (race.IsWrongWay) Banner("WRONG WAY — TURN AROUND", new Color(.78f,.20f,.13f), 139);
             if (race.State == RaceState.Countdown) DrawCountdown();
             else if (race.State == RaceState.Racing && race.StartFeedbackRemaining > 0f)
@@ -81,13 +112,24 @@ namespace GrannyRacer.UI
         {
             Panel(new Rect(24, 549, 366, 147));
             GUI.Label(new Rect(42, 556, 155, 36), $"{walker.Speed * 3.6f:0} km/h", heading);
-            GUI.Label(new Rect(213, 566, 165, 24), walker.IsGrounded ? "SLIPPERS DOWN" : "FEET UP!", small);
+            GUI.Label(new Rect(213, 566, 165, 24), walker.IsBoosting ? "ROCKET SLIPPERS!"
+                : walker.HeatStage == SlipperHeatStage.BurnedOut ? "SLIPPERS TOASTED!"
+                : walker.Heat > .05f ? "COOLING DOWN" : "BOOST READY", small);
             var burned = walker.HeatStage == SlipperHeatStage.BurnedOut;
             GUI.Label(new Rect(42, 597, 326, 28), burned
                 ? $"NEW SLIPPERS IN {walker.ReplacementRemaining:0.0}s — tap boost"
                 : $"SLIPPER HEAT   {walker.Heat * 100f:0}%", small);
             Fill(new Rect(42, 630, 326, 14), new Color(.22f,.26f,.26f));
             Fill(new Rect(42, 630, 326 * walker.Heat, 14), burned ? Color.red : Color.Lerp(teal,new Color(1,.35f,.12f),walker.Heat));
+            Fill(new Rect(42 + 326 * .6f, 629, 2, 16), paper);
+            Fill(new Rect(42 + 326 * .8f, 629, 2, 16), paper);
+            if (walker.HeatStage == SlipperHeatStage.Critical)
+            {
+                var previousColor = GUI.color;
+                GUI.color = Color.Lerp(paper, new Color(1,.35f,.12f), .5f + .5f * Mathf.Sin(Time.time * 12));
+                GUI.Label(new Rect(400, 125, 530, 44), "HOT FEET! RELEASE BOOST", heading);
+                GUI.color = previousColor;
+            }
             var driftText = walker.IsDrifting ? $"DRIFT {walker.DriftStage} / HOLD TO CHARGE"
                 : walker.DriftBoostActive ? $"{walker.DriftBoostStage} DRIFT BOOST!"
                 : walker.IsDriftArmed ? "HOP — STEER INTO THE LANDING" : "HOP + HOLD TO DRIFT";
@@ -114,18 +156,33 @@ namespace GrannyRacer.UI
             Panel(new Rect(389, 126, 502, 494));
             GUI.Label(new Rect(419, 148, 444, 40), finished ? "BACK BEFORE BINGO!" : "TEA BREAK", heading);
             GUI.Label(new Rect(419, 191, 444, 36), finished
-                ? $"Three laps in {race.FinishTime:0.0} seconds." : "Paused. Your slippers can catch their breath.", body);
+                ? $"{race.LapTarget} laps in {race.FinishTime:0.0} seconds." : "Paused. Your slippers can catch their breath.", body);
             if (!finished && GUI.Button(new Rect(419, 239, 442, 42), "Resume  /  Esc or controller Menu", button)) race.TogglePause();
             if (GUI.Button(new Rect(419, 291, 442, 42), "Race again", button)) race.RestartScene();
             if (GUI.Button(new Rect(419, 343, 216, 36), "Controls", button)) showControls = !showControls;
             if (GUI.Button(new Rect(645, 343, 216, 36), "Handling lab", button)) showTuning = !showTuning;
-            if (showControls)
+            if (tour != null && GUI.Button(new Rect(419, 515, 442, 32), showTracks ? "Close tour  /  T or X" : "Choose another track  /  T or X", button))
+                ToggleTrackSelection();
+            if (showTracks && tour != null)
+            {
+                for(var i=0;i<tour.Destinations.Length;i++)
+                {
+                    var destination=tour.Destinations[i];
+                    if(GUI.Button(new Rect(419, 382+i*36, 442, 32),(selectedTrack==i?">  ":"")+destination.title,button))tour.Travel(i);
+                }
+                GUI.Label(new Rect(419,490,442,24),"Arrows / D-pad choose  •  Enter / A race",small);
+            }
+            else if (showControls)
                 GUI.Label(new Rect(419, 390, 442, 153), "Keyboard: WASD / arrows drive, Space boost, Shift hop and hold to drift, R recover.\nController: triggers drive/brake, stick steer, A boost, RB hop/drift, Y recover, Menu pause.\nCool slippers between boosts. Tap boost during burnout to replace them faster.", small);
             else
             {
                 GUI.Label(new Rect(419, 402, 190, 28), "Master volume", body);
                 AudioListener.volume = GUI.HorizontalSlider(new Rect(614, 413, 237, 20), AudioListener.volume, 0f, 1f);
-                GUI.Label(new Rect(419, 454, 442, 70), "One granny. Three laps. Questionable engineering.\nCool your slippers between boosts and keep an eye on the heat.", small);
+                if(arcadeAudio != null)
+                {
+                    GUI.Label(new Rect(419, 449, 190, 28), "Arcade effects", body);
+                    arcadeAudio.EffectsVolume=GUI.HorizontalSlider(new Rect(614,460,237,20),arcadeAudio.EffectsVolume,0,1);
+                }
             }
             if (GUI.Button(new Rect(419, 556, 442, 36), "Quit to desktop", button)) Application.Quit();
         }
@@ -139,8 +196,8 @@ namespace GrannyRacer.UI
             GUI.Label(new Rect(917, 179, 320, 45), "Changes last for this run. Original tuning stays safe.", small);
             GUI.changed = false;
             settings.acceleration = Slider("Acceleration", settings.acceleration, 10, 40, 233);
-            settings.maximumSpeed = Slider("Top speed (m/s)", settings.maximumSpeed, 8, 22, 291);
-            settings.lateralGrip = Slider("Grip", settings.lateralGrip, 2, 12, 349);
+            settings.maximumSpeed = Slider("Top speed (m/s)", settings.maximumSpeed, 8, 35, 291);
+            settings.lateralGrip = Slider("Grip", settings.lateralGrip, 2, 18, 349);
             settings.steeringDegreesPerSecond = Slider("Steering", settings.steeringDegreesPerSecond, 60, 180, 407);
             if (GUI.changed) walker.RefreshHandling();
             GUI.Label(new Rect(917, 471, 320, 55), $"Accel {settings.acceleration:0.0} / speed {settings.maximumSpeed:0.0}\nGrip {settings.lateralGrip:0.0} / steer {settings.steeringDegreesPerSecond:0}", small);

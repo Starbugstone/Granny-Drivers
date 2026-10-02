@@ -33,6 +33,12 @@ namespace GrannyRacer.Walker
         private float pendingRaceStartImpulse;
         private WalkerHandlingSettings originalHandling;
         private float overturnedSeconds;
+        private float trackBoostRemaining;
+        private float pendingTrackBoost;
+        [SerializeField] private LayerMask offRoadLayers;
+        [SerializeField, Range(.1f, 1)] private float offRoadSpeedScale = .55f;
+        public bool IsOffRoad { get; private set; }
+        public void ConfigureOffRoad(LayerMask layers) => offRoadLayers = layers;
 
         public float Speed => body == null ? 0f : body.linearVelocity.magnitude;
         public bool IsGrounded => grounded;
@@ -65,6 +71,17 @@ namespace GrannyRacer.Walker
         public DriftChargeStage DriftBoostStage => drift.BoostStage;
         public bool DriftBoostActive => drift.BoostRemaining > 0f;
         public bool IsStartBoostActive => raceStartBoostRemaining > 0f;
+        public bool IsTrackBoostActive => trackBoostRemaining > 0f;
+
+        public bool TryApplyTrackBoost(float speedGain, float duration)
+        {
+            if (!canDrive || !grounded || heat.IsBurnedOut || speedGain <= 0f || duration <= 0f
+                || float.IsNaN(speedGain) || float.IsInfinity(speedGain)
+                || float.IsNaN(duration) || float.IsInfinity(duration)) return false;
+            pendingTrackBoost = Mathf.Max(pendingTrackBoost, Mathf.Min(speedGain, 10f));
+            trackBoostRemaining = Mathf.Max(trackBoostRemaining, Mathf.Min(duration, 3f));
+            return true;
+        }
         public bool IsStartSkidding => raceStartSkidRemaining > 0f;
         public int StartSkidDirection => handling == null || Mathf.Sin(raceStartSkidElapsed
             * handling.startSkidSwerveFrequency * Mathf.PI * 2f) >= 0f ? 1 : -1;
@@ -174,6 +191,8 @@ namespace GrannyRacer.Walker
                     heatSettings.coolingDelay, heatSettings.coolingPerSecond,
                     heatSettings.replacementDuration, heatSettings.replacementTapReduction,
                     heatSettings.postReplacementHeat);
+                // The frame that reaches 100% must stop the rocket, too.
+                IsBoosting &= !heat.IsBurnedOut;
             }
 
             if (visualRoot != null && handling != null)
@@ -216,10 +235,21 @@ namespace GrannyRacer.Walker
             }
 
             grounded = Physics.SphereCast(transform.position + transform.up * 0.1f, handling.groundProbeRadius,
-                -transform.up, out _, handling.groundProbeDistance, Physics.DefaultRaycastLayers,
+                -transform.up, out var groundHit, handling.groundProbeDistance, Physics.DefaultRaycastLayers,
                 QueryTriggerInteraction.Ignore);
+            IsOffRoad = grounded && (offRoadLayers.value & (1 << groundHit.collider.gameObject.layer)) != 0;
 
             var velocity = body.linearVelocity;
+            if (pendingTrackBoost > 0f)
+            {
+                if (!heat.IsBurnedOut)
+                {
+                    var gain = Mathf.Min(pendingTrackBoost, Mathf.Max(0f, stats.BoostMaximumSpeed - Vector3.Dot(velocity, transform.forward)));
+                    body.AddForce(transform.forward * gain, ForceMode.VelocityChange);
+                }
+                pendingTrackBoost = 0f;
+            }
+            if (trackBoostRemaining > 0f) trackBoostRemaining = Mathf.Max(0f, trackBoostRemaining - Time.fixedDeltaTime);
             var forwardSpeed = Vector3.Dot(velocity, transform.forward);
             var lateralSpeed = Vector3.Dot(velocity, transform.right);
             var startSkidding = raceStartSkidRemaining > 0f;
@@ -277,16 +307,27 @@ namespace GrannyRacer.Walker
                 acceleration *= handling.startSkidAccelerationScale;
                 speedLimit *= handling.startSkidSpeedScale;
             }
-            if (heat.IsBurnedOut && heatSettings != null)
-            {
-                speedLimit *= heatSettings.burnoutSpeedScale;
-            }
-            if ((drift.BoostRemaining > 0f || raceStartBoostRemaining > 0f) && driveInput >= 0f)
+            if ((drift.BoostRemaining > 0f || raceStartBoostRemaining > 0f || trackBoostRemaining > 0f) && driveInput >= 0f)
             {
                 // The exit boost is worth nothing if the normal cap claws the speed straight
                 // back, so it raises the ceiling for as long as it lasts.
                 speedLimit = Mathf.Max(speedLimit, stats.BoostMaximumSpeed);
             }
+            else if (IsOffRoad && !IsBoosting)
+            {
+                speedLimit *= offRoadSpeedScale;
+            }
+            // A reduced acceleration ceiling alone never slowed an already-fast racer.
+            // Burnout wins over start, drift and track boosts, and preserves forward motion.
+            var deceleration = IsOffRoad ? handling.braking : handling.boostReleaseDeceleration;
+            if (heat.IsBurnedOut && heatSettings != null)
+            {
+                speedLimit = Mathf.Min(speedLimit, stats.MaximumSpeed * heatSettings.burnoutSpeedScale);
+                deceleration = heatSettings.burnoutDeceleration;
+            }
+            if (forwardSpeed > speedLimit && driveInput >= 0f)
+                body.AddForce(-transform.forward * Mathf.Min(deceleration,
+                    (forwardSpeed - speedLimit) / Time.fixedDeltaTime), ForceMode.Acceleration);
             if (Mathf.Abs(forwardSpeed) < speedLimit || Mathf.Sign(driveInput) != Mathf.Sign(forwardSpeed))
             {
                 body.AddForce(transform.forward * (driveInput * acceleration), ForceMode.Acceleration);
@@ -297,7 +338,7 @@ namespace GrannyRacer.Walker
                 body.AddForce(-transform.forward * (input.Brake * handling.braking), ForceMode.Acceleration);
             }
             else if (Mathf.Approximately(driveInput, 0f) && Mathf.Abs(forwardSpeed) > 0.1f
-                && drift.BoostRemaining <= 0f)
+                && drift.BoostRemaining <= 0f && trackBoostRemaining <= 0f)
             {
                 // The collider is frictionless so PhysX cannot cancel the drive force, so the
                 // coast-down has to be applied explicitly.
@@ -308,6 +349,8 @@ namespace GrannyRacer.Walker
             }
 
             var grip = IsBoosting ? stats.LateralGrip * handling.boostGripScale : stats.LateralGrip;
+            if (heatSettings != null && HeatStage == SlipperHeatStage.Critical)
+                grip *= heatSettings.criticalGripScale;
             if (drift.IsDrifting) grip *= handling.driftGripScale;
             else if (brakeSlide || startSkidding) grip *= handling.skidGripScale;
             body.AddForce(-transform.right * (lateralSpeed * grip), ForceMode.Acceleration);
@@ -352,7 +395,7 @@ namespace GrannyRacer.Walker
                 input.Steer);
 
             var impulse = drift.ConsumeBoostImpulse();
-            if (impulse > 0f)
+            if (impulse > 0f && !heat.IsBurnedOut)
             {
                 body.AddForce(transform.forward * impulse, ForceMode.VelocityChange);
             }
@@ -378,6 +421,8 @@ namespace GrannyRacer.Walker
 
         public void ResetToSpawn()
         {
+            trackBoostRemaining = 0f;
+            pendingTrackBoost = 0f;
             overturnedSeconds = 0f;
             body.position = spawnPosition;
             body.rotation = spawnRotation;

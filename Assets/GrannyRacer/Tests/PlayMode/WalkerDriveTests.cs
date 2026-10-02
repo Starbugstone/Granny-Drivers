@@ -99,6 +99,44 @@ namespace GrannyRacer.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator BurnoutSlowsTheBoostedRacerAndFreshSlippersRestoreBoost()
+        {
+            yield return LoadPocScene();
+            // An isolated long test runway lets real physics reach top speed without the
+            // legacy POC's first corner interfering. No velocity is injected into the racer.
+            var runway = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            runway.name = "Heat test runway";
+            runway.transform.position = new Vector3(1000,-.5f,200);
+            runway.transform.localScale = new Vector3(30,1,500);
+            runway.layer = LayerMask.NameToLayer("Track");
+            racer.ResetForRace(new Vector3(1000,.9f,0), Quaternion.identity);
+            yield return new WaitForSeconds(.3f);
+            Press(keyboard.wKey); Press(keyboard.spaceKey);
+            var deadline = Time.time + 6;
+            var topSpeed = 0f;
+            while (racer.HeatStage != SlipperHeatStage.BurnedOut && Time.time < deadline)
+            {
+                topSpeed = Mathf.Max(topSpeed, racer.Speed);
+                yield return null;
+            }
+            Assert.That(topSpeed, Is.GreaterThan(32), "Boost must deliver the configured arcade speed.");
+            Assert.That(racer.HeatStage, Is.EqualTo(SlipperHeatStage.BurnedOut));
+            Assert.That(racer.IsBoosting, Is.False, "Rockets must stop on the burnout frame.");
+            Assert.That(racer.TryApplyTrackBoost(5,1), Is.False, "A boost pad cannot cancel the heat penalty.");
+            InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.W)); InputSystem.Update();
+            yield return new WaitForSeconds(1.4f);
+            Assert.That(racer.Speed, Is.InRange(10f,15f), "Burnout must slow an already-fast racer while keeping her moving.");
+            deadline = Time.time + 3;
+            while (racer.HeatStage == SlipperHeatStage.BurnedOut && Time.time < deadline) yield return null;
+            Assert.That(racer.Heat, Is.LessThan(.3f));
+            Press(keyboard.spaceKey);
+            yield return new WaitForSeconds(.7f);
+            Assert.That(racer.IsBoosting, Is.True);
+            Assert.That(racer.Speed, Is.GreaterThan(32), "Fresh slippers must restore the rocket speed.");
+            Object.Destroy(runway);
+        }
+
+        [UnityTest]
         public IEnumerator WalkerSettlesOnTopOfTheRoadNotBeneathIt()
         {
             yield return LoadPocScene();
