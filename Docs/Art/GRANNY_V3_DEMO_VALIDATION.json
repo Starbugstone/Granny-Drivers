@@ -1,0 +1,75 @@
+{
+  "runs": [
+    {
+      "results": "Logs/test-results-editmode-20261002-214244.xml",
+      "total": 95,
+      "passed": 95,
+      "failed": 0,
+      "failures": []
+    },
+    {
+      "results": "Logs/test-results-playmode-20261002-213243.xml",
+      "total": 46,
+      "passed": 43,
+      "failed": 3,
+      "failures": [
+        {
+          "test": "GrannyRacer.Tests.PlayMode.GrannyFacialAnimationTests.ImportedGrannyDrivesFacialMeshesAndEyeBonesInTheDemoScene",
+          "message": "  Eye gaze curve must animate the rig.\n  Expected: greater than 3\n  But was:  0.0f\n"
+        },
+        {
+          "test": "GrannyRacer.Tests.PlayMode.PocSceneTests.DriveAnimationMovesLegsFasterWithRacerSpeed",
+          "message": "  Drive must visibly animate the legs; Foot_L moved only 0,000 degrees.\n  Expected: greater than 0.25f\n  But was:  0.0f\n"
+        },
+        {
+          "test": "GrannyRacer.Tests.PlayMode.PocSceneTests.IdleAnimationMovesTheGrannyRig",
+          "message": "  Idle must visibly animate the rig; Head moved only 0,000 degrees.\n  Expected: greater than 0.25f\n  But was:  0.0f\n"
+        }
+      ]
+    },
+    {
+      "results": "Logs/test-results-playmode-20261002-214133.xml",
+      "total": 11,
+      "passed": 11,
+      "failed": 0,
+      "failures": []
+    },
+    {
+      "results": "Logs/test-results-playmode-20261002-214948.xml",
+      "total": 46,
+      "passed": 44,
+      "failed": 2,
+      "failures": [
+        {
+          "test": "GrannyRacer.Tests.PlayMode.NeighborhoodPresentationTests.BakedBlenderPropsAnimateAndPauseWithTheRace",
+          "message": "  Expected: less than 0.100000001f\n  But was:  0.978779137f\n"
+        },
+        {
+          "test": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.DriftingPaintsSkidRibbonsThatFadeAwayAfterTheDrift",
+          "message": "  Expected: False\n  But was:  True\n"
+        }
+      ]
+    },
+    {
+      "results": "Logs/test-results-playmode-20261002-215810.xml",
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "failures": [
+        {
+          "test": "GrannyRacer.Tests.PlayMode.NeighborhoodPresentationTests.BakedBlenderPropsAnimateAndPauseWithTheRace",
+          "message": "  Expected: less than 0.100000001f\n  But was:  0.353877425f\n"
+        }
+      ]
+    }
+  ],
+  "build": {
+    "succeeded": true,
+    "errors": 0,
+    "warnings": 1,
+    "log": "Logs/unity-build-development-20261002-214421.log"
+  },
+  "existingFbxGuidsPreserved": 9,
+  "allStagedFbxHashesMatchUnitySources": true,
+  "humanGameplayReviewed": false
+}

@@ -1,0 +1,286 @@
+{
+  "source": "Blender/Source/Characters/CHR_Granny_Expression_v3.blend",
+  "boneCount": 43,
+  "bones": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Eye_L",
+    "Lid_L",
+    "Brow_L",
+    "Eye_R",
+    "Lid_R",
+    "Brow_R",
+    "Jaw",
+    "Hair_Bun",
+    "Shoulder_L",
+    "UpperArm_L",
+    "LowerArm_L",
+    "Hand_L",
+    "Fingers_L",
+    "Thumb_L",
+    "Shoulder_R",
+    "UpperArm_R",
+    "LowerArm_R",
+    "Hand_R",
+    "Fingers_R",
+    "Thumb_R",
+    "Thigh_L",
+    "Shin_L",
+    "Foot_L",
+    "Thigh_R",
+    "Shin_R",
+    "Foot_R",
+    "Skirt_Front",
+    "Skirt_Back",
+    "Skirt_L",
+    "Skirt_R",
+    "Walker_Root",
+    "Caster_L",
+    "Wheel_L",
+    "Rocket_L",
+    "Caster_R",
+    "Wheel_R",
+    "Rocket_R"
+  ],
+  "sockets": [
+    "Slipper_Socket_L",
+    "Hand_Socket_L",
+    "FX_Exhaust_L",
+    "Slipper_Socket_R",
+    "Hand_Socket_R",
+    "FX_Exhaust_R"
+  ],
+  "meshes": [
+    {
+      "name": "CHR_Granny",
+      "triangles": 36936,
+      "dimensionsMetres": [
+        0.6833127737045288,
+        0.533913254737854,
+        1.567000150680542
+      ],
+      "materials": 1,
+      "shapeKeys": [
+        "Basis",
+        "Determined",
+        "Delighted",
+        "Surprised",
+        "Annoyed"
+      ]
+    },
+    {
+      "name": "CHR_Granny_Face",
+      "triangles": 7800,
+      "dimensionsMetres": [
+        0.24509039521217346,
+        0.11905670166015625,
+        0.21391630172729492
+      ],
+      "materials": 1,
+      "shapeKeys": [
+        "Basis",
+        "Determined",
+        "Delighted",
+        "Surprised",
+        "Annoyed",
+        "Blink_L",
+        "Squint_L",
+        "Wide_L",
+        "Blink_R",
+        "Squint_R",
+        "Wide_R"
+      ]
+    },
+    {
+      "name": "VEH_Walker",
+      "triangles": 7728,
+      "dimensionsMetres": [
+        0.8720000386238098,
+        0.8269000053405762,
+        0.972000002861023
+      ],
+      "materials": 1,
+      "shapeKeys": []
+    }
+  ],
+  "animations": {
+    "Idle": {
+      "frames": [
+        0,
+        60
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.940696716308622e-08
+    },
+    "Drive": {
+      "frames": [
+        0,
+        40
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.971687092477304e-08
+    },
+    "TurnLeft": {
+      "frames": [
+        0,
+        30
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 3.332000937312528e-08,
+      "maxFootTargetErrorMetres": 8.972170467768863e-08
+    },
+    "TurnRight": {
+      "frames": [
+        0,
+        30
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.971687092477304e-08
+    },
+    "Boost": {
+      "frames": [
+        0,
+        45
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 6.664001874625056e-08
+    },
+    "HitReact": {
+      "frames": [
+        0,
+        26
+      ],
+      "fps": 30,
+      "loop": false,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.940696716308595e-08
+    },
+    "AttackLeft": {
+      "frames": [
+        0,
+        36
+      ],
+      "fps": 30,
+      "loop": false,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.9406967163086e-08
+    },
+    "AttackRight": {
+      "frames": [
+        0,
+        36
+      ],
+      "fps": 30,
+      "loop": false,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.9406967163086e-08
+    }
+  },
+  "humanReviewed": false,
+  "unityImported": false,
+  "notes": [
+    "Walker and slipper meshes retained.",
+    "All animation authored anew; no runtime IK dependency."
+  ],
+  "previousSourceSha256": "078716db12ad65aa75e637a18ab555127b63809c783ab387392ed8b62f567ea4",
+  "facialActions": {
+    "Idle": {
+      "CHR_Granny": "Idle_CHR_Granny_Face",
+      "CHR_Granny_Face": "Idle_CHR_Granny_Face_Face"
+    },
+    "Drive": {
+      "CHR_Granny": "Drive_CHR_Granny_Face",
+      "CHR_Granny_Face": "Drive_CHR_Granny_Face_Face"
+    },
+    "TurnLeft": {
+      "CHR_Granny": "TurnLeft_CHR_Granny_Face",
+      "CHR_Granny_Face": "TurnLeft_CHR_Granny_Face_Face"
+    },
+    "TurnRight": {
+      "CHR_Granny": "TurnRight_CHR_Granny_Face",
+      "CHR_Granny_Face": "TurnRight_CHR_Granny_Face_Face"
+    },
+    "Boost": {
+      "CHR_Granny": "Boost_CHR_Granny_Face",
+      "CHR_Granny_Face": "Boost_CHR_Granny_Face_Face"
+    },
+    "HitReact": {
+      "CHR_Granny": "HitReact_CHR_Granny_Face",
+      "CHR_Granny_Face": "HitReact_CHR_Granny_Face_Face"
+    },
+    "AttackLeft": {
+      "CHR_Granny": "AttackLeft_CHR_Granny_Face",
+      "CHR_Granny_Face": "AttackLeft_CHR_Granny_Face_Face"
+    },
+    "AttackRight": {
+      "CHR_Granny": "AttackRight_CHR_Granny_Face",
+      "CHR_Granny_Face": "AttackRight_CHR_Granny_Face_Face"
+    },
+    "FacialReview": {
+      "CHR_Granny": "FacialReview_CHR_Granny_Face",
+      "CHR_Granny_Face": "FacialReview_CHR_Granny_Face_Face"
+    }
+  },
+  "textures": [
+    "GrannyV2_Palette.png",
+    "POC_Palette.png"
+  ],
+  "expressions": [
+    "Determined",
+    "Delighted",
+    "Surprised",
+    "Annoyed"
+  ],
+  "eyeRadiusMetres": 0.028,
+  "clips": {
+    "Idle": {
+      "end": 60,
+      "loop": true
+    },
+    "Drive": {
+      "end": 40,
+      "loop": true
+    },
+    "TurnLeft": {
+      "end": 30,
+      "loop": true
+    },
+    "TurnRight": {
+      "end": 30,
+      "loop": true
+    },
+    "Boost": {
+      "end": 45,
+      "loop": true
+    },
+    "HitReact": {
+      "end": 26,
+      "loop": false
+    },
+    "AttackLeft": {
+      "end": 36,
+      "loop": false
+    },
+    "AttackRight": {
+      "end": 36,
+      "loop": false
+    },
+    "FacialReview": {
+      "end": 240,
+      "loop": true
+    }
+  }
+}

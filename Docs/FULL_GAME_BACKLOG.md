@@ -74,3 +74,17 @@ Playbook §14.1 offers two schemes: separate left/right attack buttons, or one a
 plus steering direction. Tracked in [DECISIONS.md](DECISIONS.md) outstanding decisions.
 
 The action map reserves the inputs either way, so this does not block the POC.
+
+### Circuit authoring beyond the demo tool
+
+**Noted:** 2026-09-08, D-19.
+
+The editor circuit builder and its one suburban preset are now explicitly requested demo
+work. An in-game construction UI, player-created track sharing, a campaign track roster,
+and dynamic neighbourhood hazards remain deferred. The initial editor supports planar
+circuits; terrain-conforming lots and grade-separated junctions require a later scoped task.
+
+The additional-tracks and final-audio rows above retain the wider release scope. The owner
+explicitly brought two demo routes, seven neighborhood assets, two decorative Blender
+loops and original arcade sound cues into the current playable tour in [D-21](DECISIONS.md#d-21--expand-the-playable-neighborhood-tour-and-arcade-sound-presentation).
+Further courses, final music/mastering and full-game content remain deferred.

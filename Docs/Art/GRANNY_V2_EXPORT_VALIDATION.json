@@ -1,0 +1,236 @@
+{
+  "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+  "sourceBoneCount": 43,
+  "animations": [
+    {
+      "name": "Idle",
+      "frames": [
+        0,
+        60
+      ],
+      "loop": true,
+      "loopMatrixDelta": 1.4185905456542969e-05,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.940696716308622e-08
+    },
+    {
+      "name": "Drive",
+      "frames": [
+        0,
+        40
+      ],
+      "loop": true,
+      "loopMatrixDelta": 3.725290298461914e-06,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.971687092477304e-08
+    },
+    {
+      "name": "TurnLeft",
+      "frames": [
+        0,
+        30
+      ],
+      "loop": true,
+      "loopMatrixDelta": 6.020069122314453e-06,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 3.332000937312528e-08,
+      "maxFootTargetErrorMetres": 8.972170467768863e-08
+    },
+    {
+      "name": "TurnRight",
+      "frames": [
+        0,
+        30
+      ],
+      "loop": true,
+      "loopMatrixDelta": 5.781650543212891e-06,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.971687092477304e-08
+    },
+    {
+      "name": "Boost",
+      "frames": [
+        0,
+        45
+      ],
+      "loop": true,
+      "loopMatrixDelta": 1.6927719116210938e-05,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 6.664001874625056e-08
+    },
+    {
+      "name": "HitReact",
+      "frames": [
+        0,
+        26
+      ],
+      "loop": false,
+      "loopMatrixDelta": 2.9206275939941406e-06,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.940696716308595e-08
+    },
+    {
+      "name": "AttackLeft",
+      "frames": [
+        0,
+        36
+      ],
+      "loop": false,
+      "loopMatrixDelta": 8.314847946166992e-06,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.9406967163086e-08
+    },
+    {
+      "name": "AttackRight",
+      "frames": [
+        0,
+        36
+      ],
+      "loop": false,
+      "loopMatrixDelta": 8.314847946166992e-06,
+      "rootMotionMetres": 0,
+      "nonFiniteMatrices": 0,
+      "fps": 30,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.9406967163086e-08
+    }
+  ],
+  "exports": [
+    {
+      "file": "Granny_Walker.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "materials": 1,
+          "dimensionsMetres": [
+            0.8719999194145203,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "invalidWeights": 0,
+          "maxInfluences": 1,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0,
+          "boundaryEdges": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 42000,
+          "materials": 1,
+          "dimensionsMetres": [
+            0.6833127737045288,
+            0.5503239631652832,
+            1.5669995546340942
+          ],
+          "invalidWeights": 0,
+          "maxInfluences": 5,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0,
+          "boundaryEdges": 80
+        }
+      ],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@AttackLeft.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@AttackRight.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@Boost.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@Drive.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@HitReact.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@Idle.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@TurnLeft.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    },
+    {
+      "file": "Granny_Walker@TurnRight.fbx",
+      "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+      "bones": 43,
+      "meshes": [],
+      "errors": [],
+      "technicalPass": true,
+      "humanReviewed": false
+    }
+  ],
+  "errors": [],
+  "technicalPass": true,
+  "humanReviewed": false,
+  "unityVerified": false
+}

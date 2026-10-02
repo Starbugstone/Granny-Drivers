@@ -1,0 +1,18 @@
+{
+  "streams": [
+    {
+      "codec_type": "video",
+      "codec_name": "h264",
+      "width": 960,
+      "height": 720,
+      "avg_frame_rate": "24/1",
+      "nb_frames": "384",
+      "pix_fmt": "yuv420p"
+    }
+  ],
+  "format": {
+    "duration": "16.0"
+  },
+  "fullDecodePassed": true,
+  "decoderLog": "Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '[PROJECT_ROOT]/Docs/Art/Previews/Granny_v2/granny_v2_review.mp4':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Lavf61.1.100\n  Duration: 00:00:16.00, start: 0.000000, bitrate: 783 kb/s\n  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, unknown/bt709/iec61966-2-1, progressive), 960x720 [SAR 1:1 DAR 4:3], 780 kb/s, 24 fps, 24 tbr, 12288 tbn (default)\n      Metadata:\n        handler_name    : VideoHandler\n        vendor_id       : [0][0][0][0]\n        encoder         : Lavc61.3.100 libx264\nStream mapping:\n  Stream #0:0 -> #0:0 (h264 (native) -> wrapped_avframe (native))\nPress [q] to stop, [?] for help\nOutput #0, null, to 'pipe:':\n  Metadata:\n    major_brand     : isom\n    minor_version   : 512\n    compatible_brands: isomiso2avc1mp41\n    encoder         : Lavf61.1.100\n  Stream #0:0(und): Video: wrapped_avframe, yuv420p(tv, unknown/bt709/iec61966-2-1, progressive), 960x720 [SAR 1:1 DAR 4:3], q=2-31, 200 kb/s, 24 fps, 24 tbn (default)\n      Metadata:\n        handler_name    : VideoHandler\n        vendor_id       : [0][0][0][0]\n        encoder         : Lavc61.3.100 wrapped_avframe\nframe=  256 fps=0.0 q=-0.0 size=N/A time=00:00:10.66 bitrate=N/A speed=21.2x    \n[out#0/null @ 0x3369ca40] video:165KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nframe=  384 fps=0.0 q=-0.0 Lsize=N/A time=00:00:16.00 bitrate=N/A speed=22.9x    \n"
+}

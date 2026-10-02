@@ -1,0 +1,137 @@
+{
+  "source": "ENV_NeighborhoodExpansion_v1.blend",
+  "unitScale": 1.0,
+  "objects": [
+    {
+      "name": "ENV_PorchHouse",
+      "triangles": 4076,
+      "dimensions": [
+        9.9808,
+        10.6152,
+        4.996
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_StationWagon",
+      "triangles": 3188,
+      "dimensions": [
+        2.16,
+        4.79,
+        1.81
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "ENV_NeighborhoodSchool",
+      "triangles": 2480,
+      "dimensions": [
+        16.6,
+        10.0,
+        4.39
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_PicnicTable",
+      "triangles": 1636,
+      "dimensions": [
+        2.0,
+        2.4,
+        0.9208
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_PlaygroundSlide",
+      "triangles": 2270,
+      "dimensions": [
+        1.48,
+        3.9061,
+        2.7
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_WindSpinner_Base",
+      "triangles": 140,
+      "dimensions": [
+        0.11,
+        0.11,
+        2.5
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_WindSpinner_Rotor",
+      "triangles": 176,
+      "dimensions": [
+        1.7,
+        0.28,
+        1.7
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Seesaw_Base",
+      "triangles": 396,
+      "dimensions": [
+        1.1844,
+        0.2758,
+        0.7865
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Seesaw_Beam",
+      "triangles": 324,
+      "dimensions": [
+        3.5,
+        0.6,
+        0.26
+      ],
+      "materials": [
+        "MAT_NeighborhoodPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    }
+  ],
+  "triangles": 14686,
+  "errors": [],
+  "warnings": [],
+  "technicalPass": true,
+  "humanReviewed": false
+}

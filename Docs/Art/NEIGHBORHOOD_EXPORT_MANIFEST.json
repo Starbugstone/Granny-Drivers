@@ -1,0 +1,102 @@
+{
+  "assets": [
+    {
+      "assetId": "ENV_PorchHouse",
+      "triangles": 4076,
+      "dimensions": [
+        9.980830192565918,
+        10.615157127380371,
+        4.995990753173828
+      ],
+      "materials": 1,
+      "animationSeconds": 0,
+      "source": "Blender\\Source\\Environment\\ENV_NeighborhoodExpansion_v1.blend",
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_StationWagon",
+      "triangles": 3188,
+      "dimensions": [
+        2.1600000858306885,
+        4.789999961853027,
+        1.8099999083922498
+      ],
+      "materials": 1,
+      "animationSeconds": 0,
+      "source": "Blender\\Source\\Environment\\ENV_NeighborhoodExpansion_v1.blend",
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "ENV_NeighborhoodSchool",
+      "triangles": 2480,
+      "dimensions": [
+        16.600000381469727,
+        10.0,
+        4.389999866485596
+      ],
+      "materials": 1,
+      "animationSeconds": 0,
+      "source": "Blender\\Source\\Environment\\ENV_NeighborhoodExpansion_v1.blend",
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_PicnicTable",
+      "triangles": 1636,
+      "dimensions": [
+        2.0,
+        2.4000000953674316,
+        0.9208176545798779
+      ],
+      "materials": 1,
+      "animationSeconds": 0,
+      "source": "Blender\\Source\\Environment\\ENV_NeighborhoodExpansion_v1.blend",
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_PlaygroundSlide",
+      "triangles": 2270,
+      "dimensions": [
+        1.4800000190734863,
+        3.906114339828491,
+        2.700000047683716
+      ],
+      "materials": 1,
+      "animationSeconds": 0,
+      "source": "Blender\\Source\\Environment\\ENV_NeighborhoodExpansion_v1.blend",
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_WindSpinner",
+      "triangles": 316,
+      "dimensions": [
+        1.7000000476837158,
+        0.3149999901652336,
+        3.1500000953674316
+      ],
+      "materials": 1,
+      "animationSeconds": 4,
+      "source": "Blender\\Source\\Environment\\ENV_NeighborhoodExpansion_v1.blend",
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_Seesaw",
+      "triangles": 720,
+      "dimensions": [
+        3.5,
+        0.6000000238418579,
+        1.0062285587191582
+      ],
+      "materials": 1,
+      "animationSeconds": 4,
+      "source": "Blender\\Source\\Environment\\ENV_NeighborhoodExpansion_v1.blend",
+      "validated": false,
+      "humanReviewed": false
+    }
+  ]
+}

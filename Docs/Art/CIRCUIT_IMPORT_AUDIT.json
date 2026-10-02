@@ -1,0 +1,85 @@
+{
+    "assets": [
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/ENV_ColonialHouse.fbx",
+            "triangles": 3292,
+            "materials": 1,
+            "dimensions": {
+                "x": 9.683091163635254,
+                "y": 7.7966508865356449,
+                "z": 8.649999618530274
+            }
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/ENV_Garage.fbx",
+            "triangles": 716,
+            "materials": 1,
+            "dimensions": {
+                "x": 6.680498123168945,
+                "y": 4.696474552154541,
+                "z": 6.6999993324279789
+            }
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/ENV_RanchHouse.fbx",
+            "triangles": 2064,
+            "materials": 1,
+            "dimensions": {
+                "x": 9.682869911193848,
+                "y": 4.750000476837158,
+                "z": 8.649999618530274
+            }
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/PRP_FireHydrant.fbx",
+            "triangles": 920,
+            "materials": 1,
+            "dimensions": {
+                "x": 0.47999998927116396,
+                "y": 0.9800000190734863,
+                "z": 0.4800000488758087
+            }
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/PRP_Hedge.fbx",
+            "triangles": 1400,
+            "materials": 1,
+            "dimensions": {
+                "x": 3.749415397644043,
+                "y": 1.3599998950958253,
+                "z": 0.9520000219345093
+            }
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/PRP_StreetLamp.fbx",
+            "triangles": 560,
+            "materials": 1,
+            "dimensions": {
+                "x": 0.6499999761581421,
+                "y": 5.169999599456787,
+                "z": 1.4398002624511719
+            }
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/PRP_StreetSign.fbx",
+            "triangles": 704,
+            "materials": 1,
+            "dimensions": {
+                "x": 1.5,
+                "y": 2.9000000953674318,
+                "z": 1.500000238418579
+            }
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/SuburbCircuit/PRP_USMailbox.fbx",
+            "triangles": 682,
+            "materials": 1,
+            "dimensions": {
+                "x": 0.5774999856948853,
+                "y": 1.709999918937683,
+                "z": 0.8200001120567322
+            }
+        }
+    ],
+    "humanReviewed": false
+}

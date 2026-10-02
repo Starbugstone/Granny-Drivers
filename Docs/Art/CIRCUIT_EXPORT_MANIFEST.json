@@ -1,0 +1,125 @@
+{
+  "assets": [
+    {
+      "assetId": "ENV_RanchHouse",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\ENV_RanchHouse.fbx",
+      "scale": 1,
+      "triangleCount": 2132,
+      "dimensions": [
+        9.682869911193848,
+        8.649999618530273,
+        4.75
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "ENV_ColonialHouse",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\ENV_ColonialHouse.fbx",
+      "scale": 1,
+      "triangleCount": 3428,
+      "dimensions": [
+        9.683091163635254,
+        8.649999618530273,
+        7.796650409698486
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "ENV_Garage",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\ENV_Garage.fbx",
+      "scale": 1,
+      "triangleCount": 836,
+      "dimensions": [
+        6.6804986000061035,
+        6.699999809265137,
+        4.696474075317383
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_USMailbox",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\PRP_USMailbox.fbx",
+      "scale": 1,
+      "triangleCount": 728,
+      "dimensions": [
+        0.5774999856948853,
+        0.8199999928474426,
+        1.709999918937683
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_FireHydrant",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\PRP_FireHydrant.fbx",
+      "scale": 1,
+      "triangleCount": 920,
+      "dimensions": [
+        0.47999998927116394,
+        0.47999998927116394,
+        0.9800000190734863
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_StreetLamp",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\PRP_StreetLamp.fbx",
+      "scale": 1,
+      "triangleCount": 560,
+      "dimensions": [
+        0.6499999761581421,
+        1.4397999048233032,
+        5.170000076293945
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_StreetSign",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\PRP_StreetSign.fbx",
+      "scale": 1,
+      "triangleCount": 708,
+      "dimensions": [
+        1.5,
+        1.5,
+        2.9000000953674316
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    },
+    {
+      "assetId": "PRP_Hedge",
+      "source": "Blender\\Source\\Environment\\ENV_SuburbCircuit_Kit.blend",
+      "export": "Blender\\Exports\\SuburbCircuit\\PRP_Hedge.fbx",
+      "scale": 1,
+      "triangleCount": 1400,
+      "dimensions": [
+        3.749415397644043,
+        0.9519999027252197,
+        1.3599998950958252
+      ],
+      "materials": 1,
+      "validated": false,
+      "humanReviewed": false
+    }
+  ],
+  "humanReviewed": false
+}

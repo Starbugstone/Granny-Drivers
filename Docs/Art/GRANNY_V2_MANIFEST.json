@@ -1,0 +1,173 @@
+{
+  "source": "Blender\\Source\\Characters\\CHR_Granny_Mischief_v2.blend",
+  "boneCount": 43,
+  "bones": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Eye_L",
+    "Lid_L",
+    "Brow_L",
+    "Eye_R",
+    "Lid_R",
+    "Brow_R",
+    "Jaw",
+    "Hair_Bun",
+    "Shoulder_L",
+    "UpperArm_L",
+    "LowerArm_L",
+    "Hand_L",
+    "Fingers_L",
+    "Thumb_L",
+    "Shoulder_R",
+    "UpperArm_R",
+    "LowerArm_R",
+    "Hand_R",
+    "Fingers_R",
+    "Thumb_R",
+    "Thigh_L",
+    "Shin_L",
+    "Foot_L",
+    "Thigh_R",
+    "Shin_R",
+    "Foot_R",
+    "Skirt_Front",
+    "Skirt_Back",
+    "Skirt_L",
+    "Skirt_R",
+    "Walker_Root",
+    "Caster_L",
+    "Wheel_L",
+    "Rocket_L",
+    "Caster_R",
+    "Wheel_R",
+    "Rocket_R"
+  ],
+  "sockets": [
+    "Slipper_Socket_L",
+    "Hand_Socket_L",
+    "FX_Exhaust_L",
+    "Slipper_Socket_R",
+    "Hand_Socket_R",
+    "FX_Exhaust_R"
+  ],
+  "meshes": [
+    {
+      "name": "CHR_Granny",
+      "triangles": 42000,
+      "vertices": 21302,
+      "dimensionsMetres": [
+        0.6833127737045288,
+        0.5503240823745728,
+        1.567000150680542
+      ],
+      "materials": [
+        "MAT_GrannyV2_Palette"
+      ]
+    },
+    {
+      "name": "VEH_Walker",
+      "triangles": 7728,
+      "vertices": 3978,
+      "dimensionsMetres": [
+        0.8720000386238098,
+        0.8269000053405762,
+        0.972000002861023
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ]
+    }
+  ],
+  "animations": {
+    "Idle": {
+      "frames": [
+        0,
+        60
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.940696716308622e-08
+    },
+    "Drive": {
+      "frames": [
+        0,
+        40
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.971687092477304e-08
+    },
+    "TurnLeft": {
+      "frames": [
+        0,
+        30
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 3.332000937312528e-08,
+      "maxFootTargetErrorMetres": 8.972170467768863e-08
+    },
+    "TurnRight": {
+      "frames": [
+        0,
+        30
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.971687092477304e-08
+    },
+    "Boost": {
+      "frames": [
+        0,
+        45
+      ],
+      "fps": 30,
+      "loop": true,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 6.664001874625056e-08
+    },
+    "HitReact": {
+      "frames": [
+        0,
+        26
+      ],
+      "fps": 30,
+      "loop": false,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.940696716308595e-08
+    },
+    "AttackLeft": {
+      "frames": [
+        0,
+        36
+      ],
+      "fps": 30,
+      "loop": false,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.9406967163086e-08
+    },
+    "AttackRight": {
+      "frames": [
+        0,
+        36
+      ],
+      "fps": 30,
+      "loop": false,
+      "maxHandTargetErrorMetres": 1.4901161193847656e-08,
+      "maxFootTargetErrorMetres": 8.9406967163086e-08
+    }
+  },
+  "humanReviewed": false,
+  "unityImported": false,
+  "notes": [
+    "Walker and slipper meshes retained.",
+    "All animation authored anew; no runtime IK dependency."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+    "assets": [
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/Neighborhood/ENV_NeighborhoodSchool.fbx",
+            "triangles": 2384,
+            "materialSlots": 1,
+            "dimensions": {
+                "x": 16.599998474121095,
+                "y": 4.390000343322754,
+                "z": 10.0
+            },
+            "animationClips": 0,
+            "animationSeconds": 0.0
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/Neighborhood/ENV_PorchHouse.fbx",
+            "triangles": 3796,
+            "materialSlots": 1,
+            "dimensions": {
+                "x": 9.980830192565918,
+                "y": 4.9959917068481449,
+                "z": 10.615157127380371
+            },
+            "animationClips": 0,
+            "animationSeconds": 0.0
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/Neighborhood/PRP_PicnicTable.fbx",
+            "triangles": 1636,
+            "materialSlots": 1,
+            "dimensions": {
+                "x": 2.0,
+                "y": 0.9208178520202637,
+                "z": 2.3999998569488527
+            },
+            "animationClips": 0,
+            "animationSeconds": 0.0
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/Neighborhood/PRP_PlaygroundSlide.fbx",
+            "triangles": 2242,
+            "materialSlots": 1,
+            "dimensions": {
+                "x": 1.4800000190734864,
+                "y": 2.700000286102295,
+                "z": 3.906114339828491
+            },
+            "animationClips": 0,
+            "animationSeconds": 0.0
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/Neighborhood/PRP_Seesaw.fbx",
+            "triangles": 720,
+            "materialSlots": 2,
+            "dimensions": {
+                "x": 3.5,
+                "y": 1.0062285661697388,
+                "z": 0.6000000238418579
+            },
+            "animationClips": 1,
+            "animationSeconds": 4.000000476837158
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/Neighborhood/PRP_StationWagon.fbx",
+            "triangles": 3164,
+            "materialSlots": 1,
+            "dimensions": {
+                "x": 2.1600000858306886,
+                "y": 1.8100004196166993,
+                "z": 4.789999485015869
+            },
+            "animationClips": 0,
+            "animationSeconds": 0.0
+        },
+        {
+            "asset": "Assets/GrannyRacer/Art/Environment/Neighborhood/PRP_WindSpinner.fbx",
+            "triangles": 316,
+            "materialSlots": 2,
+            "dimensions": {
+                "x": 1.7000000476837159,
+                "y": 3.1499998569488527,
+                "z": 0.31500035524368288
+            },
+            "animationClips": 1,
+            "animationSeconds": 4.000000476837158
+        }
+    ],
+    "humanReviewed": false
+}

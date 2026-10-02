@@ -1,0 +1,81 @@
+{
+  "source": "CHR_Granny_Mischief_v2.blend",
+  "unitScale": 1.0,
+  "objects": [
+    {
+      "name": "VEH_Walker",
+      "triangles": 7728,
+      "dimensions": [
+        0.872,
+        0.8269,
+        0.972
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Slipper_Classic",
+      "triangles": 1128,
+      "dimensions": [
+        0.122,
+        0.255,
+        0.109
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Slipper_Bunny",
+      "triangles": 3088,
+      "dimensions": [
+        0.122,
+        0.256,
+        0.1962
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Slipper_Rocket",
+      "triangles": 1228,
+      "dimensions": [
+        0.132,
+        0.255,
+        0.109
+      ],
+      "materials": [
+        "MAT_POC_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "CHR_Granny",
+      "triangles": 42000,
+      "dimensions": [
+        0.6833,
+        0.5503,
+        1.567
+      ],
+      "materials": [
+        "MAT_GrannyV2_Palette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    }
+  ],
+  "triangles": 55172,
+  "errors": [],
+  "warnings": [],
+  "technicalPass": true,
+  "humanReviewed": false
+}

@@ -1,0 +1,740 @@
+{
+  "humanReviewed": false,
+  "runs": [
+    {
+      "results": "Logs/test-results-editmode-20260909-075848.xml",
+      "total": 95,
+      "passed": 95,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "GrannyRacer.Tests.EditMode.CheckpointCrossingTests.OnlyForwardPlaneCrossingsCount(-0.3f,0.2f,8,True)",
+          "result": "Passed",
+          "seconds": 0.031766
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CheckpointCrossingTests.OnlyForwardPlaneCrossingsCount(0.3f,-0.2f,-8,False)",
+          "result": "Passed",
+          "seconds": 0.000433
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CheckpointCrossingTests.OnlyForwardPlaneCrossingsCount(0.3f,0.8f,8,False)",
+          "result": "Passed",
+          "seconds": 0.000314
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CheckpointCrossingTests.OnlyForwardPlaneCrossingsCount(-0.8f,-0.3f,8,False)",
+          "result": "Passed",
+          "seconds": 0.000308
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CheckpointCrossingTests.OnlyForwardPlaneCrossingsCount(0,0.1f,0,False)",
+          "result": "Passed",
+          "seconds": 0.000161
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CheckpointCrossingTests.OnlyForwardPlaneCrossingsCount(0,0.1f,1,True)",
+          "result": "Passed",
+          "seconds": 0.000241
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.ClearanceAccountsForTheWholeAssetAndTheOppositeRoad",
+          "result": "Passed",
+          "seconds": 0.03486
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RecipeBuildsUseTheirOwnPersistentMeshFolder",
+          "result": "Passed",
+          "seconds": 0.211529
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RejectsCrossingRoute",
+          "result": "Passed",
+          "seconds": 0.003892
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RejectsDuplicateClosingPointBeforeSplineGeneration",
+          "result": "Passed",
+          "seconds": 0.001482
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RejectsInvalidWidth(float.NaN)",
+          "result": "Passed",
+          "seconds": 0.002561
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RejectsInvalidWidth(float.PositiveInfinity)",
+          "result": "Passed",
+          "seconds": 0.000792
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RejectsInvalidWidth(2)",
+          "result": "Passed",
+          "seconds": 0.000723
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RejectsMissingFinishCheckpoint",
+          "result": "Passed",
+          "seconds": 0.001237
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.RejectsUnsupportedElevationInsteadOfLeavingFloatingLots",
+          "result": "Passed",
+          "seconds": 0.001248
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.ShortcutCannotSkipARequiredGate",
+          "result": "Passed",
+          "seconds": 0.032386
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.CircuitBuilderTests.SquarePresetProducesAnOrderedClosedRoadWithSpaceToBrake",
+          "result": "Passed",
+          "seconds": 0.029089
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.AirborneTimeKeepsAnEngagedDriftButBanksNoCharge",
+          "result": "Passed",
+          "seconds": 0.003584
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.ChargeClimbsThroughRedYellowThenBlue",
+          "result": "Passed",
+          "seconds": 0.001361
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.CounterSteeringChargesSlowerThanSteeringIntoTheDrift",
+          "result": "Passed",
+          "seconds": 0.004923
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.DroppingBelowTheMinimumSpeedEndsTheDrift",
+          "result": "Passed",
+          "seconds": 0.00096
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.EachTierReleasesAStrongerBoost",
+          "result": "Passed",
+          "seconds": 0.000715
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.GroundContactDuringTakeOffIsNotALanding",
+          "result": "Passed",
+          "seconds": 0.000777
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.HoppingTooSlowDoesNotArmADrift",
+          "result": "Passed",
+          "seconds": 0.000919
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.LandingStraightAndStayingStraightGivesUpOnTheDrift",
+          "result": "Passed",
+          "seconds": 0.000705
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.LandingStraightStillEngagesIfTheStickTurnsInWithinTheWindow",
+          "result": "Passed",
+          "seconds": 0.001063
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.ReleasingBeforeRedGivesNoBoost",
+          "result": "Passed",
+          "seconds": 0.000908
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.ReleasingTheButtonInTheAirCancelsTheArmedHop",
+          "result": "Passed",
+          "seconds": 0.000728
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.ResetClearsArmedHopsDriftsAndBoosts",
+          "result": "Passed",
+          "seconds": 0.000868
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.SteeringTheOtherWayMidDriftDoesNotFlipTheCommittedDirection",
+          "result": "Passed",
+          "seconds": 0.000532
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.TheBoostIsHandedOutOnceAndThenExpires",
+          "result": "Passed",
+          "seconds": 0.001147
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.TheDriftEngagesOnLandingInTheDirectionSteeredThen",
+          "result": "Passed",
+          "seconds": 0.000717
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.TheDriftLineRampsInRatherThanSnapping",
+          "result": "Passed",
+          "seconds": 0.001278
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.DriftModelTests.TheHopArmsTheDriftButDoesNotStartIt",
+          "result": "Passed",
+          "seconds": 0.000756
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.GrannyRacerStatsTests.BalancedProfilePreservesBaseHandling",
+          "result": "Passed",
+          "seconds": 0.001319
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.GrannyRacerStatsTests.NegativeRuntimeMultipliersCannotInvertPhysics",
+          "result": "Passed",
+          "seconds": 0.000714
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.GrannyRacerStatsTests.ProfileChangesEveryRelevantPartOfTheDrivingLoop",
+          "result": "Passed",
+          "seconds": 0.001133
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.GreyboxTrackGeometryTests.RoadEdgesStraddleTheWaypointByHalfItsWidth",
+          "result": "Passed",
+          "seconds": 0.001559
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.GreyboxTrackGeometryTests.RoadRibbonClosesTheLoop",
+          "result": "Passed",
+          "seconds": 0.004031
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.GreyboxTrackGeometryTests.RoadTrianglesFaceUpwards",
+          "result": "Passed",
+          "seconds": 0.001823
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.NeighborhoodLayoutTests.DoglegRoutesHaveContinuousValidatedRoadsAndOrderedSectors(False,6)",
+          "result": "Passed",
+          "seconds": 0.017116
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.NeighborhoodLayoutTests.DoglegRoutesHaveContinuousValidatedRoadsAndOrderedSectors(True,8)",
+          "result": "Passed",
+          "seconds": 0.03064
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.ProjectConventionsTests.EveryAssetFolderIsUnderARecognisedTopLevelFolder",
+          "result": "Passed",
+          "seconds": 0.003642
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.ProjectConventionsTests.GameAssetsLiveUnderGrannyRacerFolder",
+          "result": "Passed",
+          "seconds": 0.000792
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.ProjectConventionsTests.NoScriptsSitDirectlyInAssetsRoot",
+          "result": "Passed",
+          "seconds": 0.000845
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.QuietSundayLayoutTests.CheckpointsAreOrderedAndEvenlySpread",
+          "result": "Passed",
+          "seconds": 0.005388
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.QuietSundayLayoutTests.LapIsLongEnoughToSeparateItsCorners",
+          "result": "Passed",
+          "seconds": 0.001796
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.QuietSundayLayoutTests.RouteContainsACornerTooTightToTakeAtTopSpeed",
+          "result": "Passed",
+          "seconds": 0.002494
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.QuietSundayLayoutTests.RouteOffersAWideStraightABottleneckAndRealElevation",
+          "result": "Passed",
+          "seconds": 0.001331
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.QuietSundayLayoutTests.ShortcutIsShorterThanTheRoadItBypassesAndSkipsNoCheckpoint",
+          "result": "Passed",
+          "seconds": 0.002941
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.QuietSundayLayoutTests.ShortcutMouthsLandOnTheAuthoredControlPoints",
+          "result": "Passed",
+          "seconds": 0.002123
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceProgressTests.CheckpointsMustBeCrossedInOrder",
+          "result": "Passed",
+          "seconds": 0.001068
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceProgressTests.LapCompletesOnlyAfterFullOrderedLoop",
+          "result": "Passed",
+          "seconds": 0.000584
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceProgressTests.PositionMathSupportsMultipleRacers",
+          "result": "Passed",
+          "seconds": 0.000987
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceProgressTests.RaceFinishesAtConfiguredLapTarget",
+          "result": "Passed",
+          "seconds": 0.000551
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.AnEarlyRevCannotBeErasedByReleasingAndTryingAgain",
+          "result": "Passed",
+          "seconds": 0.001093
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.FirstThrottlePressSelectsTheExpectedStart(2.76f,Skid)",
+          "result": "Passed",
+          "seconds": 0.000838
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.FirstThrottlePressSelectsTheExpectedStart(2.75f,Turbo)",
+          "result": "Passed",
+          "seconds": 0.000427
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.FirstThrottlePressSelectsTheExpectedStart(2.01f,Turbo)",
+          "result": "Passed",
+          "seconds": 0.000273
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.FirstThrottlePressSelectsTheExpectedStart(2.0f,Boost)",
+          "result": "Passed",
+          "seconds": 0.000503
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.FirstThrottlePressSelectsTheExpectedStart(0.1f,Boost)",
+          "result": "Passed",
+          "seconds": 0.000318
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.NoThrottleAtGoMeansNoStartEffect",
+          "result": "Passed",
+          "seconds": 0.000616
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.RaceStartModelTests.ReleasingBeforeGoCancelsTheReward",
+          "result": "Passed",
+          "seconds": 0.000827
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.APoolAlwaysHasAtLeastOneRibbon",
+          "result": "Passed",
+          "seconds": 0.000664
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.ARibbonIsRecycledOnceItsFadeHasElapsed",
+          "result": "Passed",
+          "seconds": 0.001173
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.EachSkidGetsItsOwnRibbon",
+          "result": "Passed",
+          "seconds": 0.000713
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.OneSkidDrawsIntoOneRibbon",
+          "result": "Passed",
+          "seconds": 0.001043
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.ReleasingWithNothingActiveIsHarmless",
+          "result": "Passed",
+          "seconds": 0.000913
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.ResetReturnsEveryRibbonToTheFreePool",
+          "result": "Passed",
+          "seconds": 0.000886
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.RibbonsAreRecycledOldestReleaseFirst",
+          "result": "Passed",
+          "seconds": 0.000616
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SkidMarkPoolTests.TheRibbonBeingDrawnIntoIsNeverRecycled",
+          "result": "Passed",
+          "seconds": 0.000687
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SlipperHeatModelTests.BoostingAccumulatesDeterministicHeat",
+          "result": "Passed",
+          "seconds": 0.001015
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SlipperHeatModelTests.BurnoutKeepsHeatUntilReplacementCompletes",
+          "result": "Passed",
+          "seconds": 0.000801
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SlipperHeatModelTests.ContextTapsShortenReplacement",
+          "result": "Passed",
+          "seconds": 0.000608
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.SlipperHeatModelTests.CoolingWaitsForDelayThenReducesHeat",
+          "result": "Passed",
+          "seconds": 0.000515
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackDefinitionTests.ClosedSplineWrapsAtOne",
+          "result": "Passed",
+          "seconds": 0.003047
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.ARingOfEvenlySpacedPointsIsLeftAlone",
+          "result": "Passed",
+          "seconds": 0.001132
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.CoincidentControlPointsDoNotProduceInvalidPositions",
+          "result": "Passed",
+          "seconds": 0.00297
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.ControlPointIndicesStayInLapOrder",
+          "result": "Passed",
+          "seconds": 0.001706
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.EveryControlPointSurvivesAtItsReportedIndex",
+          "result": "Passed",
+          "seconds": 0.002113
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.GeneratedPointsAreNeverCheckpoints",
+          "result": "Passed",
+          "seconds": 0.002275
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.NoFacetTurnsSharplyEnoughToReadAsACorner",
+          "result": "Passed",
+          "seconds": 0.0035
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.NoGapExceedsTheRequestedSpacing",
+          "result": "Passed",
+          "seconds": 0.003892
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.NonPositiveBudgetsAreRejected",
+          "result": "Passed",
+          "seconds": 0.001477
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.TooFewControlPointsIsRejected",
+          "result": "Passed",
+          "seconds": 0.001112
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.TrackLayoutBuilderTests.WidthsStayWithinTheAuthoredRange",
+          "result": "Passed",
+          "seconds": 0.002715
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.BrakeBecomesGentlerReverseInputWhenStopped",
+          "result": "Passed",
+          "seconds": 0.000718
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.CounterSteeringRunsNearlyStraightWithoutEndingTheDrift",
+          "result": "Passed",
+          "seconds": 0.001164
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.DriftSteerHoldsItsLineAndCannotBeSteeredInsideOut",
+          "result": "Passed",
+          "seconds": 0.000951
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.SkidRequiresSpeedBrakeAndSteeringTogether",
+          "result": "Passed",
+          "seconds": 0.00081
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.SteeringIntoADriftBeatsCounteringIt",
+          "result": "Passed",
+          "seconds": 0.001852
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.SteeringScale_DoesNotFallFurtherAboveTopSpeed",
+          "result": "Passed",
+          "seconds": 0.000726
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.SteeringScale_IsFullAtRest",
+          "result": "Passed",
+          "seconds": 0.001014
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.SteeringScale_ReachesConfiguredScaleAtTopSpeed",
+          "result": "Passed",
+          "seconds": 0.000478
+        },
+        {
+          "name": "GrannyRacer.Tests.EditMode.WalkerHandlingMathTests.TheMinimumHoldFloorsAnOverpoweredCounterSteer",
+          "result": "Passed",
+          "seconds": 0.000724
+        }
+      ]
+    },
+    {
+      "results": "Logs/test-results-playmode-20260909-080052.xml",
+      "total": 45,
+      "passed": 45,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.BoostPanelAcceleratesAForwardRacerAndRestartClearsIt",
+          "result": "Passed",
+          "seconds": 5.376014
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.DrivewayBranchRejoinsTheSameOrderedCheckpointSequence",
+          "result": "Passed",
+          "seconds": 36.159682
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.EntireRoadAndSidewalksHaveGroundIncludingTheClosingSeam",
+          "result": "Passed",
+          "seconds": 0.771694
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.ExpectedGateRejectsBackwardEntryAndAcceptsAForwardJump",
+          "result": "Passed",
+          "seconds": 5.538811
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.LawnSlowsTheRacerAndABoostCanCarryItAcross",
+          "result": "Passed",
+          "seconds": 4.309786
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.MapleGardensHasContinuousPavementAndAPlayableOrderedLap",
+          "result": "Passed",
+          "seconds": 38.299809
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.PhysicalControllerCanCompleteAnOrderedLapOnTheGeneratedCircuit",
+          "result": "Passed",
+          "seconds": 38.691209
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.CircuitDrivingTests.SchoolRunHasContinuousPavementAndAPlayableOrderedLap",
+          "result": "Passed",
+          "seconds": 48.982037
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.NeighborhoodPresentationTests.BakedBlenderPropsAnimateAndPauseWithTheRace",
+          "result": "Passed",
+          "seconds": 1.599055
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.NeighborhoodPresentationTests.ControllerCanOpenChooseAndLoadATrackWithoutAMouse",
+          "result": "Passed",
+          "seconds": 1.975014
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.NeighborhoodPresentationTests.RaceAudioDistinguishesLaunchGateLapFinishAndPausesLoops",
+          "result": "Passed",
+          "seconds": 3.98973
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.NeighborhoodPresentationTests.TourLoadsSelectedTrackFromPauseAndRejectsInvalidDestinations",
+          "result": "Passed",
+          "seconds": 1.841594
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PlayerRacerInputTests.HoldingDProducesPositiveSteer",
+          "result": "Passed",
+          "seconds": 0.175326
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PlayerRacerInputTests.HoldingSProducesBrake",
+          "result": "Passed",
+          "seconds": 0.018717
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PlayerRacerInputTests.HoldingUpArrowProducesThrottle",
+          "result": "Passed",
+          "seconds": 0.011215
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PlayerRacerInputTests.HoldingWProducesThrottle",
+          "result": "Passed",
+          "seconds": 0.009001
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PlayerRacerInputTests.LeftShiftProducesOneJumpPress",
+          "result": "Passed",
+          "seconds": 0.01191
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PlayerRacerInputTests.ThrottleAndSteerReadTogether",
+          "result": "Passed",
+          "seconds": 0.01221
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocCompletionTests.BlenderSceneryPreservesItsImportedUpAxis",
+          "result": "Passed",
+          "seconds": 0.882961
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocCompletionTests.FallingBelowTheCourseRecoversToTheLastCheckpoint",
+          "result": "Passed",
+          "seconds": 3.811665
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocCompletionTests.PauseFreezesCountdownAndResumesIt",
+          "result": "Passed",
+          "seconds": 1.099968
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocCompletionTests.ThreeOrderedLapsFinishAndCanRestartWithoutReloading",
+          "result": "Passed",
+          "seconds": 4.241899
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocCompletionTests.TuningUsesAnIndependentCopyAndRestoresTheAsset",
+          "result": "Passed",
+          "seconds": 0.975584
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.AnimatedModelRemainsAtMetreScale",
+          "result": "Passed",
+          "seconds": 0.930463
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.AnimatedModelRemainsUpright",
+          "result": "Passed",
+          "seconds": 0.974231
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.BoostHeatAndSkidEffectsAreWiredToRigSockets",
+          "result": "Passed",
+          "seconds": 1.09853
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.CameraUsesClosePocFraming",
+          "result": "Passed",
+          "seconds": 1.127334
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.DriveAnimationMovesLegsFasterWithRacerSpeed",
+          "result": "Passed",
+          "seconds": 2.577126
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.IdleAnimationMovesTheGrannyRig",
+          "result": "Passed",
+          "seconds": 2.206597
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.ManualResetRestoresTheLatestResetPose",
+          "result": "Passed",
+          "seconds": 1.192059
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.MergedModelSlippersAndVoiceAreWiredIntoTheRacer",
+          "result": "Passed",
+          "seconds": 1.397919
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.OrderedCheckpointsAdvanceRaceAndUpdateReset",
+          "result": "Passed",
+          "seconds": 4.576634
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.PocSceneTests.RacerAndRaceControllerSpawnConfigured",
+          "result": "Passed",
+          "seconds": 1.218673
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.RaceStartPlayModeTests.HoldingThrottleTooEarlyProducesWheelspinAndSmoke",
+          "result": "Passed",
+          "seconds": 4.175104
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.RaceStartPlayModeTests.PressingInsidePerfectWindowProducesTurboAndRocketEffects",
+          "result": "Passed",
+          "seconds": 4.039309
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.BoostingActuallyEmitsParticlesAtAVisibleSize",
+          "result": "Passed",
+          "seconds": 4.454659
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.BrakingAndSteeringAtSpeedStartsASkid",
+          "result": "Passed",
+          "seconds": 4.795484
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.DriftingPaintsSkidRibbonsThatFadeAwayAfterTheDrift",
+          "result": "Passed",
+          "seconds": 10.247952
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.JumpButtonAddsAControlledUpwardImpulse",
+          "result": "Passed",
+          "seconds": 3.774057
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.ReleasingAChargedDriftGrantsASpeedBoost",
+          "result": "Passed",
+          "seconds": 6.409305
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.TheHopArmsTheDriftAndTheLandingStartsIt",
+          "result": "Passed",
+          "seconds": 6.074459
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.ThrottleAcceleratesTheWalkerForward",
+          "result": "Passed",
+          "seconds": 4.282318
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.WalkerCoastsDownWithNoThrottle",
+          "result": "Passed",
+          "seconds": 4.493703
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.WalkerColliderIsFrictionless",
+          "result": "Passed",
+          "seconds": 3.687482
+        },
+        {
+          "name": "GrannyRacer.Tests.PlayMode.WalkerDriveTests.WalkerSettlesOnTopOfTheRoadNotBeneathIt",
+          "result": "Passed",
+          "seconds": 4.89204
+        }
+      ]
+    }
+  ],
+  "build": {
+    "log": "Logs/unity-build-development-20260909-080659.log",
+    "exitCode": 0,
+    "result": "Succeeded",
+    "errors": 0,
+    "warnings": 1,
+    "sizeMB": 217,
+    "executable": "Builds/Windows-Development/GrannyRacer.exe"
+  },
+  "player": {
+    "log": "Logs/neighborhood-player-review.log",
+    "exitCode": 0,
+    "resolution": [
+      1280,
+      720
+    ],
+    "coursesCaptured": 3,
+    "humanReviewed": false
+  }
+}

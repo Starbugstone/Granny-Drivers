@@ -1,0 +1,10 @@
+{
+    "recipe": "Assets/GrannyRacer/Settings/Circuit_SchoolRun.asset",
+    "scene": "Assets/GrannyRacer/Scenes/Tracks/Circuit_SchoolRun.unity",
+    "samples": 434,
+    "lapMetres": 1070.91552734375,
+    "tightestRadius": 14.304030418395996,
+    "checkpoints": 8,
+    "authoredExtras": 5,
+    "humanReviewed": false
+}

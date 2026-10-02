@@ -1,0 +1,10 @@
+{
+    "recipe": "Assets/GrannyRacer/Settings/Circuit_SuburbSquare.asset",
+    "scene": "Assets/GrannyRacer/Scenes/Tracks/Circuit_SuburbSquare.unity",
+    "samples": 324,
+    "lapMetres": 849.05859375,
+    "tightestRadius": 13.09471321105957,
+    "checkpoints": 7,
+    "authoredExtras": 0,
+    "humanReviewed": false
+}

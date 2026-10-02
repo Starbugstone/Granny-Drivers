@@ -1,0 +1,10 @@
+{
+    "recipe": "Assets/GrannyRacer/Settings/Circuit_MapleGardens.asset",
+    "scene": "Assets/GrannyRacer/Scenes/Tracks/Circuit_MapleGardens.unity",
+    "samples": 330,
+    "lapMetres": 828.2225952148438,
+    "tightestRadius": 14.609565734863282,
+    "checkpoints": 6,
+    "authoredExtras": 5,
+    "humanReviewed": false
+}

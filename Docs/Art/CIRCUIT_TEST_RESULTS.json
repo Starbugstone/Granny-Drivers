@@ -1,0 +1,40 @@
+{
+  "runs": [
+    {
+      "mode": "editmode",
+      "results": "Logs/test-results-editmode-20260908-233300.xml",
+      "total": "93",
+      "passed": "93",
+      "failed": "0",
+      "skipped": "0"
+    },
+    {
+      "mode": "playmode",
+      "results": "Logs/test-results-playmode-20260908-232603.xml",
+      "total": "39",
+      "passed": "39",
+      "failed": "0",
+      "skipped": "0"
+    }
+  ],
+  "humanReviewed": false,
+  "earlierIntermittentFailure": "RaceStartPlayModeTests.PressingInsidePerfectWindowProducesTurboAndRocketEffects: Expected Turbo, But was None; passed isolated and final full rerun.",
+  "build": {
+    "log": "Logs/unity-build-development-20260908-233043.log",
+    "result": "Succeeded",
+    "errors": 0,
+    "warnings": 1,
+    "sizeMB": 177,
+    "wrapperExitCode": 143
+  },
+  "playerReview": {
+    "log": "Logs/circuit-player-review.log",
+    "exitCode": 0,
+    "resolution": [
+      1280,
+      720
+    ],
+    "state": "Racing",
+    "grounded": true
+  }
+}

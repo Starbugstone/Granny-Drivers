@@ -1,0 +1,56 @@
+{
+  "humanHandlingReviewed": false,
+  "humanVisualAudioReviewed": false,
+  "tests": [
+    {
+      "scope": "EditMode",
+      "results": "Logs/test-results-editmode-20261002-225913.xml",
+      "total": 96,
+      "passed": 96,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "PlayMode full",
+      "results": "Logs/test-results-playmode-20261002-224653.xml",
+      "total": 48,
+      "passed": 48,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "PlayMode UI follow-up",
+      "results": "Logs/test-results-playmode-20261002-230104.xml",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "EditMode capture-only focus correction",
+      "results": "Logs/test-results-editmode-20261002-230642.xml",
+      "total": 96,
+      "passed": 96,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "build": {
+    "log": "Logs/unity-build-development-20261002-230730.log",
+    "result": "Succeeded",
+    "errors": 0,
+    "warnings": [
+      "Access token is empty. Native symbols will not be uploaded for this build. Please make sure you are signed in to the Unity Cloud."
+    ]
+  },
+  "initialFailure": {
+    "results": "Logs/test-results-playmode-20261002-223833.xml",
+    "passed": 47,
+    "failed": 1,
+    "message": "Expected: less than 10\nBut was: 10.819994f",
+    "resolution": "Lawn test now measures slowdown relative to configured cruise speed; final full suite passed."
+  },
+  "standaloneCapture": "Docs/Art/GRANNY_ARCADE_LAP_CAPTURE.json",
+  "playerLog": "Logs/granny-lap-20261002-230842.log",
+  "playerExitCode": 0
+}

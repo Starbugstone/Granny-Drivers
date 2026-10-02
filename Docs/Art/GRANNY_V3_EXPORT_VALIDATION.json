@@ -1,0 +1,878 @@
+{
+  "source": "Blender/Source/Characters/CHR_Granny_Expression_v3.blend",
+  "sourceSha256": "4ea6a868fd48d98a30c5f6802b993b5771ced8ca60221e9613a36cbe54cbc004",
+  "sourceBoneCount": 43,
+  "animations": [
+    {
+      "clip": "Idle",
+      "frames": [
+        0,
+        60
+      ],
+      "loop": true,
+      "boneLoopDelta": 1.4185905456542969e-05,
+      "shapeLoopDelta": 0.0,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "Drive",
+      "frames": [
+        0,
+        40
+      ],
+      "loop": true,
+      "boneLoopDelta": 3.725290298461914e-06,
+      "shapeLoopDelta": 0.0,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "TurnLeft",
+      "frames": [
+        0,
+        30
+      ],
+      "loop": true,
+      "boneLoopDelta": 6.020069122314453e-06,
+      "shapeLoopDelta": 0.0,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "TurnRight",
+      "frames": [
+        0,
+        30
+      ],
+      "loop": true,
+      "boneLoopDelta": 5.781650543212891e-06,
+      "shapeLoopDelta": 0.0,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "Boost",
+      "frames": [
+        0,
+        45
+      ],
+      "loop": true,
+      "boneLoopDelta": 1.6927719116210938e-05,
+      "shapeLoopDelta": 0.0,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "HitReact",
+      "frames": [
+        0,
+        26
+      ],
+      "loop": false,
+      "boneLoopDelta": 2.9206275939941406e-06,
+      "shapeLoopDelta": 1.4997597572211942e-32,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "AttackLeft",
+      "frames": [
+        0,
+        36
+      ],
+      "loop": false,
+      "boneLoopDelta": 8.314847946166992e-06,
+      "shapeLoopDelta": 1.4997597572211942e-32,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "AttackRight",
+      "frames": [
+        0,
+        36
+      ],
+      "loop": false,
+      "boneLoopDelta": 8.314847946166992e-06,
+      "shapeLoopDelta": 1.4997597572211942e-32,
+      "rootMotionMetres": 0
+    },
+    {
+      "clip": "FacialReview",
+      "frames": [
+        0,
+        240
+      ],
+      "loop": true,
+      "boneLoopDelta": 0.0,
+      "shapeLoopDelta": 0.0,
+      "rootMotionMetres": 0
+    }
+  ],
+  "eyelidClosureChecks": [
+    {
+      "frame": 199,
+      "side": "L",
+      "frontSurfacePaletteIndex": 0,
+      "pupilCovered": true
+    },
+    {
+      "frame": 199,
+      "side": "R",
+      "frontSurfacePaletteIndex": 0,
+      "pupilCovered": true
+    },
+    {
+      "frame": 212,
+      "side": "L",
+      "frontSurfacePaletteIndex": 0,
+      "pupilCovered": true
+    },
+    {
+      "frame": 227,
+      "side": "R",
+      "frontSurfacePaletteIndex": 0,
+      "pupilCovered": true
+    }
+  ],
+  "exports": [
+    {
+      "file": "Granny_Walker.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.8719999194145203,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.6833127737045288,
+            0.5339131355285645,
+            1.5669994354248047
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24509039521217346,
+            0.11905661225318909,
+            0.21391642093658447
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 0,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@AttackLeft.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24509039521217346,
+            0.12240687012672424,
+            0.21226608753204346
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.7112994194030762,
+            0.5380585193634033,
+            1.5306509733200073
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 5.960464477539063e-08,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@AttackRight.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24509039521217346,
+            0.12240687012672424,
+            0.21226608753204346
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.7112994194030762,
+            0.5380585193634033,
+            1.5306509733200073
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 5.960464477539063e-08,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@Boost.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24509963393211365,
+            0.12266571819782257,
+            0.22899878025054932
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.6984603404998779,
+            0.5345706939697266,
+            1.347273349761963
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 0,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@Drive.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.7112994194030762,
+            0.5380585193634033,
+            1.5306508541107178
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.2450903058052063,
+            0.12396536767482758,
+            0.20848941802978516
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 0,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@FacialReview.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.6833127737045288,
+            0.5339130759239197,
+            1.5669996738433838
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24509039521217346,
+            0.11905661225318909,
+            0.21391630172729492
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 5.960464477539063e-08,
+      "maximumFacialGeometryDeltaMetres": 6.678978934360202e-07,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@HitReact.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.7112994194030762,
+            0.5380585193634033,
+            1.5306509733200073
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24509039521217346,
+            0.12240687012672424,
+            0.21226608753204346
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 2.9802322387695312e-08,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@Idle.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.7112994194030762,
+            0.5380585193634033,
+            1.5306509733200073
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24509039521217346,
+            0.12240687012672424,
+            0.21226608753204346
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 7.105427357601002e-15,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@TurnLeft.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24167689681053162,
+            0.14354698359966278,
+            0.21309888362884521
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.7033311128616333,
+            0.5327160358428955,
+            1.5283206701278687
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 0,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    },
+    {
+      "file": "Granny_Walker@TurnRight.fbx",
+      "bones": 43,
+      "meshes": [
+        {
+          "name": "CHR_Granny",
+          "triangles": 36936,
+          "dimensionsMetres": [
+            0.7031176090240479,
+            0.532709538936615,
+            1.5283206701278687
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed"
+          ],
+          "maxInfluences": 4,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "VEH_Walker",
+          "triangles": 7728,
+          "dimensionsMetres": [
+            0.871999979019165,
+            0.8269001841545105,
+            0.9720001220703125
+          ],
+          "materials": 1,
+          "shapeKeys": [],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        },
+        {
+          "name": "CHR_Granny_Face",
+          "triangles": 7800,
+          "dimensionsMetres": [
+            0.24167443811893463,
+            0.14361603558063507,
+            0.21426379680633545
+          ],
+          "materials": 1,
+          "shapeKeys": [
+            "Basis",
+            "Determined",
+            "Delighted",
+            "Surprised",
+            "Annoyed",
+            "Blink_L",
+            "Squint_L",
+            "Wide_L",
+            "Blink_R",
+            "Squint_R",
+            "Wide_R"
+          ],
+          "maxInfluences": 1,
+          "invalidWeights": 0,
+          "inconsistentWindingEdges": 0,
+          "degenerateFaces": 0
+        }
+      ],
+      "combinedCharacterTriangles": 44736,
+      "maximumFacialCurveDelta": 0,
+      "maximumFacialGeometryDeltaMetres": 0,
+      "errors": [],
+      "technicalPass": true
+    }
+  ],
+  "errors": [],
+  "technicalPass": true,
+  "humanReviewed": false,
+  "unityVerified": false
+}

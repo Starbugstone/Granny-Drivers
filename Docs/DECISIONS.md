@@ -476,3 +476,163 @@ legitimate choice. Recording it because it has consequences that should be chose
 
 **No action taken** — `.gitignore` is outside this session's assigned task. Raised for the
 user to confirm or correct.
+
+---
+
+## D-19 — Editable suburban circuit and extensible environment palette
+
+**Date:** 2026-09-08
+**Status:** Implementation explicitly requested by the owner; human acceptance pending
+**Extends:** D-03, D-04, D-18
+
+The owner requested a complete circuit builder with its 3D assets, support for additional
+assets, and a square US-suburb identity. This admits an editor recipe/palette workflow and
+one supplied suburban circuit as demo iteration tooling. It does not approve a full track
+roster, in-game UGC editor, networking or dynamic hazards.
+
+Recipes store ordered control points, checkpoints, lot settings, seed, prefab palette and
+manual placements. The editor validates and bakes continuous roads, curb ramps, sidewalks,
+containment, checkpoints and a playable race using the existing POC controller/camera/HUD.
+Each recipe owns GUID-scoped generated assets; the original Quiet Sunday scene and road
+mesh remain independent. The generated circuit becomes the first enabled build scene and
+other configured scenes remain available. Recipe edits survive rebuilds; direct generated
+scene edits are explicitly disposable.
+
+The initial builder supports planar circuits. Unsupported elevation and invalid geometry
+are rejected before generation. Decorative prefabs are bounded away from the race corridor
+and their instance colliders are removed. Adding scenery cannot introduce a hidden physics
+obstacle. Deliberate racing hazards remain a separate gameplay feature.
+
+A small Blender expansion adds two houses, a garage, mailbox, hydrant, lamp, sign and hedge
+to the existing neighbourhood kit. New source names preserve previous Blender work.
+Unity import settings are configured and audited through editor APIs. D-09's local-only
+Blender source policy still applies. Visual and handling acceptance remains with the owner.
+
+See `CIRCUIT_BUILDER.md` for authoring, reproduction, validation and remaining limits.
+
+---
+
+## D-20 — Kart-racing references inform circuit mechanics and checkpoint fairness
+
+**Date:** 2026-09-08
+**Status:** Explicit owner steering during D-19; human gameplay acceptance pending
+
+The owner asked to use Mario Kart as a reference for interesting gameplay, level design,
+and checkpoint passage. D-19 now includes offset boost panels, legal sidewalk lines,
+a narrow garden cut, boost-sensitive lawn slowdown, and forward-only sector passage.
+Existing charged drifts and timed launches are reused.
+
+Each circuit gate spans all legal lane widths and hops. It requires a forward plane crossing
+and the expected checkpoint index. A shortcut may not skip an intermediate required gate;
+both routes share progression at the merge. Recovery puts the racer beyond the last valid
+gate without granting new progress. Next-gate and sector-time feedback explain progression.
+Original Quiet Sunday keeps its legacy trigger configuration and its existing scene.
+
+This is an adaptation of general racing ideas with original suburban assets. It is not a
+reproduction of Nintendo's content or an assertion about its internal checkpoint algorithm.
+AI, items/combat, slipstreaming, anti-gravity, gliding and elimination modes remain outside
+this circuit-builder implementation. References and test evidence live in `CIRCUIT_BUILDER.md`.
+
+---
+
+## D-21 — Expand the playable neighborhood tour and arcade sound presentation
+
+**Date:** 2026-09-09
+**Status:** Owner explicitly requested more suburban tracks, Blender assets/animations and refined arcade sounds; human acceptance pending
+
+Scope review (§31.6): route variety and audible race feedback improve the playable demo
+loop. The current milestone has not been accepted by a human. Procedural neighborhood
+models and original synthesized sound effects are suitable review assets. Maintenance is
+bounded by reusing the existing circuit recipe, checkpoint, road and race systems. This is
+an explicitly requested demo expansion, not authorization for multiplayer, combat or a city simulator.
+
+Add Maple Gardens (six sectors, an inward dogleg) and School Run (eight sectors, a double
+inward dogleg) beside Sunday Block Party. All remain planar closed roads with rounded
+corners, continuous sidewalks, boost panels and ordered forward checkpoint passage.
+The tour is selectable from the race pause/finish menu. Existing recipes survive rebuilds.
+
+Seven Blender assets add porch houses, a station wagon, school building, picnic table,
+slide, wind spinner and seesaw. Two decorative four-second loops are baked in Blender and
+imported through explicit Unity animation settings. They never control physics or race
+progression. Existing character animations and source files are preserved.
+
+Original PCM synthesis supplies countdown, GO, sector, lap/final-lap/finish cues, rolling,
+skid, rocket, impact, burnout and garden ambience. Race cues take priority and duck loops.
+Inspector mix values and the pause-menu effects slider support listening review; original
+voice recordings remain untouched. Music and a full mixer-group authoring pass remain
+explicitly deferred. No new packages, borrowed music or cloned voices are introduced.
+
+See `NEIGHBORHOOD_TOUR.md` for reproduction, measurements, verification and limitations.
+
+
+---
+
+## D-22 — Faster arcade racing and a consequential slipper heat cycle
+
+**Date:** 2026-10-02
+**Status:** Owner requested faster arcade handling and identified a driveway overlapping the street; human handling acceptance pending
+
+Scope review (§31.6): speed, steering, boost risk and readable road junctions directly improve
+the demo loop. This milestone is not human-accepted. A faster-looking video alone cannot
+substitute for actual controller tuning. Maintenance is bounded to existing handling/heat,
+presentation, circuit mesh generation and the development review driver. No full-game
+systems or packages are added.
+
+Shared base tuning is 24 m/s cruise and 35 m/s boost, with 36/52 m/s² acceleration, stronger
+speed-dependent steering and lateral grip. A released boost sheds excess speed gradually.
+Holding boost heats slippers at 24%/second; releasing permits 32%/second cooling after 0.2s.
+Critical heat slightly reduces grip. Burnout actively slows the racer toward 55% cruise
+speed for a 2.4s automatic replacement; boost pads and drift impulses cannot bypass it.
+Camera FOV, look-ahead, HUD critical warnings and speed-scaled audio expose the cycle.
+
+The generated garden driveway previously extended into the street at y=0.002, drawing its
+brown material over asphalt. Its triangles now exclude the actual road footprint and meet
+the curb ramp at the street edge. Existing mesh assets retain their GUIDs; scenes are not
+rebuilt. A geometry regression rejects any positive-area driveway/asphalt intersection.
+
+The development-only lap driver now uses full throttle, corner braking and sustained boost
+through the normal gamepad/physics/checkpoint path. It demonstrates one burnout, then manages
+heat. The capture includes live facial animation and records Unity's actual audio output.
+The review is automated, not a human playtest or a real-time performance benchmark.
+See `Art/ARCADE_SPEED_REVIEW.md` for validation and the new full-lap recording.
+
+---
+
+## D-23 — Consolidate the current proof of concept on main
+
+**Date:** 2026-10-03
+**Status:** Owner authorized committing the current working version to main and retiring the other branches
+
+The owner clarified that the current playable version is the desired mainline. This is a
+proof of concept, not an accepted alpha milestone. Preserve the current granny model and
+facial animations, circuits, arcade handling, road repair, audio, tests and review media.
+No older branch should replace that working version.
+
+Both `t3code/add-granny-reaction-sounds` and `t3code/create-granny-walker-asset` are already
+ancestors of the current version and were merged through PRs #1 and #2. All 25 MP3 files
+left in the older audio worktree match the current production files byte-for-byte. There
+is no additional feature work to merge from those branches. Advance main from
+`prototype/poc-art-refresh` after committing the local work and validating it, then remove
+the three obsolete local and remote branch names. Preserve existing history and local
+worktree contents; the existing merged PR records remain on GitHub.
+
+Scope review (§31.6): this consolidates the existing demo, adds no gameplay scope and
+reduces branch maintenance. Human milestone acceptance remains pending. Existing art is
+retained; no replacement assets or full-game systems are needed. Blender sources, local
+tooling and Windows builds remain ignored under the existing repository policy.
+
+The requested persistent slipper damage and roadside refitting mechanic is specified in
+[issue #3](https://github.com/Starbugstone/Granny-Drivers/issues/3). It is still pending
+implementation; consolidation does not change the current automatic replacement behaviour.
+
+Consolidation validation on 2026-10-03: EditMode **96/96** passed
+(`Logs/test-results-editmode-20261003-000747.xml`), PlayMode **48/48** passed
+(`Logs/test-results-playmode-20261003-000856.xml`), and the Windows development build
+succeeded with **0 errors and 1 warning** (`Logs/unity-build-development-20261003-001442.log`).
+The warning was: `Access token is empty. Native symbols will not be uploaded for this build. Please make sure you are signed in to the Unity Cloud.`
+
+The broad Git whitespace check reported generated formatting such as
+`Assets/GrannyRacer/Art/Environment/Neighborhood.meta:6: trailing whitespace.` and CRLF
+line endings in exported reports. Those authored artifacts were preserved. The separate
+handwritten C#, Python and Markdown check passed with CRLF endings allowed. Game content
+hashes were unchanged during consolidation; human handling/art/audio acceptance is still pending.

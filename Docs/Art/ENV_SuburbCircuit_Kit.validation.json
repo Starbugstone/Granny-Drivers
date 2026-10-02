@@ -1,0 +1,123 @@
+{
+  "source": "ENV_SuburbCircuit_Kit.blend",
+  "unitScale": 1.0,
+  "objects": [
+    {
+      "name": "ENV_RanchHouse",
+      "triangles": 2132,
+      "dimensions": [
+        9.6829,
+        8.65,
+        4.75
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "ENV_ColonialHouse",
+      "triangles": 3428,
+      "dimensions": [
+        9.6831,
+        8.65,
+        7.7967
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "ENV_Garage",
+      "triangles": 836,
+      "dimensions": [
+        6.6805,
+        6.7,
+        4.6965
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_USMailbox",
+      "triangles": 728,
+      "dimensions": [
+        0.5775,
+        0.82,
+        1.71
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_FireHydrant",
+      "triangles": 920,
+      "dimensions": [
+        0.48,
+        0.48,
+        0.98
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_StreetLamp",
+      "triangles": 560,
+      "dimensions": [
+        0.65,
+        1.4398,
+        5.17
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_StreetSign",
+      "triangles": 708,
+      "dimensions": [
+        1.5,
+        1.5,
+        2.9
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    },
+    {
+      "name": "PRP_Hedge",
+      "triangles": 1400,
+      "dimensions": [
+        3.7494,
+        0.952,
+        1.36
+      ],
+      "materials": [
+        "MAT_SuburbPalette"
+      ],
+      "uvLayers": 1,
+      "invalidWeights": 0
+    }
+  ],
+  "triangles": 10712,
+  "errors": [],
+  "warnings": [],
+  "technicalPass": true,
+  "humanReviewed": false
+}
