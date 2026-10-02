@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7bf53d6848dbb44a254fc2a4c9d8e1, type: 3}
   m_Name: SlipperHeat_POC
   m_EditorClassIdentifier: GrannyRacer.Runtime::GrannyRacer.Walker.SlipperHeatSettings
-  heatPerSecond: 0.31
+  heatPerSecond: 0.24
   collisionHeat: 0.08
-  coolingDelay: 0.55
-  coolingPerSecond: 0.2
+  coolingDelay: 0.2
+  coolingPerSecond: 0.32
   warningThreshold: 0.6
   criticalThreshold: 0.8
-  replacementDuration: 3.4
+  replacementDuration: 2.4
   replacementTapReduction: 0.18
   postReplacementHeat: 0.2
-  burnoutSpeedScale: 0.38
+  burnoutSpeedScale: 0.55
+  burnoutDeceleration: 18
+  criticalGripScale: 0.88

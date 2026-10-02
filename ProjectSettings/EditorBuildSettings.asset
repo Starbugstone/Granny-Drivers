@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/GrannyRacer/Scenes/Tracks/Circuit_SuburbSquare.unity
+    guid: 5c087d8db177fb94c8148269cd66181e
+  - enabled: 1
+    path: Assets/GrannyRacer/Scenes/Tracks/Circuit_MapleGardens.unity
+    guid: f086f78c6f0d4fd40adbdd7279a7e48e
+  - enabled: 1
+    path: Assets/GrannyRacer/Scenes/Tracks/Circuit_SchoolRun.unity
+    guid: bc58a6adabc298b4d85d9c553cdfd47c
+  - enabled: 1
     path: Assets/GrannyRacer/Scenes/Tracks/POC_QuietSunday.unity
     guid: 4e8dd7863f01c614dbba0525312cb959
   m_configObjects:

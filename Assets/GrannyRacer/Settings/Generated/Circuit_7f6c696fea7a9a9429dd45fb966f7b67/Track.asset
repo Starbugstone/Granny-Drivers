@@ -1,0 +1,1009 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573e28e1f97664447954e6051fffd641, type: 3}
+  m_Name: Track
+  m_EditorClassIdentifier: GrannyRacer.Runtime::GrannyRacer.Racing.TrackDefinition
+  waypoints:
+  - position: {x: 0, y: 0, z: -90}
+    width: 14
+    checkpoint: 1
+  - position: {x: 3.0150673, y: 0, z: -90.004745}
+    width: 13.995696
+    checkpoint: 0
+  - position: {x: 6.109662, y: 0, z: -90.01848}
+    width: 13.983101
+    checkpoint: 0
+  - position: {x: 9.276749, y: 0, z: -90.04038}
+    width: 13.9626875
+    checkpoint: 0
+  - position: {x: 12.509318, y: 0, z: -90.069664}
+    width: 13.93493
+    checkpoint: 0
+  - position: {x: 15.800356, y: 0, z: -90.105545}
+    width: 13.900302
+    checkpoint: 0
+  - position: {x: 19.142862, y: 0, z: -90.147255}
+    width: 13.859278
+    checkpoint: 0
+  - position: {x: 22.529789, y: 0, z: -90.19396}
+    width: 13.812331
+    checkpoint: 0
+  - position: {x: 25.954132, y: 0, z: -90.244896}
+    width: 13.759935
+    checkpoint: 0
+  - position: {x: 29.408897, y: 0, z: -90.29927}
+    width: 13.702564
+    checkpoint: 0
+  - position: {x: 32.88703, y: 0, z: -90.356255}
+    width: 13.640693
+    checkpoint: 0
+  - position: {x: 36.381542, y: 0, z: -90.415115}
+    width: 13.574793
+    checkpoint: 0
+  - position: {x: 39.885414, y: 0, z: -90.47503}
+    width: 13.505341
+    checkpoint: 0
+  - position: {x: 43.391624, y: 0, z: -90.53519}
+    width: 13.432808
+    checkpoint: 0
+  - position: {x: 46.89315, y: 0, z: -90.59483}
+    width: 13.357669
+    checkpoint: 0
+  - position: {x: 50.382988, y: 0, z: -90.65316}
+    width: 13.280398
+    checkpoint: 0
+  - position: {x: 53.85412, y: 0, z: -90.709366}
+    width: 13.201468
+    checkpoint: 0
+  - position: {x: 57.29951, y: 0, z: -90.76268}
+    width: 13.121355
+    checkpoint: 0
+  - position: {x: 60.712173, y: 0, z: -90.812294}
+    width: 13.04053
+    checkpoint: 0
+  - position: {x: 64.08508, y: 0, z: -90.85742}
+    width: 12.959469
+    checkpoint: 0
+  - position: {x: 67.411194, y: 0, z: -90.89726}
+    width: 12.878645
+    checkpoint: 0
+  - position: {x: 70.68353, y: 0, z: -90.93104}
+    width: 12.798532
+    checkpoint: 0
+  - position: {x: 73.89505, y: 0, z: -90.95798}
+    width: 12.719602
+    checkpoint: 0
+  - position: {x: 77.038765, y: 0, z: -90.97723}
+    width: 12.642331
+    checkpoint: 0
+  - position: {x: 80.107605, y: 0, z: -90.988045}
+    width: 12.567192
+    checkpoint: 0
+  - position: {x: 83.09461, y: 0, z: -90.989624}
+    width: 12.494659
+    checkpoint: 0
+  - position: {x: 85.99275, y: 0, z: -90.981186}
+    width: 12.425207
+    checkpoint: 0
+  - position: {x: 88.79499, y: 0, z: -90.96192}
+    width: 12.359307
+    checkpoint: 0
+  - position: {x: 91.49433, y: 0, z: -90.931046}
+    width: 12.297436
+    checkpoint: 0
+  - position: {x: 94.083755, y: 0, z: -90.88776}
+    width: 12.240065
+    checkpoint: 0
+  - position: {x: 96.55624, y: 0, z: -90.8313}
+    width: 12.187669
+    checkpoint: 0
+  - position: {x: 98.90478, y: 0, z: -90.76083}
+    width: 12.140722
+    checkpoint: 0
+  - position: {x: 101.12233, y: 0, z: -90.675575}
+    width: 12.099698
+    checkpoint: 0
+  - position: {x: 103.20189, y: 0, z: -90.574776}
+    width: 12.06507
+    checkpoint: 0
+  - position: {x: 105.13647, y: 0, z: -90.45761}
+    width: 12.0373125
+    checkpoint: 0
+  - position: {x: 106.919014, y: 0, z: -90.32328}
+    width: 12.016899
+    checkpoint: 0
+  - position: {x: 108.542534, y: 0, z: -90.17101}
+    width: 12.004304
+    checkpoint: 0
+  - position: {x: 110, y: 0, z: -90}
+    width: 12
+    checkpoint: 0
+  - position: {x: 112.3429, y: 0, z: -89.67995}
+    width: 12
+    checkpoint: 0
+  - position: {x: 114.25846, y: 0, z: -89.37192}
+    width: 12
+    checkpoint: 0
+  - position: {x: 115.8643, y: 0, z: -89.02895}
+    width: 12
+    checkpoint: 0
+  - position: {x: 117.27808, y: 0, z: -88.60405}
+    width: 12
+    checkpoint: 0
+  - position: {x: 118.617455, y: 0, z: -88.05023}
+    width: 12
+    checkpoint: 0
+  - position: {x: 120, y: 0, z: -87.32051}
+    width: 12
+    checkpoint: 0
+  - position: {x: 121.42887, y: 0, z: -86.400024}
+    width: 12
+    checkpoint: 0
+  - position: {x: 122.81053, y: 0, z: -85.323364}
+    width: 12
+    checkpoint: 0
+  - position: {x: 124.11779, y: 0, z: -84.11779}
+    width: 12
+    checkpoint: 0
+  - position: {x: 125.323364, y: 0, z: -82.81055}
+    width: 12
+    checkpoint: 0
+  - position: {x: 126.40001, y: 0, z: -81.42886}
+    width: 12
+    checkpoint: 0
+  - position: {x: 127.32051, y: 0, z: -80}
+    width: 12
+    checkpoint: 0
+  - position: {x: 128.0529, y: 0, z: -78.59719}
+    width: 12
+    checkpoint: 0
+  - position: {x: 128.61258, y: 0, z: -77.21327}
+    width: 12
+    checkpoint: 0
+  - position: {x: 129.04335, y: 0, z: -75.75493}
+    width: 12
+    checkpoint: 0
+  - position: {x: 129.38898, y: 0, z: -74.128815}
+    width: 12
+    checkpoint: 0
+  - position: {x: 129.69325, y: 0, z: -72.24162}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130, y: 0, z: -70}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.19258, y: 0, z: -68.299324}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.35237, y: 0, z: -66.39178}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.4816, y: 0, z: -64.29114}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.58243, y: 0, z: -62.0112}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.65706, y: 0, z: -59.565758}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.70766, y: 0, z: -56.9686}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.73642, y: 0, z: -54.23353}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.74554, y: 0, z: -51.37433}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.73715, y: 0, z: -48.404793}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.71349, y: 0, z: -45.338715}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.67673, y: 0, z: -42.18988}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.62903, y: 0, z: -38.97209}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.57263, y: 0, z: -35.699127}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.50963, y: 0, z: -32.384796}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.44229, y: 0, z: -29.042875}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.37277, y: 0, z: -25.687164}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.30322, y: 0, z: -22.331459}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.23589, y: 0, z: -18.989532}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.17293, y: 0, z: -15.675201}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.11649, y: 0, z: -12.402245}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.0688, y: 0, z: -9.184447}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.03206, y: 0, z: -6.035619}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.00838, y: 0, z: -2.9695415}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130, y: 0, z: 0}
+    width: 12
+    checkpoint: 1
+  - position: {x: 130.00836, y: 0, z: 2.969533}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.03204, y: 0, z: 6.0356183}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.0688, y: 0, z: 9.184447}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.11649, y: 0, z: 12.402235}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.17291, y: 0, z: 15.6751995}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.23589, y: 0, z: 18.989532}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.30322, y: 0, z: 22.331448}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.37276, y: 0, z: 25.687164}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.44229, y: 0, z: 29.042873}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.50961, y: 0, z: 32.38479}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.57262, y: 0, z: 35.69913}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.62903, y: 0, z: 38.972084}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.67671, y: 0, z: 42.189884}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.71347, y: 0, z: 45.3387}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.73715, y: 0, z: 48.40479}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.74551, y: 0, z: 51.374325}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.7364, y: 0, z: 54.233517}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.70766, y: 0, z: 56.968597}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.65704, y: 0, z: 59.565758}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.58243, y: 0, z: 62.01119}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.4816, y: 0, z: 64.29112}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.35239, y: 0, z: 66.39177}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130.19255, y: 0, z: 68.299324}
+    width: 12
+    checkpoint: 0
+  - position: {x: 130, y: 0, z: 70}
+    width: 12
+    checkpoint: 0
+  - position: {x: 129.69327, y: 0, z: 72.24162}
+    width: 12
+    checkpoint: 0
+  - position: {x: 129.38899, y: 0, z: 74.128815}
+    width: 12
+    checkpoint: 0
+  - position: {x: 129.04335, y: 0, z: 75.75493}
+    width: 12
+    checkpoint: 0
+  - position: {x: 128.61258, y: 0, z: 77.21327}
+    width: 12
+    checkpoint: 0
+  - position: {x: 128.05292, y: 0, z: 78.59718}
+    width: 12
+    checkpoint: 0
+  - position: {x: 127.32051, y: 0, z: 80}
+    width: 12
+    checkpoint: 0
+  - position: {x: 126.40001, y: 0, z: 81.42886}
+    width: 12
+    checkpoint: 0
+  - position: {x: 125.32336, y: 0, z: 82.81053}
+    width: 12
+    checkpoint: 0
+  - position: {x: 124.11779, y: 0, z: 84.11779}
+    width: 12
+    checkpoint: 0
+  - position: {x: 122.81055, y: 0, z: 85.323364}
+    width: 12
+    checkpoint: 0
+  - position: {x: 121.42887, y: 0, z: 86.40001}
+    width: 12
+    checkpoint: 0
+  - position: {x: 120, y: 0, z: 87.32051}
+    width: 12
+    checkpoint: 0
+  - position: {x: 118.56578, y: 0, z: 88.05704}
+    width: 12
+    checkpoint: 0
+  - position: {x: 117.11272, y: 0, z: 88.62582}
+    width: 12
+    checkpoint: 0
+  - position: {x: 115.585266, y: 0, z: 89.06569}
+    width: 12
+    checkpoint: 0
+  - position: {x: 113.927734, y: 0, z: 89.41545}
+    width: 12
+    checkpoint: 0
+  - position: {x: 112.08451, y: 0, z: 89.71394}
+    width: 12
+    checkpoint: 0
+  - position: {x: 110, y: 0, z: 90}
+    width: 12
+    checkpoint: 0
+  - position: {x: 107.90891, y: 0, z: 90.219124}
+    width: 12
+    checkpoint: 0
+  - position: {x: 105.56433, y: 0, z: 90.36824}
+    width: 12
+    checkpoint: 0
+  - position: {x: 102.99932, y: 0, z: 90.45649}
+    width: 12
+    checkpoint: 0
+  - position: {x: 100.24695, y: 0, z: 90.49302}
+    width: 12
+    checkpoint: 0
+  - position: {x: 97.3403, y: 0, z: 90.48694}
+    width: 12
+    checkpoint: 0
+  - position: {x: 94.31241, y: 0, z: 90.44737}
+    width: 12
+    checkpoint: 0
+  - position: {x: 91.19636, y: 0, z: 90.38346}
+    width: 12
+    checkpoint: 0
+  - position: {x: 88.02519, y: 0, z: 90.30434}
+    width: 12
+    checkpoint: 0
+  - position: {x: 84.83198, y: 0, z: 90.21912}
+    width: 12
+    checkpoint: 0
+  - position: {x: 81.649796, y: 0, z: 90.13695}
+    width: 12
+    checkpoint: 0
+  - position: {x: 78.5117, y: 0, z: 90.066956}
+    width: 12
+    checkpoint: 0
+  - position: {x: 75.450745, y: 0, z: 90.01826}
+    width: 12
+    checkpoint: 0
+  - position: {x: 72.5, y: 0, z: 90}
+    width: 12
+    checkpoint: 1
+  - position: {x: 69.54926, y: 0, z: 90.01826}
+    width: 12
+    checkpoint: 0
+  - position: {x: 66.48831, y: 0, z: 90.066956}
+    width: 12
+    checkpoint: 0
+  - position: {x: 63.3502, y: 0, z: 90.13695}
+    width: 12
+    checkpoint: 0
+  - position: {x: 60.168022, y: 0, z: 90.219124}
+    width: 12
+    checkpoint: 0
+  - position: {x: 56.97481, y: 0, z: 90.30433}
+    width: 12
+    checkpoint: 0
+  - position: {x: 53.80365, y: 0, z: 90.38345}
+    width: 12
+    checkpoint: 0
+  - position: {x: 50.687588, y: 0, z: 90.44737}
+    width: 12
+    checkpoint: 0
+  - position: {x: 47.659706, y: 0, z: 90.48693}
+    width: 12
+    checkpoint: 0
+  - position: {x: 44.753036, y: 0, z: 90.49301}
+    width: 12
+    checkpoint: 0
+  - position: {x: 42.00067, y: 0, z: 90.45649}
+    width: 12
+    checkpoint: 0
+  - position: {x: 39.435673, y: 0, z: 90.36824}
+    width: 12
+    checkpoint: 0
+  - position: {x: 37.0911, y: 0, z: 90.21912}
+    width: 12
+    checkpoint: 0
+  - position: {x: 35, y: 0, z: 90}
+    width: 12
+    checkpoint: 0
+  - position: {x: 32.915474, y: 0, z: 89.71396}
+    width: 12
+    checkpoint: 0
+  - position: {x: 31.072268, y: 0, z: 89.41547}
+    width: 12
+    checkpoint: 0
+  - position: {x: 29.414742, y: 0, z: 89.06569}
+    width: 12
+    checkpoint: 0
+  - position: {x: 27.887272, y: 0, z: 88.62582}
+    width: 12
+    checkpoint: 0
+  - position: {x: 26.434235, y: 0, z: 88.05704}
+    width: 12
+    checkpoint: 0
+  - position: {x: 25, y: 0, z: 87.32051}
+    width: 12
+    checkpoint: 0
+  - position: {x: 23.571135, y: 0, z: 86.40001}
+    width: 12
+    checkpoint: 0
+  - position: {x: 22.189463, y: 0, z: 85.323364}
+    width: 12
+    checkpoint: 0
+  - position: {x: 20.882215, y: 0, z: 84.11778}
+    width: 12
+    checkpoint: 0
+  - position: {x: 19.676643, y: 0, z: 82.81054}
+    width: 12
+    checkpoint: 0
+  - position: {x: 18.599987, y: 0, z: 81.428856}
+    width: 12
+    checkpoint: 0
+  - position: {x: 17.679493, y: 0, z: 80}
+    width: 12
+    checkpoint: 0
+  - position: {x: 17.033543, y: 0, z: 78.74416}
+    width: 12
+    checkpoint: 0
+  - position: {x: 16.510283, y: 0, z: 77.44524}
+    width: 12
+    checkpoint: 0
+  - position: {x: 16.08873, y: 0, z: 76.09454}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.747906, y: 0, z: 74.68335}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.466827, y: 0, z: 73.20299}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.22452, y: 0, z: 71.64478}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15, y: 0, z: 70}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.772672, y: 0, z: 67.51525}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.684266, y: 0, z: 64.80293}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.696896, y: 0, z: 61.925102}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.772672, y: 0, z: 58.943825}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.873707, y: 0, z: 55.92118}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.962112, y: 0, z: 52.919205}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15, y: 0, z: 50}
+    width: 12
+    checkpoint: 1
+  - position: {x: 15.037889, y: 0, z: 47.080788}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.126293, y: 0, z: 44.078827}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.227328, y: 0, z: 41.05617}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.303103, y: 0, z: 38.074898}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.315733, y: 0, z: 35.197067}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15.227329, y: 0, z: 32.484753}
+    width: 12
+    checkpoint: 0
+  - position: {x: 15, y: 0, z: 30}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.77548, y: 0, z: 28.355227}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.533172, y: 0, z: 26.797005}
+    width: 12
+    checkpoint: 0
+  - position: {x: 14.252096, y: 0, z: 25.31665}
+    width: 12
+    checkpoint: 0
+  - position: {x: 13.911272, y: 0, z: 23.90546}
+    width: 12
+    checkpoint: 0
+  - position: {x: 13.489717, y: 0, z: 22.554752}
+    width: 12
+    checkpoint: 0
+  - position: {x: 12.9664545, y: 0, z: 21.255827}
+    width: 12
+    checkpoint: 0
+  - position: {x: 12.320507, y: 0, z: 20}
+    width: 12
+    checkpoint: 0
+  - position: {x: 11.400012, y: 0, z: 18.571135}
+    width: 12
+    checkpoint: 0
+  - position: {x: 10.323358, y: 0, z: 17.189463}
+    width: 12
+    checkpoint: 0
+  - position: {x: 9.1177845, y: 0, z: 15.882213}
+    width: 12
+    checkpoint: 0
+  - position: {x: 7.810539, y: 0, z: 14.676641}
+    width: 12
+    checkpoint: 0
+  - position: {x: 6.4288626, y: 0, z: 13.599985}
+    width: 12
+    checkpoint: 0
+  - position: {x: 4.999999, y: 0, z: 12.679491}
+    width: 12
+    checkpoint: 0
+  - position: {x: 3.583165, y: 0, z: 11.945258}
+    width: 12
+    checkpoint: 0
+  - position: {x: 2.1684103, y: 0, z: 11.381514}
+    width: 12
+    checkpoint: 0
+  - position: {x: 0.67922485, y: 0, z: 10.946686}
+    width: 12
+    checkpoint: 0
+  - position: {x: -0.9609003, y: 0, z: 10.599204}
+    width: 12
+    checkpoint: 0
+  - position: {x: -2.8284717, y: 0, z: 10.297499}
+    width: 12
+    checkpoint: 0
+  - position: {x: -5.000001, y: 0, z: 10}
+    width: 12
+    checkpoint: 0
+  - position: {x: -6.887853, y: 0, z: 9.792939}
+    width: 12
+    checkpoint: 0
+  - position: {x: -9.01066, y: 0, z: 9.633167}
+    width: 12
+    checkpoint: 0
+  - position: {x: -11.347061, y: 0, z: 9.516382}
+    width: 12
+    checkpoint: 0
+  - position: {x: -13.875694, y: 0, z: 9.438286}
+    width: 12
+    checkpoint: 0
+  - position: {x: -16.575207, y: 0, z: 9.394581}
+    width: 12
+    checkpoint: 0
+  - position: {x: -19.424236, y: 0, z: 9.380969}
+    width: 12
+    checkpoint: 0
+  - position: {x: -22.40142, y: 0, z: 9.393148}
+    width: 12
+    checkpoint: 0
+  - position: {x: -25.485405, y: 0, z: 9.426823}
+    width: 12
+    checkpoint: 0
+  - position: {x: -28.654827, y: 0, z: 9.477693}
+    width: 12
+    checkpoint: 0
+  - position: {x: -31.888325, y: 0, z: 9.541458}
+    width: 12
+    checkpoint: 0
+  - position: {x: -35.164543, y: 0, z: 9.613822}
+    width: 12
+    checkpoint: 0
+  - position: {x: -38.462128, y: 0, z: 9.690485}
+    width: 12
+    checkpoint: 0
+  - position: {x: -41.759693, y: 0, z: 9.767146}
+    width: 12
+    checkpoint: 0
+  - position: {x: -45.03591, y: 0, z: 9.83951}
+    width: 12
+    checkpoint: 0
+  - position: {x: -48.269413, y: 0, z: 9.903278}
+    width: 12
+    checkpoint: 0
+  - position: {x: -51.43884, y: 0, z: 9.954147}
+    width: 12
+    checkpoint: 0
+  - position: {x: -54.522816, y: 0, z: 9.987821}
+    width: 12
+    checkpoint: 0
+  - position: {x: -57.5, y: 0, z: 10}
+    width: 12
+    checkpoint: 1
+  - position: {x: -60.47718, y: 0, z: 10.01218}
+    width: 12
+    checkpoint: 0
+  - position: {x: -63.561172, y: 0, z: 10.0458555}
+    width: 12
+    checkpoint: 0
+  - position: {x: -66.73059, y: 0, z: 10.0967245}
+    width: 12
+    checkpoint: 0
+  - position: {x: -69.96409, y: 0, z: 10.16049}
+    width: 12
+    checkpoint: 0
+  - position: {x: -73.24032, y: 0, z: 10.232854}
+    width: 12
+    checkpoint: 0
+  - position: {x: -76.53788, y: 0, z: 10.309515}
+    width: 12
+    checkpoint: 0
+  - position: {x: -79.835464, y: 0, z: 10.386179}
+    width: 12
+    checkpoint: 0
+  - position: {x: -83.111694, y: 0, z: 10.458543}
+    width: 12
+    checkpoint: 0
+  - position: {x: -86.34518, y: 0, z: 10.522308}
+    width: 12
+    checkpoint: 0
+  - position: {x: -89.5146, y: 0, z: 10.573177}
+    width: 12
+    checkpoint: 0
+  - position: {x: -92.59857, y: 0, z: 10.606852}
+    width: 12
+    checkpoint: 0
+  - position: {x: -95.57576, y: 0, z: 10.619031}
+    width: 12
+    checkpoint: 0
+  - position: {x: -98.42479, y: 0, z: 10.605419}
+    width: 12
+    checkpoint: 0
+  - position: {x: -101.12429, y: 0, z: 10.561712}
+    width: 12
+    checkpoint: 0
+  - position: {x: -103.65294, y: 0, z: 10.483618}
+    width: 12
+    checkpoint: 0
+  - position: {x: -105.98934, y: 0, z: 10.366836}
+    width: 12
+    checkpoint: 0
+  - position: {x: -108.112144, y: 0, z: 10.20706}
+    width: 12
+    checkpoint: 0
+  - position: {x: -110, y: 0, z: 10}
+    width: 12
+    checkpoint: 0
+  - position: {x: -112.171524, y: 0, z: 9.702501}
+    width: 12
+    checkpoint: 0
+  - position: {x: -114.03909, y: 0, z: 9.400795}
+    width: 12
+    checkpoint: 0
+  - position: {x: -115.679214, y: 0, z: 9.053313}
+    width: 12
+    checkpoint: 0
+  - position: {x: -117.16841, y: 0, z: 8.6184845}
+    width: 12
+    checkpoint: 0
+  - position: {x: -118.583176, y: 0, z: 8.05474}
+    width: 12
+    checkpoint: 0
+  - position: {x: -120, y: 0, z: 7.320507}
+    width: 12
+    checkpoint: 0
+  - position: {x: -121.42886, y: 0, z: 6.400012}
+    width: 12
+    checkpoint: 0
+  - position: {x: -122.810555, y: 0, z: 5.3233576}
+    width: 12
+    checkpoint: 0
+  - position: {x: -124.11778, y: 0, z: 4.117786}
+    width: 12
+    checkpoint: 0
+  - position: {x: -125.323364, y: 0, z: 2.8105402}
+    width: 12
+    checkpoint: 0
+  - position: {x: -126.40001, y: 0, z: 1.4288648}
+    width: 12
+    checkpoint: 0
+  - position: {x: -127.32051, y: 0, z: 0.0000009536743}
+    width: 12
+    checkpoint: 0
+  - position: {x: -128.05862, y: 0, z: -1.4462998}
+    width: 12
+    checkpoint: 0
+  - position: {x: -128.63089, y: 0, z: -2.9258828}
+    width: 12
+    checkpoint: 0
+  - position: {x: -129.07428, y: 0, z: -4.4798975}
+    width: 12
+    checkpoint: 0
+  - position: {x: -129.42563, y: 0, z: -6.1494894}
+    width: 12
+    checkpoint: 0
+  - position: {x: -129.72191, y: 0, z: -7.9758086}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130, y: 0, z: -10.000002}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.21587, y: 0, z: -12.113086}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.34973, y: 0, z: -14.45956}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.41449, y: 0, z: -17.002577}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.42313, y: 0, z: -19.70528}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.38858, y: 0, z: -22.530823}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.32382, y: 0, z: -25.442356}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.24179, y: 0, z: -28.403019}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.15543, y: 0, z: -31.375965}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.0777, y: 0, z: -34.32435}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.0216, y: 0, z: -37.21131}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130, y: 0, z: -40}
+    width: 12
+    checkpoint: 1
+  - position: {x: -130.0216, y: 0, z: -42.788692}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.0777, y: 0, z: -45.67565}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.15543, y: 0, z: -48.624035}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.24179, y: 0, z: -51.596977}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.32382, y: 0, z: -54.557655}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.38858, y: 0, z: -57.469177}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.42313, y: 0, z: -60.294724}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.41449, y: 0, z: -62.99743}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.34973, y: 0, z: -65.54044}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130.21587, y: 0, z: -67.88692}
+    width: 12
+    checkpoint: 0
+  - position: {x: -130, y: 0, z: -70}
+    width: 12
+    checkpoint: 0
+  - position: {x: -129.7219, y: 0, z: -72.02419}
+    width: 12
+    checkpoint: 0
+  - position: {x: -129.42563, y: 0, z: -73.85052}
+    width: 12
+    checkpoint: 0
+  - position: {x: -129.07426, y: 0, z: -75.5201}
+    width: 12
+    checkpoint: 0
+  - position: {x: -128.63092, y: 0, z: -77.07412}
+    width: 12
+    checkpoint: 0
+  - position: {x: -128.05862, y: 0, z: -78.553696}
+    width: 12
+    checkpoint: 0
+  - position: {x: -127.32051, y: 0, z: -80}
+    width: 12
+    checkpoint: 0
+  - position: {x: -126.40001, y: 0, z: -81.42886}
+    width: 12
+    checkpoint: 0
+  - position: {x: -125.32336, y: 0, z: -82.81053}
+    width: 12
+    checkpoint: 0
+  - position: {x: -124.11779, y: 0, z: -84.11779}
+    width: 12
+    checkpoint: 0
+  - position: {x: -122.81055, y: 0, z: -85.323364}
+    width: 12
+    checkpoint: 0
+  - position: {x: -121.42887, y: 0, z: -86.40001}
+    width: 12
+    checkpoint: 0
+  - position: {x: -120, y: 0, z: -87.32051}
+    width: 12
+    checkpoint: 0
+  - position: {x: -118.617455, y: 0, z: -88.05023}
+    width: 12
+    checkpoint: 0
+  - position: {x: -117.27808, y: 0, z: -88.60404}
+    width: 12
+    checkpoint: 0
+  - position: {x: -115.86431, y: 0, z: -89.02895}
+    width: 12
+    checkpoint: 0
+  - position: {x: -114.25845, y: 0, z: -89.37192}
+    width: 12
+    checkpoint: 0
+  - position: {x: -112.34288, y: 0, z: -89.679924}
+    width: 12
+    checkpoint: 0
+  - position: {x: -110, y: 0, z: -90}
+    width: 12
+    checkpoint: 0
+  - position: {x: -108.54254, y: 0, z: -90.17101}
+    width: 12.004304
+    checkpoint: 0
+  - position: {x: -106.919014, y: 0, z: -90.32329}
+    width: 12.016899
+    checkpoint: 0
+  - position: {x: -105.13647, y: 0, z: -90.45761}
+    width: 12.0373125
+    checkpoint: 0
+  - position: {x: -103.201904, y: 0, z: -90.57478}
+    width: 12.06507
+    checkpoint: 0
+  - position: {x: -101.12232, y: 0, z: -90.67559}
+    width: 12.099698
+    checkpoint: 0
+  - position: {x: -98.90478, y: 0, z: -90.76083}
+    width: 12.140722
+    checkpoint: 0
+  - position: {x: -96.556244, y: 0, z: -90.83128}
+    width: 12.187669
+    checkpoint: 0
+  - position: {x: -94.08375, y: 0, z: -90.88776}
+    width: 12.240065
+    checkpoint: 0
+  - position: {x: -91.49435, y: 0, z: -90.931046}
+    width: 12.297436
+    checkpoint: 0
+  - position: {x: -88.795, y: 0, z: -90.96193}
+    width: 12.359307
+    checkpoint: 0
+  - position: {x: -85.99277, y: 0, z: -90.981186}
+    width: 12.425207
+    checkpoint: 0
+  - position: {x: -83.094635, y: 0, z: -90.98965}
+    width: 12.494659
+    checkpoint: 0
+  - position: {x: -80.10762, y: 0, z: -90.98805}
+    width: 12.567192
+    checkpoint: 0
+  - position: {x: -77.03876, y: 0, z: -90.977234}
+    width: 12.642331
+    checkpoint: 0
+  - position: {x: -73.895065, y: 0, z: -90.95796}
+    width: 12.719602
+    checkpoint: 0
+  - position: {x: -70.68352, y: 0, z: -90.931046}
+    width: 12.798532
+    checkpoint: 0
+  - position: {x: -67.411194, y: 0, z: -90.89727}
+    width: 12.878645
+    checkpoint: 0
+  - position: {x: -64.08508, y: 0, z: -90.85742}
+    width: 12.95947
+    checkpoint: 0
+  - position: {x: -60.71218, y: 0, z: -90.8123}
+    width: 13.040531
+    checkpoint: 0
+  - position: {x: -57.29953, y: 0, z: -90.76269}
+    width: 13.121355
+    checkpoint: 0
+  - position: {x: -53.854115, y: 0, z: -90.709366}
+    width: 13.201468
+    checkpoint: 0
+  - position: {x: -50.383, y: 0, z: -90.65317}
+    width: 13.280398
+    checkpoint: 0
+  - position: {x: -46.893154, y: 0, z: -90.59483}
+    width: 13.357669
+    checkpoint: 0
+  - position: {x: -43.391624, y: 0, z: -90.5352}
+    width: 13.432808
+    checkpoint: 0
+  - position: {x: -39.88543, y: 0, z: -90.47503}
+    width: 13.505341
+    checkpoint: 0
+  - position: {x: -36.381546, y: 0, z: -90.415115}
+    width: 13.574793
+    checkpoint: 0
+  - position: {x: -32.887035, y: 0, z: -90.35628}
+    width: 13.640693
+    checkpoint: 0
+  - position: {x: -29.408901, y: 0, z: -90.29927}
+    width: 13.702564
+    checkpoint: 0
+  - position: {x: -25.954134, y: 0, z: -90.24491}
+    width: 13.759935
+    checkpoint: 0
+  - position: {x: -22.529789, y: 0, z: -90.19397}
+    width: 13.812331
+    checkpoint: 0
+  - position: {x: -19.142862, y: 0, z: -90.14728}
+    width: 13.859278
+    checkpoint: 0
+  - position: {x: -15.800358, y: 0, z: -90.10556}
+    width: 13.900302
+    checkpoint: 0
+  - position: {x: -12.509318, y: 0, z: -90.06968}
+    width: 13.93493
+    checkpoint: 0
+  - position: {x: -9.27675, y: 0, z: -90.04038}
+    width: 13.9626875
+    checkpoint: 0
+  - position: {x: -6.109663, y: 0, z: -90.01849}
+    width: 13.983101
+    checkpoint: 0
+  - position: {x: -3.0150673, y: 0, z: -90.00476}
+    width: 13.995696
+    checkpoint: 0
+  laps: 3
+  shortcutStartWaypoint: -1
+  shortcutEndWaypoint: -1
+  shortcutWidth: 4.5

@@ -1,0 +1,157 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6daa1a44b8ad7d64a9489a251aa57e48, type: 3}
+  m_Name: Circuit_SuburbSquare
+  m_EditorClassIdentifier: GrannyRacer.Runtime::GrannyRacer.Racing.CircuitRecipe
+  circuitName: SUNDAY BLOCK PARTY
+  laps: 3
+  seed: 17
+  lotSpacing: 20
+  houseSetback: 14
+  arcadeFeatures: 1
+  drivewayShortcut: 1
+  shortcutStartControl: 5
+  shortcutEndControl: 10
+  shortcutWidth: 4.5
+  controlPoints:
+  - position: {x: 0, y: 0, z: -100}
+    width: 14
+    checkpoint: 1
+  - position: {x: 102, y: 0, z: -100}
+    width: 12
+    checkpoint: 0
+  - position: {x: 111, y: 0, z: -97.588455}
+    width: 12
+    checkpoint: 0
+  - position: {x: 117.588455, y: 0, z: -91}
+    width: 12
+    checkpoint: 1
+  - position: {x: 120, y: 0, z: -82}
+    width: 12
+    checkpoint: 0
+  - position: {x: 120, y: 0, z: 0}
+    width: 12
+    checkpoint: 1
+  - position: {x: 120, y: 0, z: 82}
+    width: 12
+    checkpoint: 0
+  - position: {x: 117.588455, y: 0, z: 91}
+    width: 12
+    checkpoint: 0
+  - position: {x: 111, y: 0, z: 97.588455}
+    width: 12
+    checkpoint: 0
+  - position: {x: 102, y: 0, z: 100}
+    width: 12
+    checkpoint: 0
+  - position: {x: 0, y: 0, z: 100}
+    width: 8
+    checkpoint: 1
+  - position: {x: -102, y: 0, z: 100}
+    width: 8
+    checkpoint: 0
+  - position: {x: -111, y: 0, z: 97.588455}
+    width: 8
+    checkpoint: 0
+  - position: {x: -117.588455, y: 0, z: 91}
+    width: 8
+    checkpoint: 1
+  - position: {x: -120, y: 0, z: 82}
+    width: 8
+    checkpoint: 0
+  - position: {x: -120, y: 0, z: 0}
+    width: 12
+    checkpoint: 1
+  - position: {x: -120, y: 0, z: -82}
+    width: 12
+    checkpoint: 0
+  - position: {x: -117.588455, y: 0, z: -91}
+    width: 12
+    checkpoint: 0
+  - position: {x: -111, y: 0, z: -97.588455}
+    width: 12
+    checkpoint: 1
+  - position: {x: -102, y: 0, z: -100}
+    width: 12
+    checkpoint: 0
+  palette:
+  - label: ENV_ColonialHouse
+    prefab: {fileID: 919132149155446097, guid: f6e0abdfb8df0dd4397e33ae6fb6f772, type: 3}
+    role: 0
+    scale: 1
+    yaw: 0
+  - label: ENV_Garage
+    prefab: {fileID: 919132149155446097, guid: e002deae99828d64bbfda7c92eb0849c, type: 3}
+    role: 0
+    scale: 1
+    yaw: 0
+  - label: ENV_House
+    prefab: {fileID: 919132149155446097, guid: d70941a3cd27bbc4db3ae1b9fa52e902, type: 3}
+    role: 0
+    scale: 1
+    yaw: 0
+  - label: ENV_RanchHouse
+    prefab: {fileID: 919132149155446097, guid: 8337b1274af159443879fab4288a3d26, type: 3}
+    role: 0
+    scale: 1
+    yaw: 0
+  - label: ENV_Tree
+    prefab: {fileID: 919132149155446097, guid: 0136d3b7038299944b7b3961bbd06581, type: 3}
+    role: 1
+    scale: 1
+    yaw: 0
+  - label: PRP_Bench
+    prefab: {fileID: 919132149155446097, guid: fe7fc9eac60ee6547a0ce854149ec221, type: 3}
+    role: 3
+    scale: 1
+    yaw: 0
+  - label: PRP_Bin
+    prefab: {fileID: 919132149155446097, guid: f0dc93a7b043dfe42abc656afd4e971d, type: 3}
+    role: 3
+    scale: 1
+    yaw: 0
+  - label: PRP_Cone
+    prefab: {fileID: 919132149155446097, guid: 45785ad8cc9a6b743814f7d092c0812b, type: 3}
+    role: 3
+    scale: 1
+    yaw: 0
+  - label: PRP_Fence
+    prefab: {fileID: 919132149155446097, guid: 8422a5efcfe3f5041a5e75a779ab43d1, type: 3}
+    role: 2
+    scale: 1
+    yaw: 0
+  - label: PRP_FireHydrant
+    prefab: {fileID: 919132149155446097, guid: 2df86edc21c8c2a429eb092b194655b0, type: 3}
+    role: 3
+    scale: 1
+    yaw: 0
+  - label: PRP_Hedge
+    prefab: {fileID: 919132149155446097, guid: 0e18ed6ff43dc25408991778d549e5c2, type: 3}
+    role: 2
+    scale: 1
+    yaw: 0
+  - label: PRP_StreetLamp
+    prefab: {fileID: 919132149155446097, guid: 4af2a9204f65c894bb2ba1e9f9987e76, type: 3}
+    role: 3
+    scale: 1
+    yaw: 0
+  - label: PRP_StreetSign
+    prefab: {fileID: 919132149155446097, guid: 76a48f99a52ff2940b75e52b9b092755, type: 3}
+    role: 3
+    scale: 1
+    yaw: 0
+  - label: PRP_USMailbox
+    prefab: {fileID: 919132149155446097, guid: 708c392370c8b6145a38e0b3f8dab1df, type: 3}
+    role: 3
+    scale: 1
+    yaw: 0
+  extraAssets: []

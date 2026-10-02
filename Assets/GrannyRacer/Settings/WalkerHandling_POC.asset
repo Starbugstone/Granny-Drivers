@@ -12,23 +12,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ff3defee9d90d4d83e6fd7a6df5a33, type: 3}
   m_Name: WalkerHandling_POC
   m_EditorClassIdentifier: GrannyRacer.Runtime::GrannyRacer.Walker.WalkerHandlingSettings
-  acceleration: 24
+  acceleration: 36
   reverseAcceleration: 12
-  braking: 32
-  maximumSpeed: 15
+  braking: 42
+  maximumSpeed: 24
   maximumReverseSpeed: 5
-  boostAcceleration: 38
-  boostMaximumSpeed: 22
-  boostGripScale: 0.72
-  steeringDegreesPerSecond: 125
-  steeringFalloffSpeed: 15
-  topSpeedSteeringScale: 0.42
-  lateralGrip: 7
+  boostAcceleration: 52
+  boostMaximumSpeed: 35
+  boostGripScale: 0.8
+  boostReleaseDeceleration: 8
+  startBoostSpeed: 2.5
+  startTurboSpeed: 5.5
+  startBoostDuration: 0.65
+  startTurboDuration: 1.1
+  startSkidDuration: 1.25
+  startSkidAccelerationScale: 0.42
+  startSkidSpeedScale: 0.65
+  startSkidSteerStrength: 0.72
+  startSkidSwerveFrequency: 1.35
+  steeringDegreesPerSecond: 155
+  steeringFalloffSpeed: 35
+  topSpeedSteeringScale: 0.7
+  lateralGrip: 12
+  rollingResistance: 5
   groundProbeRadius: 0.42
   groundProbeDistance: 0.8
   downforce: 18
   uprightStrength: 18
   uprightDamping: 5
+  recoveryDropDistance: 8
+  overturnedRecoverySeconds: 2
+  jumpVelocityChange: 5.2
+  jumpInputBuffer: 0.12
+  skidMinimumSpeed: 7
+  skidMinimumBrake: 0.35
+  skidMinimumSteer: 0.35
+  skidGripScale: 0.38
+  driftMinimumSpeed: 5
+  driftMinimumSteer: 0.3
+  driftMinimumAirTime: 0.08
+  driftEngageWindow: 0.6
+  driftEngageRamp: 0.15
+  driftSteerBias: 0.7
+  driftInwardSteerControl: 0.38
+  driftCounterSteerControl: 0.62
+  driftMinimumHold: 0.08
+  driftSteeringScale: 1.25
+  driftGripScale: 0.3
+  driftInsideChargeRate: 1.35
+  driftOutsideChargeRate: 0.55
+  driftRedSeconds: 0.7
+  driftYellowSeconds: 1.6
+  driftBlueSeconds: 2.6
+  driftRedBoostSpeed: 2.2
+  driftYellowBoostSpeed: 3.8
+  driftBlueBoostSpeed: 5.6
+  driftBoostDuration: 0.9
   visualLeanDegrees: 11
   visualLeanSpeed: 8
   wobbleDegrees: 8
