@@ -44,10 +44,16 @@ namespace GrannyRacer.Editor
         {
             EnsureFolder("Assets/GrannyRacer/Scenes/Tracks");
             EnsureFolder("Assets/GrannyRacer/Settings");
+            CreateRaceScene(LoadOrCreateTrack(), ScenePath);
+        }
+
+        public static void CreateRaceScene(TrackDefinition track, string scenePath,
+            string roadMeshPath = null, System.Action<TrackDefinition> decorate = null)
+        {
+            if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var handling = LoadOrCreate<WalkerHandlingSettings>(HandlingPath);
             var heat = LoadOrCreate<SlipperHeatSettings>(HeatPath);
-            var track = LoadOrCreateTrack();
 
             CreateLight();
             CreateGround(track);
@@ -60,17 +66,21 @@ namespace GrannyRacer.Editor
             var race = raceObject.AddComponent<RaceController>();
 
             var generatedTrack = new GameObject("Generated Track").transform;
-            var checkpointCount = GreyboxTrackGenerator.Build(track, generatedTrack, race);
+            var checkpointCount = roadMeshPath == null
+                ? GreyboxTrackGenerator.Build(track, generatedTrack, race)
+                : GreyboxTrackGenerator.Build(track, generatedTrack, race, roadMeshPath, true);
             race.Configure(new[] { racer }, new[] { start }, new[] { startForward }, 0, input,
                 checkpointCount, track.Laps);
             CreateCamera(racer.transform);
             CreateHud(racer, race);
-            PocArtRefreshBuilder.Decorate(track);
+            if (decorate != null) decorate(track);
+            else PocArtRefreshBuilder.Decorate(track);
 
-            EditorSceneManager.SaveScene(scene, ScenePath);
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
+            EditorSceneManager.SaveScene(scene, scenePath);
+            if (roadMeshPath == null)
+                EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(scenePath, true) };
             AssetDatabase.SaveAssets();
-            Debug.Log($"[POC] Created complete single-racer POC at {ScenePath}");
+            Debug.Log($"[POC] Created complete single-racer POC at {scenePath}");
         }
 
         private static ArcadeWalkerController CreateWalker(WalkerHandlingSettings handling,

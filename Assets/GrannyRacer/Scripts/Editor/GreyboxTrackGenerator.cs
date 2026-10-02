@@ -14,7 +14,8 @@ namespace GrannyRacer.Editor
         private const string KerbMaterialPath = "Assets/GrannyRacer/Art/Materials/MAT_POC_Kerb.mat";
         private const string ShortcutMaterialPath = "Assets/GrannyRacer/Art/Materials/MAT_POC_Shortcut.mat";
 
-        public static int Build(TrackDefinition track, Transform parent, RaceController race)
+        public static int Build(TrackDefinition track, Transform parent, RaceController race,
+            string roadMeshPath = RoadMeshPath, bool seamlessEdges = false)
         {
             if (track == null || track.Waypoints == null || track.Waypoints.Length < 3)
             {
@@ -27,10 +28,15 @@ namespace GrannyRacer.Editor
             var kerbMaterial = GetOrCreateMaterial(KerbMaterialPath, new Color(0.92f, 0.82f, 0.2f));
             var shortcutMaterial = GetOrCreateMaterial(ShortcutMaterialPath, new Color(0.34f, 0.29f, 0.22f));
 
-            CreateRoad(track, parent, roadMaterial);
-            CreateKerbs(track, parent, kerbMaterial);
-            CreateBarriers(track, parent, kerbMaterial);
-            CreateShortcut(track, parent, shortcutMaterial);
+            CreateRoad(track, parent, roadMaterial, roadMeshPath);
+            if (seamlessEdges) CircuitRoadBuilder.BuildEdges(track, parent, roadMeshPath);
+            else
+            {
+                CreateKerbs(track, parent, kerbMaterial);
+                CreateBarriers(track, parent, kerbMaterial);
+            }
+            if (seamlessEdges) CircuitRoadBuilder.BuildShortcut(track, parent, roadMeshPath);
+            else CreateShortcut(track, parent, shortcutMaterial);
             CreateSpawnGrid(track, parent);
             return CreateCheckpoints(track, parent, race);
         }
@@ -69,7 +75,7 @@ namespace GrannyRacer.Editor
             }
         }
 
-        private static void CreateRoad(TrackDefinition track, Transform parent, Material material)
+        private static void CreateRoad(TrackDefinition track, Transform parent, Material material, string meshPath)
         {
             BuildRoadGeometry(track.Waypoints, out var vertices, out var triangles);
 
@@ -79,10 +85,10 @@ namespace GrannyRacer.Editor
             generated.RecalculateNormals();
             generated.RecalculateBounds();
 
-            var mesh = AssetDatabase.LoadAssetAtPath<Mesh>(RoadMeshPath);
+            var mesh = AssetDatabase.LoadAssetAtPath<Mesh>(meshPath);
             if (mesh == null)
             {
-                AssetDatabase.CreateAsset(generated, RoadMeshPath);
+                AssetDatabase.CreateAsset(generated, meshPath);
                 mesh = generated;
             }
             else

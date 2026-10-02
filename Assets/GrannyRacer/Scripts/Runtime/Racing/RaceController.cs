@@ -41,11 +41,15 @@ namespace GrannyRacer.Racing
         private float raceElapsed;
         private float startFeedbackRemaining;
         private readonly RaceStartModel raceStart = new RaceStartModel();
+        [SerializeField] private string circuitName = "QUIET SUNDAY / ROCKET CLUB";
+        private float sectorStartedAt;
+        private float checkpointFeedbackRemaining;
 
         private ArcadeWalkerController PlayerRacer => racers[playerRacerIndex];
         private RaceProgress PlayerProgress => progressByRacer[playerRacerIndex];
 
         public RaceState State { get; private set; }
+        public bool ExternalMenuOpen { get; set; }
         public int CurrentLap => progressByRacer.Length == 0 ? 1 : Mathf.Min(PlayerProgress.CompletedLaps + 1, lapTarget);
         public int LapTarget => lapTarget;
         public int Position => RacePositionMath.GetPosition(playerRacerIndex, progressByRacer);
@@ -57,6 +61,12 @@ namespace GrannyRacer.Racing
         public bool IsInitialized { get; private set; }
         public RaceStartOutcome StartOutcome { get; private set; }
         public float StartFeedbackRemaining => startFeedbackRemaining;
+        public string CircuitName => circuitName;
+        public int NextCheckpoint => progressByRacer.Length == 0 ? 1 : PlayerProgress.ExpectedCheckpoint;
+        public int CheckpointCount => checkpointCount;
+        public float LastSectorTime { get; private set; }
+        public float CheckpointFeedbackRemaining => checkpointFeedbackRemaining;
+        public void SetCircuitName(string value) => circuitName = value;
 
         public void Configure(ArcadeWalkerController[] raceRacers, Vector3[] gridPositions,
             Vector3[] gridForwards, int playerIndex, PlayerRacerInput input, int checkpoints, int laps)
@@ -83,7 +93,7 @@ namespace GrannyRacer.Racing
                 var input = playerInput.Sample();
                 throttle = input.Throttle;
                 if (input.Pause) TogglePause();
-                if (State == RaceState.Finished && (input.BoostPressed || input.Reset))
+                if (State == RaceState.Finished && !ExternalMenuOpen && (input.BoostPressed || input.Reset))
                 {
                     RestartScene();
                     return;
@@ -109,6 +119,7 @@ namespace GrannyRacer.Racing
             {
                 if (startFeedbackRemaining > 0f) startFeedbackRemaining -= Time.deltaTime;
                 raceElapsed += Time.deltaTime;
+                if (checkpointFeedbackRemaining > 0f) checkpointFeedbackRemaining -= Time.deltaTime;
                 var headingDot = Vector3.Dot(PlayerRacer.transform.forward, expectedTrackDirection);
                 wrongWayTime = headingDot < -0.35f && PlayerRacer.Speed > 2f
                     ? wrongWayTime + Time.deltaTime
@@ -131,6 +142,9 @@ namespace GrannyRacer.Racing
 
             countdownRemaining = countdownDuration;
             raceElapsed = 0f;
+            sectorStartedAt = 0f;
+            LastSectorTime = 0f;
+            checkpointFeedbackRemaining = 0f;
             FinishTime = 0f;
             wrongWayTime = 0f;
             IsWrongWay = false;
@@ -143,13 +157,20 @@ namespace GrannyRacer.Racing
             IsInitialized = true;
         }
 
-        public bool TryPassCheckpoint(int index, Transform checkpoint, ArcadeWalkerController racer)
+        public bool TryPassCheckpoint(int index, Transform checkpoint, ArcadeWalkerController racer, Transform safeReset = null)
         {
             if (State != RaceState.Racing) return false;
             var racerIndex = IndexOfRacer(racer);
             if (racerIndex < 0 || !progressByRacer[racerIndex].TryPassCheckpoint(index)) return false;
 
-            racers[racerIndex].SetResetPose(checkpoint.position + Vector3.up * 0.9f, checkpoint.rotation);
+            racers[racerIndex].SetResetPose(safeReset == null ? checkpoint.position + Vector3.up * 0.9f : safeReset.position,
+                safeReset == null ? checkpoint.rotation : safeReset.rotation);
+            if (racerIndex == playerRacerIndex)
+            {
+                LastSectorTime = raceElapsed - sectorStartedAt;
+                sectorStartedAt = raceElapsed;
+                checkpointFeedbackRemaining = 1.5f;
+            }
             if (progressByRacer[racerIndex].IsFinished)
             {
                 racers[racerIndex].SetCanDrive(false);
